@@ -115,6 +115,16 @@ function Home() {
         </div>
       </section>
 
+      {/* Slideshow */}
+      <section className="container-page py-16 md:py-20">
+        <div className="max-w-2xl mb-8">
+          <p className="text-xs uppercase tracking-widest font-semibold text-warm">In pictures</p>
+          <h2 className="mt-2 text-3xl md:text-4xl font-bold">Safe Chain across Zambia.</h2>
+          <p className="mt-3 text-muted-foreground">A glimpse at the young people, clinics, and communities behind the platform.</p>
+        </div>
+        <Slideshow slides={slides} />
+      </section>
+
       {/* Features */}
       <section className="container-page py-16 md:py-24">
         <div className="max-w-2xl">
