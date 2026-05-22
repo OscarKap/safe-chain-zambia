@@ -5,6 +5,20 @@ import {
 } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 import communityImg from "@/assets/community.jpg";
+import clinicImg from "@/assets/clinic.jpg";
+import learningImg from "@/assets/learning.jpg";
+import workshopImg from "@/assets/workshop.jpg";
+import mobileImg from "@/assets/mobile.jpg";
+import { Slideshow } from "@/components/Slideshow";
+
+const slides = [
+  { src: heroImg, alt: "Young Zambians smiling together", title: "Your safe link to health & rights", caption: "A youth-built platform for SRHR support, reporting, and community accountability." },
+  { src: clinicImg, alt: "Young person outside a youth-friendly clinic", title: "Youth-friendly clinics, near you", caption: "Find accessible, judgment-free health services across 10+ districts." },
+  { src: learningImg, alt: "Diverse youth learning together with tablets", title: "Learning that includes everyone", caption: "Lessons designed for girls, boys, and youth with disabilities — in 5 local languages." },
+  { src: workshopImg, alt: "Peer educators leading an SRHR workshop", title: "Peer-led, community-rooted", caption: "Real conversations, led by young Zambians who understand your world." },
+  { src: mobileImg, alt: "Young woman privately using her mobile phone", title: "Private by default", caption: "Report incidents anonymously — even over SMS when you're offline." },
+  { src: communityImg, alt: "Community SRHR gathering", title: "Accountability you can see", caption: "Community scorecards turn lived experience into real change." },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -99,6 +113,16 @@ function Home() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Slideshow */}
+      <section className="container-page py-16 md:py-20">
+        <div className="max-w-2xl mb-8">
+          <p className="text-xs uppercase tracking-widest font-semibold text-warm">In pictures</p>
+          <h2 className="mt-2 text-3xl md:text-4xl font-bold">Safe Chain across Zambia.</h2>
+          <p className="mt-3 text-muted-foreground">A glimpse at the young people, clinics, and communities behind the platform.</p>
+        </div>
+        <Slideshow slides={slides} />
       </section>
 
       {/* Features */}
