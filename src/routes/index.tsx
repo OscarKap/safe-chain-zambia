@@ -10,6 +10,7 @@ import learningImg from "@/assets/learning.jpg";
 import workshopImg from "@/assets/workshop.jpg";
 import mobileImg from "@/assets/mobile.jpg";
 import { Slideshow } from "@/components/Slideshow";
+import { MobileHome } from "@/components/MobileHome";
 
 const slides = [
   { src: heroImg, alt: "Young Zambians smiling together", title: "Your safe link to health & rights", caption: "A youth-built platform for SRHR support, reporting, and community accountability." },
@@ -50,8 +51,12 @@ const stats = [
 function Home() {
   return (
     <>
-      {/* Hero */}
-      <section className="gradient-hero">
+      {/* Mobile-first homepage */}
+      <MobileHome />
+
+      {/* Hero (desktop / tablet) */}
+      <section className="gradient-hero hidden md:block">
+
         <div className="container-page py-14 md:py-20 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-3 py-1 text-xs font-medium text-muted-foreground">
