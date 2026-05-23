@@ -14,10 +14,10 @@ The menstrual cycle is the body’s natural process preparing for pregnancy each
 
 If pregnancy does not happen, the body releases blood and tissue through the vagina. This is called a period.
 
-A normal cycle can:
-### Last between 21–35 days
-### Have bleeding for 2–7 days
-### Change slightly from month to month
+- A normal cycle can:
+- Last between 21–35 days
+- Have bleeding for 2–7 days
+- Change slightly from month to month
 
 For many girls, periods are irregular during the first few years after they begin.
 
@@ -25,7 +25,7 @@ For many girls, periods are irregular during the first few years after they begi
 
 Many girls and women experience:
 
-### Stomach cramps
+- Stomach cramps
 - Back pain
 - Headaches
 - Breast tenderness
@@ -36,48 +36,48 @@ Many girls and women experience:
 
 These are common and usually not dangerous.
 
-### Managing Period Pain
-What can help:
-### Drinking water
-### Resting
-### Light exercise or walking
-### Warm water bottle on the stomach
-### Healthy meals
-### Pain medication recommended by a health worker
-Seek medical help if:
-### Pain is extremely severe
-### You faint during periods
-### Bleeding is very heavy
-### Periods suddenly stop for many months
-### You experience unusual smell or discharge
-### Menstrual Hygiene
+- Managing Period Pain
+- What can help:
+- Drinking water
+- Resting
+- Light exercise or walking
+- Warm water bottle on the stomach
+- Healthy meals
+- Pain medication recommended by a health worker
+- Seek medical help if:
+- Pain is extremely severe
+- You faint during periods
+- Bleeding is very heavy
+- Periods suddenly stop for many months
+- You experience unusual smell or discharge
+- Menstrual Hygiene
 
 Good menstrual hygiene helps prevent infections and discomfort.
 
-Common menstrual products:
-### Sanitary pads
-### Reusable cloth pads
-### Tampons
-### Menstrual cups
+- Common menstrual products:
+- Sanitary pads
+- Reusable cloth pads
+- Tampons
+- Menstrual cups
 
 In many rural communities, girls use cloth because pads are expensive or unavailable. Clean reusable cloth is okay if managed properly.
 
-### Hygiene Tips
-Important things to do:
-### Change pads or cloth regularly
-### Wash hands before and after changing
-### Bathe regularly during periods
-### Use clean water when possible
-### Dry reusable cloth completely in sunlight if possible
-Avoid:
-### Using dirty cloth
-### Wearing one pad for too long
-### Hiding wet reusable pads in dark places where bacteria grow
-### Menstruation and School
+- Hygiene Tips
+- Important things to do:
+- Change pads or cloth regularly
+- Wash hands before and after changing
+- Bathe regularly during periods
+- Use clean water when possible
+- Dry reusable cloth completely in sunlight if possible
+- Avoid:
+- Using dirty cloth
+- Wearing one pad for too long
+- Hiding wet reusable pads in dark places where bacteria grow
+- Menstruation and School
 
 Many girls miss school during periods because:
 
-### They lack pads
+- They lack pads
 - Schools lack private toilets
 - Fear of teasing
 - Pain or discomfort
@@ -86,7 +86,7 @@ This affects confidence and education.
 
 Communities and schools should support girls with:
 
-### Clean toilets
+- Clean toilets
 - Water and soap
 - Emergency pads
 - Accurate information
@@ -95,9 +95,9 @@ Communities and schools should support girls with:
 Periods should never stop a girl from learning.
 
 ### Myths and Facts
-Myth:
+- Myth:
 
-## “Girls on their period are dirty.”
+- “Girls on their period are dirty.”
 
 Fact:
 
@@ -105,7 +105,7 @@ Menstruation is natural and healthy.
 
 Myth:
 
-## “A girl should not cook or touch certain foods during her period.”
+- “A girl should not cook or touch certain foods during her period.”
 
 Fact:
 
@@ -113,7 +113,7 @@ Periods do not make someone harmful or unclean.
 
 Myth:
 
-## “You cannot get pregnant during your period.”
+- “You cannot get pregnant during your period.”
 
 Fact:
 
@@ -121,7 +121,7 @@ Pregnancy can still happen, especially if cycles are irregular.
 
 Myth:
 
-## “Talking about periods is shameful.”
+- “Talking about periods is shameful.”
 
 Fact:
 
@@ -133,7 +133,7 @@ Periods can affect emotions too.
 
 Some girls and women feel:
 
-### Emotional
+- Emotional
 - Irritable
 - Sad
 - Anxious
@@ -146,7 +146,7 @@ Support from family, friends, teachers, and partners matters a lot.
 
 Girls with disabilities often face additional challenges:
 
-### Lack of accessible toilets
+- Lack of accessible toilets
 - Dependence on caregivers
 - Lack of menstrual information in accessible formats
 - Increased stigma
@@ -159,7 +159,7 @@ Tracking periods helps understand the body better.
 
 You can track:
 
-### Start date
+- Start date
 - End date
 - Pain levels
 - Mood changes
@@ -173,7 +173,7 @@ Apps, calendars, or notebooks can all work.
 
 Seek help if:
 
-### Bleeding is extremely heavy
+- Bleeding is extremely heavy
 - Periods stop unexpectedly
 - Severe pain affects daily life
 - You suspect infection
@@ -183,7 +183,7 @@ Seek help if:
 
 Every girl and woman deserves:
 
-### Access to menstrual products
+- Access to menstrual products
 - Privacy and dignity
 - Correct health information
 - Safe toilets and water

@@ -24,7 +24,7 @@ STIs are infections mainly spread through sexual contact.
 
 Common STIs include:
 
-### Gonorrhea
+- Gonorrhea
 - Syphilis
 - Chlamydia
 - Herpes
@@ -38,7 +38,7 @@ Some STIs can be treated easily. Others need lifelong care.
 
 They can spread through:
 
-### Unprotected sex
+- Unprotected sex
 - Sharing needles or sharp objects
 - Blood contact
 - Mother-to-child during pregnancy, birth, or breastfeeding (for HIV)
@@ -50,7 +50,7 @@ Some STIs can also spread through skin-to-skin contact.
 
 You cannot get HIV from:
 
-### Hugging
+- Hugging
 - Handshakes
 - Sharing food
 - Mosquito bites
@@ -65,7 +65,7 @@ Sometimes people have no symptoms at all.
 
 Possible signs include:
 
-### Pain during urination
+- Pain during urination
 - Unusual discharge
 - Sores or wounds around private parts
 - Lower abdominal pain
@@ -79,7 +79,7 @@ Because many infections stay hidden, regular testing matters.
 
 Early HIV symptoms may look like:
 
-### Fever
+- Fever
 - Sore throat
 - Rash
 - Tiredness
@@ -94,7 +94,7 @@ The only way to know your HIV status is through testing.
 
 Condoms help protect against:
 
-### HIV
+- HIV
 - Many STIs
 - Unplanned pregnancy
 
@@ -104,7 +104,7 @@ Use a new condom every time during sex.
 
 Testing helps:
 
-### Detect infections early
+- Detect infections early
 - Protect partners
 - Start treatment quickly
 
@@ -118,7 +118,7 @@ Having many unprotected sexual partners increases risk.
 
 Do not share:
 
-### Razors
+- Razors
 - Needles
 - Unsterilized blades
 - 5. Prevent Mother-to-Child Transmission
@@ -131,13 +131,13 @@ Treatment during pregnancy greatly reduces HIV transmission to babies.
 
 HIV testing is:
 
-### Confidential
+- Confidential
 - Usually quick
 - Available at many clinics and outreach programs
 
 Some places also offer:
 
-### Self-testing kits
+- Self-testing kits
 - Youth-friendly services
 
 Testing is not something to fear. It is part of protecting your health.
@@ -150,13 +150,13 @@ People living with HIV take Antiretroviral Therapy (ART).
 
 ART helps:
 
-### Reduce the virus in the body
+- Reduce the virus in the body
 - Keep people healthy
 - Prevent transmission to others
 
 Many people on treatment:
 
-### Work
+- Work
 - Study
 - Have families
 - Live normal lives
@@ -172,7 +172,7 @@ Many STIs can be cured with medicine if treated early.
 
 Ignoring symptoms can lead to:
 
-### Infertility
+- Infertility
 - Severe infections
 - Pregnancy complications
 - Long-term pain
@@ -183,7 +183,7 @@ Never self-medicate without proper guidance.
 
 Young people often avoid clinics because of:
 
-### Fear of judgment
+- Fear of judgment
 - Lack of privacy
 - Cultural stigma
 - Misinformation
@@ -196,7 +196,7 @@ Young people deserve respectful healthcare without shame.
 
 Girls and women facing:
 
-### Forced sex
+- Forced sex
 - Abuse
 - Early marriage
 - Exploitation
@@ -205,14 +205,14 @@ Girls and women facing:
 
 Support services should include:
 
-### Medical care
-### Counseling
-### Legal support
-### Emergency protection
-### Common Myths vs Facts
-Myth:
+- Medical care
+- Counseling
+- Legal support
+- Emergency protection
+- Common Myths vs Facts
+- Myth:
 
-## “HIV means death.”
+- “HIV means death.”
 
 Fact:
 
@@ -220,7 +220,7 @@ With treatment, people can live long healthy lives.
 
 Myth:
 
-## “You can tell who has HIV by looking at them.”
+- “You can tell who has HIV by looking at them.”
 
 Fact:
 
@@ -228,7 +228,7 @@ Many people with HIV look healthy.
 
 Myth:
 
-## “Only certain people get STIs.”
+- “Only certain people get STIs.”
 
 Fact:
 
@@ -236,13 +236,13 @@ Anyone who is sexually active can get an STI.
 
 Myth:
 
-## “Testing means you are promiscuous.”
+- “Testing means you are promiscuous.”
 
 Fact:
 
 Testing is responsible healthcare.
 
-### Protecting Yourself and Others
+- Protecting Yourself and Others
 - Get tested regularly
 - Use condoms correctly
 - Seek treatment early
@@ -252,7 +252,7 @@ Testing is responsible healthcare.
 
 Visit a clinic or hospital if:
 
-### You were sexually assaulted
+- You were sexually assaulted
 - A condom breaks during sex
 - You notice sores or unusual discharge
 - You think you may have been exposed to HIV
@@ -263,7 +263,7 @@ Some medicines, like PEP (Post-Exposure Prophylaxis), can help prevent HIV if ta
 
 Everyone has the right to:
 
-### HIV testing and treatment
+- HIV testing and treatment
 - Privacy and confidentiality
 - Respectful healthcare
 - Accurate SRHR information

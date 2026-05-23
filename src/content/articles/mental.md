@@ -6,7 +6,7 @@ Just like physical health, mental health matters.
 
 Many young people silently struggle with:
 
-### Stress
+- Stress
 - Depression
 - Anxiety
 - Loneliness
@@ -27,7 +27,7 @@ Stress happens when life feels overwhelming.
 
 Young people may feel stressed because of:
 
-### School or exams
+- School or exams
 - Unemployment
 - Family conflict
 - Money problems
@@ -41,7 +41,7 @@ A little stress is normal. Too much stress can affect health and daily life.
 
 You may notice:
 
-### Constant worry
+- Constant worry
 - Trouble sleeping
 - Headaches
 - Feeling angry easily
@@ -55,7 +55,7 @@ Anxiety is more than ordinary worry.
 
 It can feel like:
 
-### Constant fear
+- Constant fear
 - Racing thoughts
 - Panic
 - Tight chest
@@ -70,7 +70,7 @@ Depression is not laziness or weakness.
 
 It is a serious emotional condition that can affect:
 
-### Energy
+- Energy
 - Mood
 - Sleep
 - Appetite
@@ -79,7 +79,7 @@ It is a serious emotional condition that can affect:
 
 Someone with depression may:
 
-### Feel numb or hopeless
+- Feel numb or hopeless
 - Lose interest in life
 - Withdraw from others
 - Cry often
@@ -91,7 +91,7 @@ Breakups and rejection can deeply affect mental health, especially for young peo
 
 Heartbreak can cause:
 
-### Sadness
+- Sadness
 - Loss of confidence
 - Isolation
 - Anxiety
@@ -107,7 +107,7 @@ Healing takes time.
 
 Sometimes emotional pain becomes so heavy that a person starts thinking:
 
-### “I want to disappear.”
+- “I want to disappear.”
 - “People would be better without me.”
 - “I can’t continue anymore.”
 
@@ -119,7 +119,7 @@ Having suicidal thoughts does NOT mean someone is weak or crazy. It often means 
 
 A person may:
 
-### Talk about death often
+- Talk about death often
 - Withdraw completely
 - Give away belongings
 - Say goodbye unusually
@@ -136,7 +136,7 @@ You do not have to carry everything alone.
 
 Speak to:
 
-### A trusted friend
+- A trusted friend
 - Parent or guardian
 - Teacher
 - Counselor
@@ -148,7 +148,7 @@ Sometimes the body and mind need recovery.
 
 Try:
 
-### Sleeping properly
+- Sleeping properly
 - Reducing constant phone stress
 - Spending time outside
 - Taking breaks from pressure
@@ -156,7 +156,7 @@ Try:
 
 Some people try to escape pain through:
 
-### Alcohol
+- Alcohol
 - Drugs
 - Dangerous behavior
 - Isolation
@@ -171,7 +171,7 @@ Journaling, music, art, prayer, or talking can help release emotional pressure.
 
 Many boys and young men are taught:
 
-### “Men don’t cry.”
+- “Men don’t cry.”
 - “Be tough.”
 - “Handle it alone.”
 
@@ -183,7 +183,7 @@ Men also deserve emotional support.
 
 Girls and young women may face:
 
-### Relationship pressure
+- Relationship pressure
 - GBV
 - Body shaming
 - School stress
@@ -196,12 +196,13 @@ These experiences can affect confidence and emotional wellbeing deeply.
 
 Social media can sometimes increase:
 
-### Anxiety
+- Anxiety
 - Comparison
 - Loneliness
 - Pressure to look perfect
 
-Remember: People usually post their best moments, not their struggles.
+- Remember:
+People usually post their best moments, not their struggles.
 
 Your value is not measured by likes or followers.
 
@@ -209,14 +210,14 @@ Your value is not measured by likes or followers.
 
 If a friend is struggling:
 
-### Listen without judging
+- Listen without judging
 - Check in regularly
 - Encourage them to seek help
 - Take suicide comments seriously
 
 Avoid saying:
 
-### “Just be strong.”
+- “Just be strong.”
 - “Others have it worse.”
 - “You’re overreacting.”
 
@@ -226,14 +227,14 @@ Sometimes simply listening helps more than trying to “fix” everything.
 
 Counselling gives young people a safe space to:
 
-### Talk openly
+- Talk openly
 - Process emotions
 - Learn coping skills
 - Heal from trauma
 
 Support may be available through:
 
-### Clinics
+- Clinics
 - Schools
 - Youth centers
 - NGOs
@@ -247,7 +248,7 @@ Some services are free or low-cost.
 
 Seek support if:
 
-### Sadness lasts many weeks
+- Sadness lasts many weeks
 - Anxiety affects daily life
 - You cannot cope normally
 - You think about self-harm

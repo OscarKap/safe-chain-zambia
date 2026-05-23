@@ -12,7 +12,7 @@ Contraception is not only for married people. Young people also have the right t
 
 Contraception can help:
 
-### Prevent unplanned pregnancies
+- Prevent unplanned pregnancies
 - Reduce unsafe abortions
 - Protect young people from health risks
 - Help girls stay in school
@@ -34,7 +34,7 @@ Worn on the penis.
 
 Placed inside the vagina before sex.
 
-### Benefits
+- Benefits
 - Help prevent pregnancy
 - Protect against HIV and STIs
 - Easy to get from clinics, pharmacies, and some youth centers
@@ -46,7 +46,7 @@ Placed inside the vagina before sex.
 
 These are pills taken daily by women to prevent pregnancy.
 
-### Benefits
+- Benefits
 - Effective when taken correctly
 - Can help regulate periods
 - Challenges
@@ -56,7 +56,7 @@ These are pills taken daily by women to prevent pregnancy.
 
 An injection given at a clinic every 2–3 months.
 
-### Benefits
+- Benefits
 - Private and long-lasting
 - Does not require daily attention
 - Possible Side Effects
@@ -67,7 +67,7 @@ An injection given at a clinic every 2–3 months.
 
 Small flexible rods placed under the skin of the arm by a health worker.
 
-### Benefits
+- Benefits
 - Works for 3–5 years
 - Very effective
 - Safe for many women
@@ -77,7 +77,7 @@ Small flexible rods placed under the skin of the arm by a health worker.
 
 A small device placed inside the womb by a nurse or doctor.
 
-### Benefits
+- Benefits
 - Long-term protection
 - Can work for several years
 - Important
@@ -87,14 +87,14 @@ A small device placed inside the womb by a nurse or doctor.
 
 Used after unprotected sex to reduce the chance of pregnancy.
 
-### Important
-### Works best within 72 hours
-### Not meant for regular use
-### Available at many clinics and pharmacies
-### Myths vs Facts
-Myth:
+- Important
+- Works best within 72 hours
+- Not meant for regular use
+- Available at many clinics and pharmacies
+- Myths vs Facts
+- Myth:
 
-## “Contraception makes women infertile forever.”
+- “Contraception makes women infertile forever.”
 
 Fact:
 
@@ -102,7 +102,7 @@ Most contraceptives do NOT cause permanent infertility.
 
 Myth:
 
-## “Only married women should use family planning.”
+- “Only married women should use family planning.”
 
 Fact:
 
@@ -110,7 +110,7 @@ Anyone who is sexually active has the right to information and protection.
 
 Myth:
 
-## “Condoms are unsafe.”
+- “Condoms are unsafe.”
 
 Fact:
 
@@ -118,7 +118,7 @@ Condoms are safe and are one of the best ways to prevent HIV and STIs.
 
 Myth:
 
-## “Young people should not ask about contraception.”
+- “Young people should not ask about contraception.”
 
 Fact:
 
@@ -128,7 +128,7 @@ Young people deserve accurate health information without shame or fear.
 
 In many African countries, contraception can be found at:
 
-### Government clinics
+- Government clinics
 - Hospitals
 - Pharmacies
 - Youth-friendly health centers
@@ -141,7 +141,7 @@ Some services may be free, especially at public health facilities.
 
 You have the right to:
 
-### Ask questions privately
+- Ask questions privately
 - Receive respectful treatment
 - Access accurate SRHR information
 - Make informed decisions about your body
@@ -153,7 +153,7 @@ No one should shame or abuse you for seeking health services.
 
 Talk to a health worker if:
 
-### You experience unusual pain or bleeding
+- You experience unusual pain or bleeding
 - You think your method is causing problems
 - A condom breaks during sex
 - You need advice on choosing the right method
@@ -163,13 +163,13 @@ Talk to a health worker if:
 
 This is very common with:
 
-### Injectables
+- Injectables
 - Implants
 - Some pills
 
 A woman may experience:
 
-### Bleeding for many days or weeks
+- Bleeding for many days or weeks
 - Spotting between periods
 - Missed periods
 - Heavy periods
@@ -177,26 +177,26 @@ A woman may experience:
 
 Hormonal contraceptives change the body’s natural hormone balance. The womb lining reacts differently, especially during the first few months.
 
-### What can help
-### Give the body time to adjust (often 3–6 months)
-### Drink enough water and eat iron-rich foods
+- What can help
+- Give the body time to adjust (often 3–6 months)
+- Drink enough water and eat iron-rich foods
 - Visit a clinic if bleeding becomes very heavy or causes weakness
-Seek medical help urgently if:
-### Bleeding is extremely heavy
-### You feel dizzy or faint
-### You soak many pads in a short time
-### Severe abdominal pain develops
-### 2. Weight Gain
+- Seek medical help urgently if:
+- Bleeding is extremely heavy
+- You feel dizzy or faint
+- You soak many pads in a short time
+- Severe abdominal pain develops
+- 2. Weight Gain
 
 Some women notice:
 
-### Increased appetite
+- Increased appetite
 - Water retention
 - Slight body changes
 
 This is more commonly reported with injectables like Depo-Provera, though not every woman experiences it.
 
-### What can help
+- What can help
 - Regular movement or exercise
 - Balanced meals
 - Monitoring sudden or extreme changes
@@ -207,14 +207,14 @@ Sometimes the weight gain is temporary. Sometimes the method simply doesn’t su
 
 Mild headaches can happen when starting:
 
-### Pills
+- Pills
 - Implants
 - Injectables
 - Why
 
 Hormones can affect blood vessels and body chemistry.
 
-### What helps
+- What helps
 - Rest
 - Hydration
 - Eating regularly
@@ -223,7 +223,7 @@ Hormones can affect blood vessels and body chemistry.
 
 If headaches become:
 
-### Severe
+- Severe
 - Frequent
 - Associated with blurred vision
 - Associated with chest pain or weakness
@@ -234,14 +234,14 @@ If headaches become:
 
 Some women report:
 
-### Back pain
+- Back pain
 - Breast tenderness
 - Muscle aches
 - Lower abdominal discomfort
 
 These are usually temporary while the body adjusts.
 
-### What helps
+- What helps
 - Rest
 - Light exercise
 - Warm compress
@@ -252,7 +252,7 @@ Hormonal contraception can sometimes affect emotions.
 
 Some women experience:
 
-### Mood swings
+- Mood swings
 - Irritability
 - Anxiety
 - Low mood
@@ -267,7 +267,7 @@ A lot of women are given contraception without proper counseling.
 
 Sometimes a woman gets an injection at a clinic and nobody explains:
 
-### Possible side effects
+- Possible side effects
 - Warning signs
 - Alternative methods
 - What to do if problems start
@@ -276,7 +276,7 @@ That creates fear and mistrust.
 
 Good family planning should always involve:
 
-### Clear explanation
+- Clear explanation
 - Choice
 - Consent
 - Follow-up support
@@ -293,7 +293,7 @@ Not every contraceptive suits every woman.
 
 A nurse may suggest:
 
-### Switching from injectable to implant
+- Switching from injectable to implant
 - Trying a lower-dose pill
 - Using non-hormonal methods like condoms or copper IUD
 - 3. Attend Follow-Up Visits
@@ -310,7 +310,7 @@ Some myths exaggerate side effects, while some real complications are ignored.
 
 Go to a clinic or hospital urgently if there is:
 
-### Severe chest pain
+- Severe chest pain
 - Difficulty breathing
 - Very severe headaches
 - Loss of vision

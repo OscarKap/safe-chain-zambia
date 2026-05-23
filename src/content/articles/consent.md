@@ -8,7 +8,7 @@ It is about respect, safety, choice, and dignity.
 
 Every person has the right to decide:
 
-### What happens to their body
+- What happens to their body
 - Who touches them
 - What kind of relationship they want
 - When to say yes
@@ -16,7 +16,7 @@ Every person has the right to decide:
 
 Consent is not only about sex. It also applies to:
 
-### Touching
+- Touching
 - Kissing
 - Sharing photos
 - Online conversations
@@ -26,13 +26,13 @@ Consent is not only about sex. It also applies to:
 
 Consent should be:
 
-## Clear
+- Clear
 
 A person clearly agrees.
 
 Examples:
 
-### “Yes”
+- “Yes”
 - “I want to”
 - “I’m comfortable with this”
 
@@ -44,7 +44,7 @@ The person is not pressured, threatened, manipulated, or forced.
 
 Consent is not real if someone is:
 
-### Afraid
+- Afraid
 - Drunk or unconscious
 - Too young to legally agree
 - Threatened financially or emotionally
@@ -54,7 +54,7 @@ Someone can change their mind at any time.
 
 Even if a person agreed before, they can still say:
 
-### “Stop”
+- “Stop”
 - “Not anymore”
 - “I’m uncomfortable”
 
@@ -68,7 +68,7 @@ Healthy relationships involve listening, respect, and comfort from both people.
 
 Consent is NOT:
 
-### Fear
+- Fear
 - Silence
 - Pressure
 - Manipulation
@@ -86,7 +86,7 @@ Even married partners must respect consent.
 
 Boundaries are personal limits people set to protect:
 
-### Their body
+- Their body
 - Emotions
 - Privacy
 - Comfort
@@ -96,7 +96,7 @@ Everyone’s boundaries are different.
 
 Examples:
 
-### “I don’t want to be touched.”
+- “I don’t want to be touched.”
 - “I’m not ready for sex.”
 - “Don’t share my photos.”
 - “I need privacy.”
@@ -110,7 +110,7 @@ In many communities, young people — especially girls — are taught to stay si
 
 Some harmful beliefs include:
 
-### “A husband cannot be refused.”
+- “A husband cannot be refused.”
 - “Men should always control relationships.”
 - “Girls who say no are disrespectful.”
 - “Buying gifts means someone owes sex.”
@@ -125,7 +125,7 @@ Consent also matters online.
 
 You should never:
 
-### Share someone’s private photos without permission
+- Share someone’s private photos without permission
 - Pressure someone to send intimate pictures
 - Read private messages without permission
 - Record someone secretly
@@ -137,7 +137,7 @@ Digital abuse is real harm.
 
 A relationship may be unsafe if someone:
 
-### Controls your movements
+- Controls your movements
 - Checks your phone constantly
 - Threatens you
 - Pressures you sexually
@@ -152,14 +152,14 @@ Love should not feel like fear.
 
 Many teenagers feel pressure from:
 
-### Friends
+- Friends
 - Social media
 - Older partners
 - School environments
 
 You never have to do something sexual just to:
 
-### Fit in
+- Fit in
 - Keep a relationship
 - Receive money or gifts
 - Avoid being mocked
@@ -170,13 +170,13 @@ Saying no is your right.
 
 If someone forces, pressures, or harms you:
 
-### It is not your fault
+- It is not your fault
 - You deserve support
 - You have the right to seek help
 
 You can speak to:
 
-### A trusted adult
+- A trusted adult
 - Counselor
 - Health worker
 - Teacher
@@ -187,14 +187,14 @@ You can speak to:
 
 If someone shares an experience of abuse:
 
-### Listen calmly
+- Listen calmly
 - Do not blame them
 - Believe them
 - Help them find support
 
 Statements like:
 
-### “Why were you there?”
+- “Why were you there?”
 - “What were you wearing?”
 - “You should have known better.”
 
@@ -204,14 +204,14 @@ Statements like:
 
 People with disabilities also have full rights to:
 
-### Relationships
+- Relationships
 - Privacy
 - Safety
 - Consent
 
 No one should assume a person with a disability cannot make decisions or deserves less protection.
 
-### Healthy Relationships Should Include
+- Healthy Relationships Should Include
 - Respect
 - Communication
 - Trust
