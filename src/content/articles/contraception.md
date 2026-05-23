@@ -1,7 +1,5 @@
 # Contraception
 
-## Contraception
-
 Contraception simply means ways people can prevent pregnancy when they are not ready to have children. Some methods also help protect people from sexually transmitted infections (STIs), including HIV.
 
 In many African communities, talking openly about contraception can feel uncomfortable because of culture, religion, or fear of judgment. But learning about family planning is important for protecting health, education, relationships, and future goals.

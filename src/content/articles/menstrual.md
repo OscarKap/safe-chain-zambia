@@ -1,7 +1,5 @@
 # Menstrual Health
 
-## Menstrual Health
-
 Menstrual health is about understanding your period, managing it safely and comfortably, and making sure girls and women can live with dignity during menstruation.
 
 A period is a normal part of growing up and reproductive health. It is not a disease, a curse, or something shameful. Yet in many African communities, menstruation is still surrounded by silence, myths, and embarrassment. Because of this, many girls grow up confused or scared when their periods start.

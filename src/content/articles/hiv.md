@@ -1,7 +1,5 @@
 # HIV & STIs
 
-## HIV & STIs
-
 HIV and sexually transmitted infections (STIs) affect millions of people across Africa, especially young people. Many infections spread quietly because people fear testing, feel ashamed, or do not have enough information.
 
 The truth is simple: knowing your status, protecting yourself, and getting treatment early can save lives.

@@ -1,7 +1,5 @@
 # Consent & Boundaries
 
-## Consent & Boundaries
-
 Consent means giving clear, willing permission for something to happen — especially in relationships and sexual situations.
 
 It is about respect, safety, choice, and dignity.
