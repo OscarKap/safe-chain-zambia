@@ -1,13 +1,21 @@
 import { Link } from "@tanstack/react-router";
 import { Home, Stethoscope, MessageCircle, BookOpen, User, Phone } from "lucide-react";
 
-const tabs = [
+type Tab = {
+  to: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  exact?: boolean;
+  center?: boolean;
+};
+
+const tabs: Tab[] = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/services", label: "Services", icon: Stethoscope },
   { to: "/emergency", label: "SOS", icon: Phone, center: true },
   { to: "/learn", label: "Learn", icon: BookOpen },
   { to: "/dashboard", label: "Profile", icon: User },
-] as const;
+];
 
 export function MobileBottomNav() {
   return (
