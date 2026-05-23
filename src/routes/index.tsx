@@ -10,6 +10,7 @@ import learningImg from "@/assets/learning.jpg";
 import workshopImg from "@/assets/workshop.jpg";
 import mobileImg from "@/assets/mobile.jpg";
 import { Slideshow } from "@/components/Slideshow";
+import { MobileHome } from "@/components/MobileHome";
 
 const slides = [
   { src: heroImg, alt: "Young Zambians smiling together", title: "Your safe link to health & rights", caption: "A youth-built platform for SRHR support, reporting, and community accountability." },
@@ -50,8 +51,12 @@ const stats = [
 function Home() {
   return (
     <>
-      {/* Hero */}
-      <section className="gradient-hero">
+      {/* Mobile-first homepage */}
+      <MobileHome />
+
+      {/* Hero (desktop / tablet) */}
+      <section className="gradient-hero hidden md:block">
+
         <div className="container-page py-14 md:py-20 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-3 py-1 text-xs font-medium text-muted-foreground">
@@ -104,7 +109,8 @@ function Home() {
       </section>
 
       {/* Stats */}
-      <section className="border-y border-border bg-surface">
+      <section className="border-y border-border bg-surface hidden md:block">
+
         <div className="container-page py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map((s) => (
             <div key={s.label}>
@@ -116,7 +122,8 @@ function Home() {
       </section>
 
       {/* Slideshow */}
-      <section className="container-page py-16 md:py-20">
+      <section className="container-page py-16 md:py-20 hidden md:block">
+
         <div className="max-w-2xl mb-8">
           <p className="text-xs uppercase tracking-widest font-semibold text-warm">In pictures</p>
           <h2 className="mt-2 text-3xl md:text-4xl font-bold">Safe Chain across Zambia.</h2>
@@ -126,7 +133,8 @@ function Home() {
       </section>
 
       {/* Features */}
-      <section className="container-page py-16 md:py-24">
+      <section className="container-page py-16 md:py-24 hidden md:block">
+
         <div className="max-w-2xl">
           <p className="text-xs uppercase tracking-widest font-semibold text-brand">What we offer</p>
           <h2 className="mt-2 text-3xl md:text-4xl font-bold">Everything a young person needs — in one safe place.</h2>
@@ -153,7 +161,8 @@ function Home() {
       </section>
 
       {/* Community split */}
-      <section className="bg-surface border-y border-border">
+      <section className="bg-surface border-y border-border hidden md:block">
+
         <div className="container-page py-16 md:py-20 grid lg:grid-cols-2 gap-10 items-center">
           <img
             src={communityImg}
@@ -188,7 +197,8 @@ function Home() {
       </section>
 
       {/* CTA */}
-      <section className="container-page py-16 md:py-24">
+      <section className="container-page py-16 md:py-24 hidden md:block">
+
         <div className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-brand to-brand/80 p-10 md:p-14 text-brand-foreground">
           <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-warm/30 blur-3xl" aria-hidden />
           <div className="relative max-w-2xl">
