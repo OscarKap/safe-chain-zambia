@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Home, Stethoscope, MessageCircle, BookOpen, User, Phone } from "lucide-react";
+import { Home, Stethoscope, BookOpen, User, Phone } from "lucide-react";
 
 type Tab = {
   to: string;
