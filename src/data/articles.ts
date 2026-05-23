@@ -139,7 +139,7 @@ export const articles: Article[] = [
   },
 ];
 
-export const articles: Article[] = raw;
+
 
 export const articleBySlug = (slug: string): Article | undefined =>
   articles.find((a) => a.slug === slug);
