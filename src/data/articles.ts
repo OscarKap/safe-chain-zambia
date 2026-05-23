@@ -42,7 +42,7 @@ function readingTime(text: string): string {
   return `${mins} min read`;
 }
 
-const raw: Omit<Article, "content"> & { content: string }[] = [
+export const articles: Article[] = [
   {
     slug: "contraception",
     title: "Contraception",
