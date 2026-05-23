@@ -18,6 +18,7 @@ import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -64,6 +65,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LearnSlugRoute = LearnSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => LearnRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -71,10 +77,11 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
-  '/learn': typeof LearnRoute
+  '/learn': typeof LearnRouteWithChildren
   '/login': typeof LoginRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/learn/$slug': typeof LearnSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -82,10 +89,11 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
-  '/learn': typeof LearnRoute
+  '/learn': typeof LearnRouteWithChildren
   '/login': typeof LoginRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/learn/$slug': typeof LearnSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -94,10 +102,11 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
-  '/learn': typeof LearnRoute
+  '/learn': typeof LearnRouteWithChildren
   '/login': typeof LoginRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/learn/$slug': typeof LearnSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/report'
     | '/services'
+    | '/learn/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/report'
     | '/services'
+    | '/learn/$slug'
   id:
     | '__root__'
     | '/'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/report'
     | '/services'
+    | '/learn/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -141,7 +153,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   EmergencyRoute: typeof EmergencyRoute
   FeedbackRoute: typeof FeedbackRoute
-  LearnRoute: typeof LearnRoute
+  LearnRoute: typeof LearnRouteWithChildren
   LoginRoute: typeof LoginRoute
   ReportRoute: typeof ReportRoute
   ServicesRoute: typeof ServicesRoute
@@ -212,8 +224,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/learn/$slug': {
+      id: '/learn/$slug'
+      path: '/$slug'
+      fullPath: '/learn/$slug'
+      preLoaderRoute: typeof LearnSlugRouteImport
+      parentRoute: typeof LearnRoute
+    }
   }
 }
+
+interface LearnRouteChildren {
+  LearnSlugRoute: typeof LearnSlugRoute
+}
+
+const LearnRouteChildren: LearnRouteChildren = {
+  LearnSlugRoute: LearnSlugRoute,
+}
+
+const LearnRouteWithChildren = LearnRoute._addFileChildren(LearnRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -221,7 +250,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   EmergencyRoute: EmergencyRoute,
   FeedbackRoute: FeedbackRoute,
-  LearnRoute: LearnRoute,
+  LearnRoute: LearnRouteWithChildren,
   LoginRoute: LoginRoute,
   ReportRoute: ReportRoute,
   ServicesRoute: ServicesRoute,

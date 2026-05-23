@@ -13,18 +13,18 @@ type Action = {
 };
 
 const actions: Action[] = [
-  { to: "/services",  title: "Find Nearby Services", icon: MapPin,                className: "bg-gradient-to-br from-teal-500 to-teal-600 text-white" },
-  { to: "/services",  title: "Talk to a Health Worker", icon: Stethoscope,        className: "bg-gradient-to-br from-sky-500 to-blue-600 text-white" },
-  { to: "/emergency", title: "Emergency Help",      icon: Phone,                  className: "bg-gradient-to-br from-rose-500 to-red-600 text-white" },
-  { to: "/report",    title: "Report GBV Safely",   icon: ShieldAlert,            className: "bg-gradient-to-br from-amber-500 to-orange-600 text-white" },
-  { to: "/learn",     title: "HIV / STI Info",      icon: HeartPulse,             className: "bg-gradient-to-br from-fuchsia-500 to-pink-600 text-white" },
-  { to: "/learn",     title: "Period Support",      icon: Droplet,                className: "bg-gradient-to-br from-pink-500 to-rose-500 text-white" },
-  { to: "/learn",     title: "Mental Health Help",  icon: Brain,                  className: "bg-gradient-to-br from-violet-500 to-purple-600 text-white" },
-  { to: "/learn",     title: "Ask a Question",      icon: HelpCircle,             className: "bg-gradient-to-br from-emerald-500 to-teal-600 text-white" },
-  { to: "/learn",     title: "Youth Rights",        icon: Scale,                  className: "bg-gradient-to-br from-indigo-500 to-blue-600 text-white" },
-  { to: "/services",  title: "Disability Support",  icon: Accessibility,          className: "bg-gradient-to-br from-cyan-500 to-sky-600 text-white" },
-  { to: "/report",    title: "Safe Reporting",      icon: MessageSquareWarning,   className: "bg-gradient-to-br from-orange-500 to-amber-600 text-white" },
-  { to: "/feedback",  title: "Community Help",      icon: Users,                  className: "bg-gradient-to-br from-lime-500 to-green-600 text-white" },
+  { to: "/services",        title: "Find Nearby Services", icon: MapPin,              className: "bg-gradient-to-br from-teal-500 to-teal-600 text-white" },
+  { to: "/services",        title: "Talk to a Health Worker", icon: Stethoscope,      className: "bg-gradient-to-br from-sky-500 to-blue-600 text-white" },
+  { to: "/emergency",       title: "Emergency Help",      icon: Phone,                className: "bg-gradient-to-br from-rose-500 to-red-600 text-white" },
+  { to: "/report",          title: "Report GBV Safely",   icon: ShieldAlert,          className: "bg-gradient-to-br from-amber-500 to-orange-600 text-white" },
+  { to: "/learn/hiv",       title: "HIV / STI Info",      icon: HeartPulse,           className: "bg-gradient-to-br from-fuchsia-500 to-pink-600 text-white" },
+  { to: "/learn/menstrual", title: "Period Support",      icon: Droplet,              className: "bg-gradient-to-br from-pink-500 to-rose-500 text-white" },
+  { to: "/learn/mental",    title: "Mental Health Help",  icon: Brain,                className: "bg-gradient-to-br from-violet-500 to-purple-600 text-white" },
+  { to: "/learn/consent",   title: "Consent & Boundaries",icon: HelpCircle,           className: "bg-gradient-to-br from-emerald-500 to-teal-600 text-white" },
+  { to: "/learn/rights",    title: "Youth Rights",        icon: Scale,                className: "bg-gradient-to-br from-indigo-500 to-blue-600 text-white" },
+  { to: "/services",        title: "Disability Support",  icon: Accessibility,        className: "bg-gradient-to-br from-cyan-500 to-sky-600 text-white" },
+  { to: "/learn/gbv",       title: "GBV Awareness",       icon: MessageSquareWarning, className: "bg-gradient-to-br from-orange-500 to-amber-600 text-white" },
+  { to: "/learn/relationships", title: "Healthy Love",    icon: Users,                className: "bg-gradient-to-br from-lime-500 to-green-600 text-white" },
 ];
 
 const helpfulInfo = [
