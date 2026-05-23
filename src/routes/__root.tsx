@@ -10,6 +10,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SplashScreen } from "@/components/SplashScreen";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 
 import appCss from "../styles.css?url";
 
@@ -99,10 +100,11 @@ function RootComponent() {
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main" className="flex-1">
+        <main id="main" className="flex-1 pb-20 md:pb-0">
           <Outlet />
         </main>
         <SiteFooter />
+        <MobileBottomNav />
       </div>
       <Toaster richColors position="top-right" />
     </QueryClientProvider>
