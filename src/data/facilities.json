@@ -1,0 +1,2810 @@
+[
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101039",
+    "name": "Chamakubi",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101010",
+    "name": "Chibombo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101011",
+    "name": "Chikobo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101034",
+    "name": "Chikonkomene",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101012",
+    "name": "Chipembi",
+    "type": "Rural Health Centre",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101013",
+    "name": "Chipeso",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101014",
+    "name": "Chisamba",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101016",
+    "name": "Chitanda",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101017",
+    "name": "Golden Valley",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101018",
+    "name": "Ipongo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101041",
+    "name": "Itumbwe",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101019",
+    "name": "Kabangalala",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101020",
+    "name": "Kaparu",
+    "type": "Rural Health Centre",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101021",
+    "name": "Kayosha",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101022",
+    "name": "Keembe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101001",
+    "name": "Liteta Hospital",
+    "type": "Level 1 Hospital",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101042",
+    "name": "Makoka",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101023",
+    "name": "Malambanyama",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101033",
+    "name": "Malombe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101024",
+    "name": "Mboshya",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101035",
+    "name": "Momboshi",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101025",
+    "name": "Mulungushi Agro",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101026",
+    "name": "Mungule",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101040",
+    "name": "Muntemba",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101027",
+    "name": "Muswishi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101028",
+    "name": "Mwachisompola",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101029",
+    "name": "Mwachisompola Demo Zone",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101037",
+    "name": "Mwanjuni",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101036",
+    "name": "Mwapula",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101030",
+    "name": "Naluyanda",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101038",
+    "name": "Namayani",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101031",
+    "name": "Shimukuni",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101032",
+    "name": "Twalumba",
+    "type": "Rural Health Centre",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Central",
+    "district": "Chibombo",
+    "code": "101015",
+    "name": "ZNS Chisamba",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102010",
+    "name": "Bwacha",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102030",
+    "name": "Chindwini Camp",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102027",
+    "name": "Chowa",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102051",
+    "name": "Chreso",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102002",
+    "name": "Kabwe General Hospital",
+    "type": "Level 2 Hospital",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102001",
+    "name": "Kabwe Mine. Hosp.",
+    "type": "Level 2 Hospital",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102057",
+    "name": "Kalwelwe",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102039",
+    "name": "Kangomba",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102028",
+    "name": "Kasanda",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102035",
+    "name": "Kasavasa",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102041",
+    "name": "Katondo",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102033",
+    "name": "Kawama",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102031",
+    "name": "Kohima",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102015",
+    "name": "Mahatma Gandhi Memorial",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102016",
+    "name": "Makululu",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102017",
+    "name": "Maximum Prison",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102018",
+    "name": "Medium Prison",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102034",
+    "name": "Mpima Prisons",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102037",
+    "name": "Mpima dairy",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102019",
+    "name": "Mukobeko Township",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102044",
+    "name": "Munga",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102020",
+    "name": "Nakoli",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102021",
+    "name": "Natuseko",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102022",
+    "name": "Ngungu",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102032",
+    "name": "Nkrumah T. College Clinic",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102045",
+    "name": "Police",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102023",
+    "name": "Pollen",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102012",
+    "name": "Railway Surgery",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102046",
+    "name": "Ranchhod",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102036",
+    "name": "ZAF",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102050",
+    "name": "ZISC",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Central",
+    "district": "Kabwe",
+    "code": "102025",
+    "name": "Zambia National Service",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103002",
+    "name": "Chankomo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103027",
+    "name": "Chapusha",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103022",
+    "name": "Chawama",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103003",
+    "name": "Chibwe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103004",
+    "name": "Chilumba",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103005",
+    "name": "Chilwa",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103006",
+    "name": "Chipepo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103030",
+    "name": "Chishinka",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103026",
+    "name": "Chitaba",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103029",
+    "name": "Kafinda",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103007",
+    "name": "Kakulu",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103008",
+    "name": "Kampumba",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103024",
+    "name": "Kapiri",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103001",
+    "name": "Kapiri Mposhi Hospital",
+    "type": "Level 1 Hospital",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103021",
+    "name": "Kawama",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103009",
+    "name": "Luanshimba",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103032",
+    "name": "Lukomba",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103028",
+    "name": "Lunchu \u2018B\u2019",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103010",
+    "name": "Lunsemfwa",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103014",
+    "name": "Mpunde",
+    "type": "Rural Health Centre",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103011",
+    "name": "Mukonchi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103012",
+    "name": "Mukubwe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103013",
+    "name": "Mulungushi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103031",
+    "name": "Mumbachala",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103017",
+    "name": "NCMDS",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103023",
+    "name": "Ndeke",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103015",
+    "name": "Ngabwe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103016",
+    "name": "Nkole",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103018",
+    "name": "St Pauls",
+    "type": "Rural Health Centre",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103025",
+    "name": "TAZARA",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Central",
+    "district": "Kapiri Mposhi",
+    "code": "103019",
+    "name": "Waya",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104010",
+    "name": "Chalata",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104031",
+    "name": "Chembe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104011",
+    "name": "Chibefwe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104022",
+    "name": "Chikupili",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104012",
+    "name": "Chimika",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104013",
+    "name": "Chingombe",
+    "type": "Rural Health Centre",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104014",
+    "name": "Fiwila",
+    "type": "Rural Health Centre",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104028",
+    "name": "Kakushi",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104032",
+    "name": "Kampelembe",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104026",
+    "name": "Kaundula",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104015",
+    "name": "Luanshimba",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104016",
+    "name": "Masansa",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104035",
+    "name": "Mayo Clinic",
+    "type": "Rural Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104017",
+    "name": "Mboroma",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104018",
+    "name": "Mboshya",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104027",
+    "name": "Miloso",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104024",
+    "name": "Mkushi Copper Mine",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104001",
+    "name": "Mkushi District Hospital",
+    "type": "Level 1 Hospital",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104029",
+    "name": "Munsakamba",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104019",
+    "name": "Musofu",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104025",
+    "name": "Nkolonga",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104020",
+    "name": "Nkumbi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104023",
+    "name": "Nshinso",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104021",
+    "name": "Old Mkushi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104030",
+    "name": "Tusekelemo",
+    "type": "Rural Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Central",
+    "district": "Mkushi",
+    "code": "104033",
+    "name": "Twatasha",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105029",
+    "name": "Chiwena",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105010",
+    "name": "Chunga",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105032",
+    "name": "Kabwanga",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105011",
+    "name": "Kaindu",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105028",
+    "name": "Kalenda ZNS",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105035",
+    "name": "Kamilambo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105037",
+    "name": "Kapepe",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105012",
+    "name": "Kapyanga",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105038",
+    "name": "Kayanga",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105013",
+    "name": "Keezwa",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105026",
+    "name": "Luili",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105014",
+    "name": "Lungobe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105015",
+    "name": "Lutale",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105030",
+    "name": "Maimwene",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105034",
+    "name": "Mpusu",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105016",
+    "name": "Muchabi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105017",
+    "name": "Mukulaikwa",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105001",
+    "name": "Mumbwa",
+    "type": "Level 1 Hospital",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105018",
+    "name": "Mwembezhi",
+    "type": "Rural Health Centre",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105019",
+    "name": "Myooye",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105033",
+    "name": "Nakanjoli",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105020",
+    "name": "Nalubanda",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105031",
+    "name": "Naluvwi",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105021",
+    "name": "Nambala",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105022",
+    "name": "Nampundwe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105002",
+    "name": "Nangoma Mission Hosp.",
+    "type": "Level 1 Hospital",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105023",
+    "name": "Shabasonje",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105036",
+    "name": "Shachele",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105024",
+    "name": "Sichobo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105025",
+    "name": "Urban Clinic",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Mumbwa",
+    "code": "105027",
+    "name": "ZAF Mumbwa Clinic",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106024",
+    "name": "Chalilo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106010",
+    "name": "Chibale",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106034",
+    "name": "Chibobo",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106011",
+    "name": "Chipundu",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106012",
+    "name": "Chisomo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106099",
+    "name": "Chitambo HAHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106001",
+    "name": "Chitambo Hospital",
+    "type": "Level 1 Hospital",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106026",
+    "name": "Gibson",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106014",
+    "name": "Kabamba",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106015",
+    "name": "Kabundi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106030",
+    "name": "Kafinda",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106029",
+    "name": "Kanona",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106013",
+    "name": "Kaseba",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106031",
+    "name": "Kunda L",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106016",
+    "name": "Lusiwasi",
+    "type": "Rural Health Centre",
+    "owner": "Private (ZESCO)"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106017",
+    "name": "Mailo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106018",
+    "name": "Malcom Moffat",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106019",
+    "name": "Mapepala",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106033",
+    "name": "Masase",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106032",
+    "name": "Miswema",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106021",
+    "name": "Mpelembe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106020",
+    "name": "Mpepetwe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106022",
+    "name": "Muchinka",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106028",
+    "name": "Mulaushi",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106023",
+    "name": "Mulilima",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106025",
+    "name": "Nchimishi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106098",
+    "name": "Serenje Hahc",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Central",
+    "district": "Serenje",
+    "code": "106027",
+    "name": "Yoramu Mwanje",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chililabombwe",
+    "code": "201020",
+    "name": "Chimfunshi",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chililabombwe",
+    "code": "201010",
+    "name": "Kakoso",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chililabombwe",
+    "code": "201011",
+    "name": "Kasumbalesa",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chililabombwe",
+    "code": "201012",
+    "name": "Konkola 1",
+    "type": "Urban Health Centre",
+    "owner": "Private (Mine)"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chililabombwe",
+    "code": "201013",
+    "name": "Konkola 2",
+    "type": "Urban Health Centre",
+    "owner": "Private (Mine)"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chililabombwe",
+    "code": "201014",
+    "name": "Konkola 4",
+    "type": "Urban Health Centre",
+    "owner": "Private (Mine)"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chililabombwe",
+    "code": "201019",
+    "name": "Konkola 5",
+    "type": "Urban Health Centre",
+    "owner": "Private (Mine)"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chililabombwe",
+    "code": "201015",
+    "name": "Lubengele",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chililabombwe",
+    "code": "201017",
+    "name": "Shaft 1",
+    "type": "Urban Health Centre",
+    "owner": "Private (Mine)"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chililabombwe",
+    "code": "201018",
+    "name": "Shaft 3",
+    "type": "Urban Health Centre",
+    "owner": "Private (Mine)"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202010",
+    "name": "Chawama",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202019",
+    "name": "Health centre 1",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202021",
+    "name": "Health centre 3",
+    "type": "Urban Health Centre",
+    "owner": "Private (KCM)"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202012",
+    "name": "Ipafu",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202013",
+    "name": "Kabundi",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202014",
+    "name": "Kalilo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202015",
+    "name": "Katuba",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202016",
+    "name": "Lulamba",
+    "type": "Urban Health Centre",
+    "owner": "Private (KCM)"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202017",
+    "name": "Muchinshi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202018",
+    "name": "Mutenda",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202022",
+    "name": "NCH",
+    "type": "Urban Health Centre",
+    "owner": "Private (KCM)"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202023",
+    "name": "Nchanga North Hosp.",
+    "type": "Level 2 Hospital",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Chingola",
+    "code": "202020",
+    "name": "Nchanga South Hosp.",
+    "type": "Level 2 Hospital",
+    "owner": "Private (KCM)"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203010",
+    "name": "Chambishi GRZ Clinic",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203011",
+    "name": "Chambishi Mine Clinic",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203021",
+    "name": "Chati RHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203024",
+    "name": "Chembe HP",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203023",
+    "name": "Chibote HP",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203012",
+    "name": "Chibuluma HC",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203013",
+    "name": "Ichimpe RHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203014",
+    "name": "Kalulushi Main UHC",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203001",
+    "name": "Kalulushi Mine Hospital",
+    "type": "Level 2 Hospital",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203022",
+    "name": "Kite RHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203017",
+    "name": "Lukoshi RHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kalulushi",
+    "code": "203018",
+    "name": "Mindolo TRN Farm Clinic",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205034",
+    "name": "Allessandras",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205011",
+    "name": "Baluba",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204010",
+    "name": "Buchi Main",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204011",
+    "name": "Buchi Small",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204012",
+    "name": "Bulangililo",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204013",
+    "name": "CBU",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204019",
+    "name": "COSETCO",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205012",
+    "name": "Chaisa (section 9)",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204014",
+    "name": "Chamboli J",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204015",
+    "name": "Chavuma",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205035",
+    "name": "Chilabula",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204046",
+    "name": "Chilobwe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204016",
+    "name": "Chimwemwe",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204017",
+    "name": "City Square",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204055",
+    "name": "Community Dev. College",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204018",
+    "name": "Company",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205013",
+    "name": "Fisenge",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205014",
+    "name": "Franco",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204020",
+    "name": "Garnatone",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204056",
+    "name": "Hillview Medical Centre",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204021",
+    "name": "Ipusukilo",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204022",
+    "name": "Itimpi",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204060",
+    "name": "KCM Nkana Clinic",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204045",
+    "name": "KTTC",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204058",
+    "name": "KVTC",
+    "type": "Health Post",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205016",
+    "name": "Kafubu Block",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204062",
+    "name": "Kakolo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204023",
+    "name": "Kamfinsa",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204024",
+    "name": "Kamitondo",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204025",
+    "name": "Kawama",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205017",
+    "name": "Kawama",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204001",
+    "name": "Kitwe Central Hospital",
+    "type": "Level 3 Hospital",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204026",
+    "name": "Kwacha",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204027",
+    "name": "Luangwa",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205001",
+    "name": "Luanshya District Hospital",
+    "type": "Level 1 Hospital",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205018",
+    "name": "Luanshya Main",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204029",
+    "name": "MEF",
+    "type": "Health Post",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205039",
+    "name": "Malaika",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204028",
+    "name": "Mawlaik Baracks (ZCCF Kitwe Camp)",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205019",
+    "name": "Mikomfwa Clinic",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205020",
+    "name": "Mikomfwa HC",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204030",
+    "name": "Mindolo 1",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204031",
+    "name": "Mindolo 2",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204032",
+    "name": "Miseshi",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205028",
+    "name": "Mpatamatu Section 26",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204053",
+    "name": "Mpelembe Secondary School",
+    "type": "Health Post",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204051",
+    "name": "Mulenga",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204033",
+    "name": "Mumana*",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204047",
+    "name": "Mwaiseni",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204034",
+    "name": "Mwekera",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204035",
+    "name": "Natwange",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204036",
+    "name": "Ndeke",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204061",
+    "name": "Ndeke Village",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205032",
+    "name": "New Town",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204038",
+    "name": "Nkana West (Care well)",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205033",
+    "name": "Plant >Plant & Works",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205037",
+    "name": "Poreline HP",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204059",
+    "name": "Progress Medical Centre",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204048",
+    "name": "Riverside",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205002",
+    "name": "Roan Antelope Hospital",
+    "type": "Level 2 Hospital",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204052",
+    "name": "SOS Children's Village (*Kitwe*)",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205026",
+    "name": "Section 23",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205023",
+    "name": "Section 5",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204002",
+    "name": "Sinozam Hospital",
+    "type": "Level 1 Hospital",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204057",
+    "name": "Springs of Life Medical Centre",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205031",
+    "name": "TVTC",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205003",
+    "name": "Thomson Hospital",
+    "type": "Level 1 Hospital",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204054",
+    "name": "Tina Medical Centre",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204049",
+    "name": "Twatasha",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204044",
+    "name": "Twibukishe (Kitwe Surgery)",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204040",
+    "name": "Wusakile D4",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204050",
+    "name": "Wusakile Govt.",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204003",
+    "name": "Wusakile Mine Hospital",
+    "type": "Level 2 Hospital",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "205036",
+    "name": "ZAMEFA",
+    "type": "Urban Health Centre",
+    "owner": "Private"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204043",
+    "name": "ZNS (*Kitwe Camp*)",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Kitwe",
+    "code": "204042",
+    "name": "Zamtan",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206010",
+    "name": "Bulaya",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206026",
+    "name": "Chantente",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206012",
+    "name": "Chikabuke",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206013",
+    "name": "Chinemu",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206014",
+    "name": "Fungulwe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206024",
+    "name": "Kansoka",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206011",
+    "name": "Kapilamikwa",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206016",
+    "name": "Lumpuma",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206023",
+    "name": "Mibenge",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206025",
+    "name": "Mibila",
+    "type": "Health Post",
+    "owner": "MISSION"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206017",
+    "name": "Mukumbo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206018",
+    "name": "Mukutuma",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206019",
+    "name": "Mushingashi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206015",
+    "name": "Nkana",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206020",
+    "name": "Shimukunami",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206021",
+    "name": "St. Joseph\u2019s",
+    "type": "Rural Health Centre",
+    "owner": "MISSION"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Lufwanyama",
+    "code": "206022",
+    "name": "St. Mary\u2019s",
+    "type": "Rural Health Centre",
+    "owner": "MISSION"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207009",
+    "name": "Bangwe",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207010",
+    "name": "Chikumbi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207011",
+    "name": "Chilese",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207013",
+    "name": "Chinondo",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207012",
+    "name": "Chiwala",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207014",
+    "name": "Chondwe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207015",
+    "name": "Fiwale",
+    "type": "Rural Health Centre",
+    "owner": "MISSION"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207017",
+    "name": "Kaf Mission",
+    "type": "Rural Health Centre",
+    "owner": "MISSION"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207016",
+    "name": "Kaf. GRZ",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207018",
+    "name": "Kaloko",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207031",
+    "name": "Kambowa",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207019",
+    "name": "Kamifungo",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207020",
+    "name": "Kashitu",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207025",
+    "name": "Lupiya",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207022",
+    "name": "Masaiti B",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207021",
+    "name": "Masaiti C",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207026",
+    "name": "Michinka",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207023",
+    "name": "Miengwe",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207024",
+    "name": "Mishikishi",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207029",
+    "name": "Mukolwe",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207030",
+    "name": "Mupapa",
+    "type": "Rural Health Centre",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207028",
+    "name": "Mutaba",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Masaiti",
+    "code": "207027",
+    "name": "Njelemani",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208009",
+    "name": "Ipumbu RHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208014",
+    "name": "Kalweo RHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208006",
+    "name": "Kanyenda RHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208008",
+    "name": "Kasamba RHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208018",
+    "name": "Luamabwe HP",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208016",
+    "name": "Luswishi HP",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208005",
+    "name": "Machiya RHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208017",
+    "name": "Mfulabunga HP",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208010",
+    "name": "Mikata RHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208013",
+    "name": "Munkumpu Company Clinic",
+    "type": "Rural Health Centre",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208011",
+    "name": "Mushiwe HP",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208007",
+    "name": "Mwinuna RHC",
+    "type": "Rural Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208015",
+    "name": "Mwishipashi HP",
+    "type": "Health Post",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208012",
+    "name": "Nampamba Company Clinic",
+    "type": "Rural Health Centre",
+    "owner": "PRIVATE"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mpongwe",
+    "code": "208003",
+    "name": "St.Theresa Mission Hosp.",
+    "type": "Rural Health Centre",
+    "owner": "Faith-based"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mufulira",
+    "code": "209013",
+    "name": "Chibolya",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mufulira",
+    "code": "209020",
+    "name": "Kamuchanga District Hosp HAHC",
+    "type": "Urban Health Centre",
+    "owner": "Government"
+  },
+  {
+    "province": "Copperbelt",
+    "district": "Mufulira",
+    "code": "209099",
+    "name": "Malcom Watson Hospital HAHC",
+    "type": "Urban Health Centre",
+    "owner": "PRIVATE"
+  }
+]
