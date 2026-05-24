@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { articles, categories, articleReadingTime, type Category } from "@/data/articles";
 import { BookmarkButton, useBookmarks } from "@/components/Bookmark";
 
-export const Route = createFileRoute("/learn")({
+export const Route = createFileRoute("/learn/")({
   head: () => ({ meta: [
     { title: "Learning Hub — Safe Chain" },
     { name: "description", content: "In-app SRHR, mental health, GBV, HIV, consent and youth rights lessons for young people in Zambia. Read offline-friendly, in your own time." },
