@@ -14,8 +14,12 @@ function setBookmarks(list: string[]) {
 }
 
 export function useBookmarks() {
-  const [list, setList] = useState<string[]>(getBookmarks);
+  // Always start empty so SSR HTML matches the first client render; hydrate after mount.
+  const [list, setList] = useState<string[]>([]);
+  const [mounted, setMounted] = useState(false);
   useEffect(() => {
+    setMounted(true);
+    setList(getBookmarks());
     const h = () => setList(getBookmarks());
     window.addEventListener("safechain:bookmarks", h);
     window.addEventListener("storage", h);
@@ -29,11 +33,11 @@ export function useBookmarks() {
     const next = cur.includes(slug) ? cur.filter(s => s !== slug) : [...cur, slug];
     setBookmarks(next);
   };
-  return { bookmarks: list, toggle, isBookmarked: (s: string) => list.includes(s) };
+  return { bookmarks: list, toggle, isBookmarked: (s: string) => mounted && list.includes(s), mounted };
 }
 
 export function BookmarkButton({ slug, className = "" }: { slug: string; className?: string }) {
-  const { isBookmarked, toggle } = useBookmarks();
+  const { isBookmarked, toggle, mounted } = useBookmarks();
   const on = isBookmarked(slug);
   return (
     <button
@@ -41,9 +45,12 @@ export function BookmarkButton({ slug, className = "" }: { slug: string; classNa
       onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(slug); }}
       aria-pressed={on}
       aria-label={on ? "Remove bookmark" : "Save article"}
+      suppressHydrationWarning
       className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/80 backdrop-blur transition hover:bg-muted ${className}`}
     >
-      {on ? <BookmarkCheck className="h-4 w-4 text-brand" /> : <Bookmark className="h-4 w-4 text-muted-foreground" />}
+      {mounted && on
+        ? <BookmarkCheck className="h-4 w-4 text-brand" />
+        : <Bookmark className="h-4 w-4 text-muted-foreground" />}
     </button>
   );
 }
