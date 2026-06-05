@@ -34,7 +34,11 @@ export const Route = createFileRoute("/admin")({
 function AdminRequestPage() {
   const submit = useServerFn(submitAdminRequest);
   const [done, setDone] = useState(false);
-  type Payload = Parameters<typeof submitAdminRequest>[0]["data"];
+  type Payload = {
+    full_name: string; job_title: string; organisation: string;
+    province: string; district: string; phone: string; email: string;
+    reason: string; requested_role: (typeof ROLES)[number]; confirm_accurate: true;
+  };
   const mut = useMutation({
     mutationFn: (data: Payload) => submit({ data }),
     onSuccess: (res) => {
