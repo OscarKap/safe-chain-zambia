@@ -34,8 +34,9 @@ export const Route = createFileRoute("/admin")({
 function AdminRequestPage() {
   const submit = useServerFn(submitAdminRequest);
   const [done, setDone] = useState(false);
+  type Payload = Parameters<typeof submitAdminRequest>[0]["data"];
   const mut = useMutation({
-    mutationFn: (data: Parameters<typeof submit>[0]["data"]) => submit({ data }),
+    mutationFn: (data: Payload) => submit({ data }),
     onSuccess: (res) => {
       if (res.ok) { setDone(true); toast.success("Request submitted"); }
       else toast.error(res.error);

@@ -92,7 +92,7 @@ async function logActivity(args: {
     action: args.action,
     target_type: args.target_type ?? null,
     target_id: args.target_id ?? null,
-    metadata: args.metadata ?? {},
+    metadata: (args.metadata ?? {}) as never,
     ip_address: ip,
   });
 }
