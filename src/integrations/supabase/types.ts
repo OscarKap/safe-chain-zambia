@@ -14,16 +14,197 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      admin_access_requests: {
+        Row: {
+          created_at: string
+          district: string
+          email: string
+          full_name: string
+          id: string
+          ip_address: string | null
+          job_title: string
+          organisation: string
+          phone: string
+          province: string
+          reason: string
+          requested_role: Database["public"]["Enums"]["app_role"]
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["request_status"]
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          district: string
+          email: string
+          full_name: string
+          id?: string
+          ip_address?: string | null
+          job_title: string
+          organisation: string
+          phone: string
+          province: string
+          reason: string
+          requested_role: Database["public"]["Enums"]["app_role"]
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["request_status"]
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          district?: string
+          email?: string
+          full_name?: string
+          id?: string
+          ip_address?: string | null
+          job_title?: string
+          organisation?: string
+          phone?: string
+          province?: string
+          reason?: string
+          requested_role?: Database["public"]["Enums"]["app_role"]
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["request_status"]
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      admin_activity_logs: {
+        Row: {
+          action: string
+          actor_email: string | null
+          actor_user_id: string | null
+          created_at: string
+          id: string
+          ip_address: string | null
+          metadata: Json
+          target_id: string | null
+          target_type: string | null
+        }
+        Insert: {
+          action: string
+          actor_email?: string | null
+          actor_user_id?: string | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json
+          target_id?: string | null
+          target_type?: string | null
+        }
+        Update: {
+          action?: string
+          actor_email?: string | null
+          actor_user_id?: string | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json
+          target_id?: string | null
+          target_type?: string | null
+        }
+        Relationships: []
+      }
+      admin_profiles: {
+        Row: {
+          accepted_privacy_at: string | null
+          created_at: string
+          district: string | null
+          full_name: string
+          last_login_at: string | null
+          must_change_password: boolean
+          organisation: string | null
+          phone: string | null
+          province: string | null
+          suspended: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          accepted_privacy_at?: string | null
+          created_at?: string
+          district?: string | null
+          full_name: string
+          last_login_at?: string | null
+          must_change_password?: boolean
+          organisation?: string | null
+          phone?: string | null
+          province?: string | null
+          suspended?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          accepted_privacy_at?: string | null
+          created_at?: string
+          district?: string | null
+          full_name?: string
+          last_login_at?: string | null
+          must_change_password?: boolean
+          organisation?: string | null
+          phone?: string | null
+          province?: string | null
+          suspended?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          granted_at: string
+          granted_by: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_super_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role:
+        | "super_admin"
+        | "gbv_responder"
+        | "clinic_admin"
+        | "community_volunteer"
+        | "counsellor"
+        | "data_reviewer"
+      request_status: "pending" | "approved" | "rejected" | "suspended"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +331,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: [
+        "super_admin",
+        "gbv_responder",
+        "clinic_admin",
+        "community_volunteer",
+        "counsellor",
+        "data_reviewer",
+      ],
+      request_status: ["pending", "approved", "rejected", "suspended"],
+    },
   },
 } as const
