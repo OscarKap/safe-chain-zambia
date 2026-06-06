@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Chain Admin Onboarding</title>
+    <link rel="stylesheet" href="/styles/admin.css">
+    <script src="/scripts/admin-validation.js" defer></script>
+</head>
+<body>
+    <div class="container mx-auto py-10 md:py-20 lg:py-24">
+        <h1 class="text-3xl font-bold text-danger mb-6">Admin Access Request Form</h1>
+        <form id="admin-request-form" class="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-8">
+            <input type="hidden" name="_csrf" id="csrfToken" />
+            <div class="mb-8">
+                <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
+                <input type="text" id="fullName" name="fullName" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <!-- Additional fields omitted for brevity -->
+            <div class="mb-8">
+                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-8">
+                <label for="accessType" class="block text-sm font-medium text-gray-700">Type of Access Requested</label>
+                <select id="accessType" name="accessType" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="SuperAdmin">Super Admin</option>
+                    <option value="GBVResponder">GBV Responder</option>
+                    <option value="ClinicAdmin">Clinic Admin</option>
+                    <option value="CommunityVolunteer">Community Volunteer</option>
+                    <option value="Counsellor">Counsellor</option>
+                    <option value="DataReviewer">Data Reviewer</option>
+                </select>
+            </div>
+            <div class="mb-8">
+                <input type="checkbox" id="confirmation" name="confirmation" required class="w-full">
+                <label for="confirmation" class="block text-sm font-medium text-gray-700">I confirm that the information provided is accurate.</label>
+            </div>
+            <div class="flex items-center justify-between max-w-full">
+                <button type="submit" class="bg-danger text-white px-6 py-3 rounded-lg hover:bg-red-700">Submit Request</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
