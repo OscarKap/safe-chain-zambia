@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Chain Admin Dashboard</title>
+    <link rel="stylesheet" href="/styles/admin.css">
+</head>
+<body>
+    <div class="container mx-auto py-10">
+        <header class="bg-white shadow-md rounded-lg p-6 mb-8">
+            <h1 class="text-3xl font-bold text-danger">Safe Chain Admin Dashboard</h1>
+            <nav class="mt-4">
+                <ul class="flex space-x-4">
+                    <li><a href="#pending" class="px-4 py-2 rounded hover:bg-red-100">Pending Requests</a></li>
+                    <li><a href="#approved" class="px-4 py-2 rounded hover:bg-green-100">Approved Admins</a></li>
+                    <li><a href="#suspended" class="px-4 py-2 rounded hover:bg-yellow-100">Suspended Accounts</a></li>
+                    <li><a href="#roles" class="px-4 py-2 rounded hover:bg-blue-100">Role Management</a></li>
+                    <li><a href="#logs" class="px-4 py-2 rounded hover:bg-purple-100">Activity Logs</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Pending Requests Section -->
+            <section id="pending" class="mb-12">
+                <h2 class="text-2xl font-semibold mb-6">Pending Requests</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Each request card will be dynamically inserted here -->
+                </div>
+                <button id="load-pending-btn" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Load Pending Requests</button>
+            </section>
+
+            <!-- Approved Admins Section -->
+            <section id="approved" class="mb-12">
+                <h2 class="text-2xl font-semibold mb-6">Approved Admins</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="border-b p-4">Name</th>
+                                <th class="border-b p-4">Email</th>
+                                <th class="border-b p-4">Role</th>
+                                <th class="border-b p-4">Status</th>
+                                <th class="border-b p-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="approved-admins-tbody">
+                            <!-- Rows will be dynamically inserted -->
+                        </tbody>
+                    </table>
+                </div>
+                <button id="load-approved-btn" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Load Approved Admins</button>
+            </section>
+
+            <!-- Suspended Accounts Section -->
+            <section id="suspended" class="mb-12">
+                <h2 class="text-2xl font-semibold mb-6">Suspended Accounts</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="border-b p-4">Name</th>
+                                <th class="border-b p-4">Email</th>
+                                <th class="border-b p-4">Role</th>
+                                <th class="border-b p-4">Suspended On</th>
+                                <th class="border-b p-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="suspended-admins-tbody">
+                            <!-- Rows will be dynamically inserted -->
+                        </tbody>
+                    </table>
+                </div>
+                <button id="load-suspended-btn" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Load Suspended Admins</button>
+            </section>
+
+            <!-- Role Management Section -->
+            <section id="roles" class="mb-12">
+                <h2 class="text-2xl font-semibold mb-6">Role Management</h2>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4">Admin Roles</h3>
+                    <div id="roles-list">
+                        <!-- Role items will be dynamically inserted -->
+                    </div>
+                    <button id="load-roles-btn" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Load Roles</button>
+                </div>
+            </section>
+
+            <!-- Activity Logs Section -->
+            <section id="logs" class="mb-12">
+                <h2 class="text-2xl font-semibold mb-6">Activity Logs</h2>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div id="activity-logs-container">
+                        <!-- Logs will be dynamically inserted -->
+                    </div>
+                    <button id="load-logs-btn" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Load Activity Logs</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/scripts/admin-dashboard.js"></script>
+</body>
+</html>
