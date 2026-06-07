@@ -39,7 +39,6 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 // Stricter rate limiting for sensitive endpoints
-import rateLimit from 'express-rate-limit';
 
 const loginLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
