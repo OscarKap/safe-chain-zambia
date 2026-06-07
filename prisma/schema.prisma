@@ -1,8 +1,8 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -30,44 +30,44 @@ enum UserStatus {
 }
 
 model AdminAccessRequest {
-  id            String        @id @default(uuid())
-  fullName      String
-  jobTitle      String
-  organisation  String
-  province      String
-  district      String
-  phone         String
-  email         String        @unique
-  reason        String
-  accessType    AccessType
-  confirmed     Boolean       @default(false)
-  status        RequestStatus @default(pending)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  ipAddress     String?
-  userAgent     String?
+  id           String        @id @default(uuid())
+  fullName     String
+  jobTitle     String
+  organisation String
+  province     String
+  district     String
+  phone        String
+  email        String        @unique
+  reason       String
+  accessType   AccessType
+  confirmed    Boolean       @default(false)
+  status       RequestStatus @default(pending)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  ipAddress    String?
+  userAgent    String?
 }
 
 model AdminUser {
-  id                     String      @id @default(uuid())
-  adminAccessRequestId   String?
-  username               String      @unique
-  email                  String      @unique
-  hashedPassword         String
-  role                   AccessType
-  status                 UserStatus  @default(pending)
-  createdAt              DateTime    @default(now())
-  updatedAt              DateTime    @updatedAt
-  ipAddress              String?
-  userAgent              String?
-  emailVerified          Boolean     @default(false)
-  passwordResetTokenId   String?
+  id                       String     @id @default(uuid())
+  adminAccessRequestId     String?
+  username                 String     @unique
+  email                    String     @unique
+  hashedPassword           String
+  role                     AccessType
+  status                   UserStatus @default(pending)
+  createdAt                DateTime   @default(now())
+  updatedAt                DateTime   @updatedAt
+  ipAddress                String?
+  userAgent                String?
+  emailVerified            Boolean    @default(false)
+  passwordResetTokenId     String?
   emailVerificationTokenId String?
 }
 
 model AdminRole {
-  id          String   @id @default(uuid())
-  name        String   @unique
+  id          String @id @default(uuid())
+  name        String @unique
   permissions Json[]
 }
 
@@ -82,7 +82,6 @@ model AdminActivityLog {
   @@index([timestamp])
 }
 
-
 model AuditLog {
   id        String   @id @default(uuid())
   userId    String?
@@ -91,6 +90,7 @@ model AuditLog {
   ipAddress String?
   userAgent String?
   timestamp DateTime @default(now())
+
   @@index([timestamp])
   @@index([userId])
 }
@@ -168,6 +168,30 @@ enum CommunicationChannel {
 }
 
 model Case {
+  assignments       Assignment[]
+  communicationLogs CommunicationLog[]
+  id                String             @id @default(uuid())
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  incidentType      IncidentCategory
+  province          String
+  district          String
+  coordinates       String? // "lat,lng" – encrypted
+  reporterPhone     String // encrypted
+  reporterInfo      String? // encrypted JSON
+  victimInfo        String? // encrypted JSON
+  severity          Severity
+  status            CaseStatus         @default(Open)
+  priority          Priority           @default(Low)
+  assignedTo        Responder[]        @relation("CaseAssignments")
+  notes             Json?
+  mediaUrls         String[]
+  deletedAt         DateTime?
+  archivedAt        DateTime?
+  archivedBy        String? // admin user ID
+  resolvedAt        DateTime?
+  resolvedBy        String? // admin user ID
+
   @@index([createdAt])
   @@index([updatedAt])
   @@index([district])
@@ -175,75 +199,53 @@ model Case {
   @@index([status, priority])
   @@index([deletedAt])
   @@index([archivedAt])
-  assignments    Assignment[]
-  communicationLogs CommunicationLog[]
-  id            String           @id @default(uuid())
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
-  incidentType  IncidentCategory
-  province      String
-  district      String
-  coordinates   String?          // "lat,lng" – encrypted
-  reporterPhone String           // encrypted
-  reporterInfo  String?          // encrypted JSON
-  victimInfo    String?          // encrypted JSON
-  severity      Severity
-  status        CaseStatus       @default(Open)
-  priority      Priority         @default(Low)
-  assignedTo    Responder[]      @relation("CaseAssignments")
-  notes         Json?
-  mediaUrls     String[]
-  deletedAt     DateTime?        @default(null)
-  archivedAt    DateTime?
-  archivedBy    String?          // admin user ID
-  resolvedAt    DateTime?
-  resolvedBy    String?          // admin user ID
 }
 
 model Responder {
-  @@index([createdAt])
-  @@index([updatedAt])
-  @@index([active, availability])
-  @@index([district, province])
-  assignments Assignment[]
+  assignments  Assignment[]
   id           String        @id @default(uuid())
   fullName     String
   role         ResponderRole
   organisation String
-  phone        String          // encrypted before save
-  whatsapp     String?         // optional encrypted
-  email        String          @unique
+  phone        String // encrypted before save
+  whatsapp     String? // optional encrypted
+  email        String        @unique
   district     String
   province     String
   dutyStation  String?
-  coordinates  String?         // encrypted GPS
-  availability Boolean         @default(true)
-  active       Boolean         @default(true)
-  specialty    Json?           // ["GBV","Counselling"]
-  cases        Case[]          @relation("CaseAssignments")
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  deletedAt    DateTime?       @default(null)
+  coordinates  String? // encrypted GPS
+  availability Boolean       @default(true)
+  active       Boolean       @default(true)
+  specialty    Json? // ["GBV","Counselling"]
+  cases        Case[]        @relation("CaseAssignments")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
+
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([active, availability])
+  @@index([district, province])
   @@index([deletedAt])
 }
 
 model Assignment {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   caseId      String
   responderId String
-  assignedAt  DateTime @default(now())
+  assignedAt  DateTime  @default(now())
   notes       String?
-  case        Case     @relation(fields: [caseId], references: [id])
+  case        Case      @relation(fields: [caseId], references: [id])
   responder   Responder @relation(fields: [responderId], references: [id])
 }
 
 model CommunicationLog {
-  id          String   @id @default(uuid())
+  id          String               @id @default(uuid())
   channel     CommunicationChannel
-  destination String   // email or phone
+  destination String // email or phone
   message     String
-  status      String   // sent, failed, delivered
-  sentAt      DateTime @default(now())
+  status      String // sent, failed, delivered
+  sentAt      DateTime             @default(now())
   caseId      String?
-  case        Case?    @relation(fields: [caseId], references: [id])
+  case        Case?                @relation(fields: [caseId], references: [id])
 }

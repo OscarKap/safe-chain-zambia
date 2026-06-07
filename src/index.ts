@@ -1,14 +1,14 @@
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
-import rateLimit from 'express-rate-limit'; // primary rate limiter
+import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { PrismaClient } from '@prisma/client';
 import authRouter from './routes/auth';
 import dashboardRouter from './routes/dashboard';
 import { activityLogger } from './middleware/activityLogger';
-
+import logger from './logger';
 // Initialize environment variables
 dotenv.config();
 
@@ -73,8 +73,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // CSRF protection
-import { csrfProtection } from './middleware/csrf';
-app.use(csrfProtection);
 
 // Activity logging (after auth setup)
 app.use(activityLogger);
@@ -89,9 +87,6 @@ app.get('/health', (req, res) => {
 });
 
 // CSRF token endpoint
-app.get('/csrf-token', (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
-});
 
 // Auth routes (login, refresh, logout)
 app.use('/auth', authRouter);
@@ -137,8 +132,6 @@ const PORT = process.env.PORT || 3001;
 
 const server = app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT}`);
-});
-  console.log(`Server running on port ${PORT}`);
 });
 
 export { app, prisma };

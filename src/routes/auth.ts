@@ -13,7 +13,7 @@ const router = Router();
 const prisma = new PrismaClient();
 
 // Login - expects email and password
-router.post('/login', loginRateLimiter, loginLimiter, validateBody(loginSchema), async (req: Request, res: Response) => {
+router.post('/login', loginRateLimiter, validateBody(loginSchema), async (req: Request, res: Response) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json({ message: 'Email and password required' });
@@ -65,7 +65,8 @@ router.post('/refresh', async (req: Request, res: Response) => {
     return res.status(401).json({ message: 'Refresh token missing' });
   }
   try {
-    const payload = signRefreshToken ? require('../services/jwtService').verifyRefreshToken(token) : null;
+    const { verifyRefreshToken } = require('../services/jwtService');
+const payload = verifyRefreshToken(token);
     const admin = await prisma.adminUser.findUnique({ where: { id: payload.sub } });
     if (!admin) {
       return res.status(401).json({ message: 'Invalid refresh token' });
