@@ -9,15 +9,18 @@ import authRouter from './routes/auth';
 import dashboardRouter from './routes/dashboard';
 import { activityLogger } from './middleware/activityLogger';
 import logger from './logger';
-// Initialize environment variables
+
 dotenv.config();
 
-// Initialize Express app
-const app: express.Application = express();
+const app = express();
 const prisma = new PrismaClient();
-// Immutable AuditLog guard – prevent updates/deletes
+
+// Prevent AuditLog modifications
 prisma.$use(async (params, next) => {
-  if (params.model === 'AuditLog' && ['update', 'updateMany', 'delete', 'deleteMany'].includes(params.action)) {
+  if (
+    params.model === 'AuditLog' &&
+    ['update', 'updateMany', 'delete', 'deleteMany'].includes(params.action)
+  ) {
     throw new Error('Audit logs are immutable and cannot be modified');
   }
   return next(params);
@@ -25,35 +28,39 @@ prisma.$use(async (params, next) => {
 
 // Security middleware
 app.use(helmet());
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true
-}));
 
-// Rate limiting
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true,
+  })
+);
+
+// Global rate limiter (ONLY ONE rateLimit instance)
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   standardHeaders: true,
   legacyHeaders: false,
 });
-app.use(limiter);
-// Stricter rate limiting for sensitive endpoints
 
+app.use(limiter);
+
+// Extra limiters (defined but NOT causing duplicates)
 const loginLimiter = rateLimit({
-  windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 5, // limit each IP to 5 login attempts per window
+  windowMs: 5 * 60 * 1000,
+  max: 5,
   message: 'Too many login attempts, please try again later.',
 });
 
 const sosLimiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
+  windowMs: 1 * 60 * 1000,
   max: 10,
   message: 'Too many SOS requests, please wait.',
 });
 
 const reportLimiter = rateLimit({
-  windowMs: 10 * 60 * 1000, // 10 minutes
+  windowMs: 10 * 60 * 1000,
   max: 20,
   message: 'Too many report submissions, please slow down.',
 });
@@ -64,57 +71,46 @@ const adminApiLimiter = rateLimit({
   message: 'Rate limit exceeded for admin API.',
 });
 
-// Attach specific limiters to routes after they are defined (see route files).
-
-// Body parsing middleware
+// Body parsing
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// CSRF protection
-
-// Activity logging (after auth setup)
+// Activity logging
 app.use(activityLogger);
 
-// Health check endpoint
+// Health check
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
   });
 });
 
-// CSRF token endpoint
-
-// Auth routes (login, refresh, logout)
+// Routes
 app.use('/auth', authRouter);
-
-// Protected dashboard routes – all routes under /dashboard require authentication
 app.use('/dashboard', dashboardRouter);
 
-// Error handling middleware
-// Centralized error handling middleware
+// Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  // Log the error internally (stack trace) for debugging
   logger.error(err);
 
-  // Determine HTTP status code
   const status = err.status || err.statusCode || 500;
 
-  // In production, hide internal details
-  const safeMessage = process.env.NODE_ENV === 'production'
-    ? (status >= 500 ? 'Internal server error' : err.message)
-    : err.message;
+  const safeMessage =
+    process.env.NODE_ENV === 'production'
+      ? status >= 500
+        ? 'Internal server error'
+        : err.message
+      : err.message;
 
   const response: any = { error: safeMessage };
 
-  // Include stack trace only in non‑production environments for debugging
   if (process.env.NODE_ENV !== 'production') {
     response.stack = err.stack;
   }
 
-  // Handle specific known errors (e.g., CSRF token)
   if (err.code === 'EBADCSRFTOKEN') {
     return res.status(403).json({ error: 'CSRF token missing or invalid' });
   }
@@ -123,13 +119,13 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 // 404 handler
-app.use('*', (req: express.Request, res: express.Response) => {
+app.use('*', (req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
 const PORT = process.env.PORT || 3001;
 
-const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT}`);
 });
 
