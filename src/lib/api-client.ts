@@ -91,10 +91,10 @@ async function request<T>(
   const parsed = text ? safeJson(text) : null;
 
   if (!res.ok) {
-    const msg =
-      (parsed && typeof parsed === "object" && "message" in parsed && String((parsed as { message: unknown }).message)) ||
-      res.statusText ||
-      `Request failed (${res.status})`;
+    let msg = res.statusText || `Request failed (${res.status})`;
+    if (parsed && typeof parsed === "object" && "message" in parsed) {
+      msg = String((parsed as { message: unknown }).message);
+    }
     throw new ApiError(msg, res.status, parsed);
   }
   return parsed as T;
