@@ -29,13 +29,18 @@ const schema = z.object({
 function Report() {
   const [submitted, setSubmitted] = useState<string | null>(null);
   const [anonymous, setAnonymous] = useState(true);
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
+  const districts = useMemo(() => (province ? ZAMBIA[province] ?? [] : []), [province]);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
+    if (!province) { toast.error("Choose a province"); return; }
+    if (!district) { toast.error("Choose a district"); return; }
     const parsed = schema.safeParse({
       category: fd.get("category"),
-      district: fd.get("district"),
+      district: `${district}, ${province}`,
       description: fd.get("description"),
       contact: anonymous ? "" : (fd.get("contact") as string),
     });
