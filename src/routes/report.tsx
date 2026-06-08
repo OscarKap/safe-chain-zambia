@@ -98,10 +98,37 @@ function Report() {
             </div>
           </fieldset>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-3 gap-4">
+            <label className="grid gap-1.5 text-sm">
+              <span className="font-medium">Province</span>
+              <div className="relative">
+                <select
+                  value={province}
+                  onChange={(e) => { setProvince(e.target.value); setDistrict(""); }}
+                  required
+                  className="w-full appearance-none rounded-lg border border-input bg-background pl-3 pr-9 py-2.5 outline-none focus:ring-2 focus:ring-ring"
+                >
+                  <option value="">Select province</option>
+                  {PROVINCES.map((p) => <option key={p} value={p}>{p}</option>)}
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              </div>
+            </label>
             <label className="grid gap-1.5 text-sm">
               <span className="font-medium">District</span>
-              <input name="district" required placeholder="e.g., Lusaka" className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring" />
+              <div className="relative">
+                <select
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
+                  required
+                  disabled={!province}
+                  className="w-full appearance-none rounded-lg border border-input bg-background pl-3 pr-9 py-2.5 outline-none focus:ring-2 focus:ring-ring disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  <option value="">{province ? "Select district" : "Choose province first"}</option>
+                  {districts.map((d) => <option key={d} value={d}>{d}</option>)}
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              </div>
             </label>
             <label className="grid gap-1.5 text-sm">
               <span className="font-medium">When did this happen? <span className="text-muted-foreground font-normal">(optional)</span></span>
