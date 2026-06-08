@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Lock, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Lock, ShieldCheck, CheckCircle2, ChevronDown } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
+import { PROVINCES, ZAMBIA } from "@/data/facilities";
 
 export const Route = createFileRoute("/report")({
   head: () => ({ meta: [{ title: "Safe Reporting — Safe Chain" }, { name: "description", content: "Anonymously report SRHR concerns, GBV incidents and service complaints. Track your case privately." }] }),
@@ -28,13 +29,18 @@ const schema = z.object({
 function Report() {
   const [submitted, setSubmitted] = useState<string | null>(null);
   const [anonymous, setAnonymous] = useState(true);
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
+  const districts = useMemo(() => (province ? ZAMBIA[province] ?? [] : []), [province]);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
+    if (!province) { toast.error("Choose a province"); return; }
+    if (!district) { toast.error("Choose a district"); return; }
     const parsed = schema.safeParse({
       category: fd.get("category"),
-      district: fd.get("district"),
+      district: `${district}, ${province}`,
       description: fd.get("description"),
       contact: anonymous ? "" : (fd.get("contact") as string),
     });
@@ -92,10 +98,37 @@ function Report() {
             </div>
           </fieldset>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-3 gap-4">
+            <label className="grid gap-1.5 text-sm">
+              <span className="font-medium">Province</span>
+              <div className="relative">
+                <select
+                  value={province}
+                  onChange={(e) => { setProvince(e.target.value); setDistrict(""); }}
+                  required
+                  className="w-full appearance-none rounded-lg border border-input bg-background pl-3 pr-9 py-2.5 outline-none focus:ring-2 focus:ring-ring"
+                >
+                  <option value="">Select province</option>
+                  {PROVINCES.map((p) => <option key={p} value={p}>{p}</option>)}
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              </div>
+            </label>
             <label className="grid gap-1.5 text-sm">
               <span className="font-medium">District</span>
-              <input name="district" required placeholder="e.g., Lusaka" className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring" />
+              <div className="relative">
+                <select
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
+                  required
+                  disabled={!province}
+                  className="w-full appearance-none rounded-lg border border-input bg-background pl-3 pr-9 py-2.5 outline-none focus:ring-2 focus:ring-ring disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  <option value="">{province ? "Select district" : "Choose province first"}</option>
+                  {districts.map((d) => <option key={d} value={d}>{d}</option>)}
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              </div>
             </label>
             <label className="grid gap-1.5 text-sm">
               <span className="font-medium">When did this happen? <span className="text-muted-foreground font-normal">(optional)</span></span>
