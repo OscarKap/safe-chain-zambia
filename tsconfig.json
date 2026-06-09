@@ -12,7 +12,8 @@
     "types": [
       "vite/client"
     ],
-    "strict": false,
+    "strict": true,
+    "noImplicitAny": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
