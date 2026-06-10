@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ReportRouteImport } from './routes/report'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as PendingRouteImport } from './routes/pending'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as EmergencyRouteImport } from './routes/emergency'
@@ -21,8 +23,11 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
-import { Route as AuthenticatedAdminConsoleRouteImport } from './routes/_authenticated/admin-console'
-import { Route as AuthenticatedAccountSetupRouteImport } from './routes/_authenticated/account.setup'
+import { Route as AuthenticatedResponderDashboardRouteImport } from './routes/_authenticated/responder.dashboard'
+import { Route as AuthenticatedGbvDashboardRouteImport } from './routes/_authenticated/gbv.dashboard'
+import { Route as AuthenticatedDeveloperDashboardRouteImport } from './routes/_authenticated/developer.dashboard'
+import { Route as AuthenticatedCounsellorDashboardRouteImport } from './routes/_authenticated/counsellor.dashboard'
+import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -32,6 +37,16 @@ const ServicesRoute = ServicesRouteImport.update({
 const ReportRoute = ReportRouteImport.update({
   id: '/report',
   path: '/report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PendingRoute = PendingRouteImport.update({
+  id: '/pending',
+  path: '/pending',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -83,16 +98,34 @@ const LearnSlugRoute = LearnSlugRouteImport.update({
   path: '/learn/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminConsoleRoute =
-  AuthenticatedAdminConsoleRouteImport.update({
-    id: '/admin-console',
-    path: '/admin-console',
+const AuthenticatedResponderDashboardRoute =
+  AuthenticatedResponderDashboardRouteImport.update({
+    id: '/responder/dashboard',
+    path: '/responder/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAccountSetupRoute =
-  AuthenticatedAccountSetupRouteImport.update({
-    id: '/account/setup',
-    path: '/account/setup',
+const AuthenticatedGbvDashboardRoute =
+  AuthenticatedGbvDashboardRouteImport.update({
+    id: '/gbv/dashboard',
+    path: '/gbv/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDeveloperDashboardRoute =
+  AuthenticatedDeveloperDashboardRouteImport.update({
+    id: '/developer/dashboard',
+    path: '/developer/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCounsellorDashboardRoute =
+  AuthenticatedCounsellorDashboardRouteImport.update({
+    id: '/counsellor/dashboard',
+    path: '/counsellor/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminDashboardRoute =
+  AuthenticatedAdminDashboardRouteImport.update({
+    id: '/admin/dashboard',
+    path: '/admin/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
@@ -104,12 +137,17 @@ export interface FileRoutesByFullPath {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/pending': typeof PendingRoute
+  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
-  '/admin-console': typeof AuthenticatedAdminConsoleRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
-  '/account/setup': typeof AuthenticatedAccountSetupRoute
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
+  '/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
+  '/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
+  '/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -119,12 +157,17 @@ export interface FileRoutesByTo {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/pending': typeof PendingRoute
+  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
-  '/admin-console': typeof AuthenticatedAdminConsoleRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn': typeof LearnIndexRoute
-  '/account/setup': typeof AuthenticatedAccountSetupRoute
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
+  '/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
+  '/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
+  '/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -136,12 +179,17 @@ export interface FileRoutesById {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/pending': typeof PendingRoute
+  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
-  '/_authenticated/admin-console': typeof AuthenticatedAdminConsoleRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
-  '/_authenticated/account/setup': typeof AuthenticatedAccountSetupRoute
+  '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/_authenticated/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
+  '/_authenticated/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
+  '/_authenticated/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
+  '/_authenticated/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -153,12 +201,17 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/pending'
+    | '/register'
     | '/report'
     | '/services'
-    | '/admin-console'
     | '/learn/$slug'
     | '/learn/'
-    | '/account/setup'
+    | '/admin/dashboard'
+    | '/counsellor/dashboard'
+    | '/developer/dashboard'
+    | '/gbv/dashboard'
+    | '/responder/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -168,12 +221,17 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/pending'
+    | '/register'
     | '/report'
     | '/services'
-    | '/admin-console'
     | '/learn/$slug'
     | '/learn'
-    | '/account/setup'
+    | '/admin/dashboard'
+    | '/counsellor/dashboard'
+    | '/developer/dashboard'
+    | '/gbv/dashboard'
+    | '/responder/dashboard'
   id:
     | '__root__'
     | '/'
@@ -184,12 +242,17 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/pending'
+    | '/register'
     | '/report'
     | '/services'
-    | '/_authenticated/admin-console'
     | '/learn/$slug'
     | '/learn/'
-    | '/_authenticated/account/setup'
+    | '/_authenticated/admin/dashboard'
+    | '/_authenticated/counsellor/dashboard'
+    | '/_authenticated/developer/dashboard'
+    | '/_authenticated/gbv/dashboard'
+    | '/_authenticated/responder/dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -201,6 +264,8 @@ export interface RootRouteChildren {
   EmergencyRoute: typeof EmergencyRoute
   FeedbackRoute: typeof FeedbackRoute
   LoginRoute: typeof LoginRoute
+  PendingRoute: typeof PendingRoute
+  RegisterRoute: typeof RegisterRoute
   ReportRoute: typeof ReportRoute
   ServicesRoute: typeof ServicesRoute
   LearnSlugRoute: typeof LearnSlugRoute
@@ -221,6 +286,20 @@ declare module '@tanstack/react-router' {
       path: '/report'
       fullPath: '/report'
       preLoaderRoute: typeof ReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pending': {
+      id: '/pending'
+      path: '/pending'
+      fullPath: '/pending'
+      preLoaderRoute: typeof PendingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -293,31 +372,58 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin-console': {
-      id: '/_authenticated/admin-console'
-      path: '/admin-console'
-      fullPath: '/admin-console'
-      preLoaderRoute: typeof AuthenticatedAdminConsoleRouteImport
+    '/_authenticated/responder/dashboard': {
+      id: '/_authenticated/responder/dashboard'
+      path: '/responder/dashboard'
+      fullPath: '/responder/dashboard'
+      preLoaderRoute: typeof AuthenticatedResponderDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/account/setup': {
-      id: '/_authenticated/account/setup'
-      path: '/account/setup'
-      fullPath: '/account/setup'
-      preLoaderRoute: typeof AuthenticatedAccountSetupRouteImport
+    '/_authenticated/gbv/dashboard': {
+      id: '/_authenticated/gbv/dashboard'
+      path: '/gbv/dashboard'
+      fullPath: '/gbv/dashboard'
+      preLoaderRoute: typeof AuthenticatedGbvDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/developer/dashboard': {
+      id: '/_authenticated/developer/dashboard'
+      path: '/developer/dashboard'
+      fullPath: '/developer/dashboard'
+      preLoaderRoute: typeof AuthenticatedDeveloperDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/counsellor/dashboard': {
+      id: '/_authenticated/counsellor/dashboard'
+      path: '/counsellor/dashboard'
+      fullPath: '/counsellor/dashboard'
+      preLoaderRoute: typeof AuthenticatedCounsellorDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/dashboard': {
+      id: '/_authenticated/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminConsoleRoute: typeof AuthenticatedAdminConsoleRoute
-  AuthenticatedAccountSetupRoute: typeof AuthenticatedAccountSetupRoute
+  AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
+  AuthenticatedCounsellorDashboardRoute: typeof AuthenticatedCounsellorDashboardRoute
+  AuthenticatedDeveloperDashboardRoute: typeof AuthenticatedDeveloperDashboardRoute
+  AuthenticatedGbvDashboardRoute: typeof AuthenticatedGbvDashboardRoute
+  AuthenticatedResponderDashboardRoute: typeof AuthenticatedResponderDashboardRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminConsoleRoute: AuthenticatedAdminConsoleRoute,
-  AuthenticatedAccountSetupRoute: AuthenticatedAccountSetupRoute,
+  AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
+  AuthenticatedCounsellorDashboardRoute: AuthenticatedCounsellorDashboardRoute,
+  AuthenticatedDeveloperDashboardRoute: AuthenticatedDeveloperDashboardRoute,
+  AuthenticatedGbvDashboardRoute: AuthenticatedGbvDashboardRoute,
+  AuthenticatedResponderDashboardRoute: AuthenticatedResponderDashboardRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -332,6 +438,8 @@ const rootRouteChildren: RootRouteChildren = {
   EmergencyRoute: EmergencyRoute,
   FeedbackRoute: FeedbackRoute,
   LoginRoute: LoginRoute,
+  PendingRoute: PendingRoute,
+  RegisterRoute: RegisterRoute,
   ReportRoute: ReportRoute,
   ServicesRoute: ServicesRoute,
   LearnSlugRoute: LearnSlugRoute,
@@ -340,13 +448,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

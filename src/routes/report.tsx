@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Lock, ShieldCheck, CheckCircle2, ChevronDown } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { PROVINCES, ZAMBIA } from "@/data/facilities";
+import { reports, apiErrorMessage } from "@/lib/api";
 
 export const Route = createFileRoute("/report")({
   head: () => ({ meta: [{ title: "Safe Reporting — Safe Chain" }, { name: "description", content: "Anonymously report SRHR concerns, GBV incidents and service complaints. Track your case privately." }] }),
@@ -12,51 +13,59 @@ export const Route = createFileRoute("/report")({
 });
 
 const categories = [
-  { id: "gbv", label: "Gender-based violence" },
-  { id: "assault", label: "Sexual assault" },
-  { id: "service", label: "Service complaint" },
-  { id: "sti", label: "STI / health concern" },
-  { id: "other", label: "Other" },
+  { id: "GBV", label: "Gender-based violence" },
+  { id: "Assault", label: "Sexual assault" },
+  { id: "Service", label: "Service complaint" },
+  { id: "STI", label: "STI / health concern" },
+  { id: "Other", label: "Other" },
 ];
 
 const schema = z.object({
   category: z.string().min(1, "Choose a category"),
-  district: z.string().trim().min(2, "District is required").max(60),
   description: z.string().trim().min(20, "Please add at least 20 characters").max(2000),
   contact: z.string().trim().max(120).optional(),
 });
 
 function Report() {
-  const [submitted, setSubmitted] = useState<string | null>(null);
+  const [submittedId, setSubmittedId] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const [anonymous, setAnonymous] = useState(true);
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const districts = useMemo(() => (province ? ZAMBIA[province] ?? [] : []), [province]);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     if (!province) { toast.error("Choose a province"); return; }
     if (!district) { toast.error("Choose a district"); return; }
     const parsed = schema.safeParse({
       category: fd.get("category"),
-      district: `${district}, ${province}`,
       description: fd.get("description"),
       contact: anonymous ? "" : (fd.get("contact") as string),
     });
-    if (!parsed.success) {
-      toast.error(parsed.error.issues[0].message);
-      return;
+    if (!parsed.success) { toast.error(parsed.error.issues[0].message); return; }
+
+    setSubmitting(true);
+    try {
+      const res = await reports.create({
+        category: parsed.data.category,
+        description: parsed.data.description,
+        province,
+        district,
+        reporter_name: anonymous ? "Anonymous" : undefined,
+        reporter_phone: anonymous ? undefined : parsed.data.contact || undefined,
+      });
+      setSubmittedId(res.id);
+      toast.success("Report received");
+    } catch (err) {
+      toast.error(apiErrorMessage(err));
+    } finally {
+      setSubmitting(false);
     }
-    const ref = "SC-" + Math.random().toString(36).slice(2, 8).toUpperCase();
-    const reports = JSON.parse(localStorage.getItem("sc_reports") || "[]");
-    reports.unshift({ ref, ...parsed.data, status: "Received", createdAt: new Date().toISOString() });
-    localStorage.setItem("sc_reports", JSON.stringify(reports));
-    setSubmitted(ref);
-    toast.success("Report received");
   }
 
-  if (submitted) {
+  if (submittedId) {
     return (
       <>
         <PageHeader eyebrow="You're safe" title="Report received" description="Thank you for trusting Safe Chain. Save this reference to track your case." />
@@ -64,11 +73,11 @@ function Report() {
           <div className="card-soft mx-auto max-w-xl p-8 text-center">
             <CheckCircle2 className="mx-auto h-12 w-12 text-brand" />
             <p className="mt-4 text-sm text-muted-foreground">Your reference number</p>
-            <p className="mt-1 text-3xl font-bold tracking-wider">{submitted}</p>
+            <p className="mt-1 text-3xl font-bold tracking-wider break-all">{submittedId}</p>
             <p className="mt-4 text-sm text-muted-foreground">
               A trained responder will review your report. If you shared contact info, we'll reach out within 48 hours.
             </p>
-            <button onClick={() => setSubmitted(null)} className="mt-6 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90">
+            <button onClick={() => setSubmittedId(null)} className="mt-6 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90">
               Submit another
             </button>
           </div>
@@ -158,7 +167,7 @@ function Report() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <button type="submit" className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90">Submit report</button>
+            <button type="submit" disabled={submitting} className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-60">{submitting ? "Submitting…" : "Submit report"}</button>
             <p className="text-xs text-muted-foreground inline-flex items-center gap-1.5">
               <Lock className="h-3.5 w-3.5" /> Encrypted locally before sending.
             </p>

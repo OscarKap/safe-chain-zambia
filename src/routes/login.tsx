@@ -2,12 +2,14 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth-context";
+import { ROLE_DASHBOARD, apiErrorMessage } from "@/lib/api";
 
 export const Route = createFileRoute("/login")({
+  ssr: false,
   head: () => ({
     meta: [
-      { title: "Admin Sign in — Safe Chain" },
+      { title: "Sign in — Safe Chain" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -16,6 +18,7 @@ export const Route = createFileRoute("/login")({
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -25,20 +28,16 @@ function Login() {
     const password = String(f.get("password") ?? "");
     if (!email || !password) return;
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
-    if (error) { toast.error(error.message); return; }
-    toast.success("Signed in");
-    navigate({ to: "/admin-console" });
-  }
-
-  async function onForgot() {
-    const email = (document.getElementById("email") as HTMLInputElement | null)?.value?.trim();
-    if (!email) { toast.info("Enter your email above first."); return; }
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/account/setup`,
-    });
-    if (error) toast.error(error.message); else toast.success("Reset link sent (if the email exists).");
+    try {
+      const user = await login(email, password);
+      toast.success("Signed in");
+      const to = ROLE_DASHBOARD[user.role] ?? "/admin/dashboard";
+      navigate({ to });
+    } catch (err) {
+      toast.error(apiErrorMessage(err));
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -46,23 +45,21 @@ function Login() {
       <div className="gradient-hero hidden lg:flex items-center justify-center p-12">
         <div className="max-w-md">
           <ShieldCheck className="h-10 w-10 text-brand" />
-          <h1 className="mt-4 text-4xl font-bold leading-tight">Safe Chain Admin Console</h1>
+          <h1 className="mt-4 text-4xl font-bold leading-tight">Safe Chain Console</h1>
           <p className="mt-3 text-muted-foreground">
-            Sign in to review reports, manage responders, and update referral
-            information. Access is invite-only.
+            Sign in to review reports, manage responders, and coordinate
+            support. Access is granted after Super Admin approval.
           </p>
           <p className="mt-6 text-sm text-muted-foreground">
-            Not an admin yet?{" "}
-            <Link to="/admin" className="text-brand font-medium">Request access</Link>
+            Don't have an account?{" "}
+            <Link to="/register" className="text-brand font-medium">Request access</Link>
           </p>
         </div>
       </div>
       <div className="flex items-center justify-center p-6 lg:p-12">
         <form onSubmit={onSubmit} className="w-full max-w-md card-soft p-8">
           <h2 className="text-2xl font-bold">Sign in</h2>
-          <p className="text-sm text-muted-foreground mt-1">
-            For approved Safe Chain administrators only.
-          </p>
+          <p className="text-sm text-muted-foreground mt-1">Approved Safe Chain users only.</p>
 
           <div className="mt-6 space-y-4">
             <label className="grid gap-1.5 text-sm">
@@ -82,8 +79,7 @@ function Login() {
               />
             </label>
             <div className="flex items-center justify-between text-sm">
-              <Link to="/admin" className="text-muted-foreground hover:text-foreground">Need access?</Link>
-              <button type="button" onClick={onForgot} className="text-brand font-medium">Forgot password?</button>
+              <Link to="/register" className="text-muted-foreground hover:text-foreground">Need access?</Link>
             </div>
             <button
               disabled={loading}
