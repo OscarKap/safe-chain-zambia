@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ReportRouteImport } from './routes/report'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as PendingRouteImport } from './routes/pending'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as EmergencyRouteImport } from './routes/emergency'
@@ -32,6 +34,16 @@ const ServicesRoute = ServicesRouteImport.update({
 const ReportRoute = ReportRouteImport.update({
   id: '/report',
   path: '/report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PendingRoute = PendingRouteImport.update({
+  id: '/pending',
+  path: '/pending',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -104,6 +116,8 @@ export interface FileRoutesByFullPath {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/pending': typeof PendingRoute
+  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
   '/admin-console': typeof AuthenticatedAdminConsoleRoute
@@ -119,6 +133,8 @@ export interface FileRoutesByTo {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/pending': typeof PendingRoute
+  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
   '/admin-console': typeof AuthenticatedAdminConsoleRoute
@@ -136,6 +152,8 @@ export interface FileRoutesById {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/pending': typeof PendingRoute
+  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
   '/_authenticated/admin-console': typeof AuthenticatedAdminConsoleRoute
@@ -153,6 +171,8 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/pending'
+    | '/register'
     | '/report'
     | '/services'
     | '/admin-console'
@@ -168,6 +188,8 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/pending'
+    | '/register'
     | '/report'
     | '/services'
     | '/admin-console'
@@ -184,6 +206,8 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/pending'
+    | '/register'
     | '/report'
     | '/services'
     | '/_authenticated/admin-console'
@@ -201,6 +225,8 @@ export interface RootRouteChildren {
   EmergencyRoute: typeof EmergencyRoute
   FeedbackRoute: typeof FeedbackRoute
   LoginRoute: typeof LoginRoute
+  PendingRoute: typeof PendingRoute
+  RegisterRoute: typeof RegisterRoute
   ReportRoute: typeof ReportRoute
   ServicesRoute: typeof ServicesRoute
   LearnSlugRoute: typeof LearnSlugRoute
@@ -221,6 +247,20 @@ declare module '@tanstack/react-router' {
       path: '/report'
       fullPath: '/report'
       preLoaderRoute: typeof ReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pending': {
+      id: '/pending'
+      path: '/pending'
+      fullPath: '/pending'
+      preLoaderRoute: typeof PendingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -332,6 +372,8 @@ const rootRouteChildren: RootRouteChildren = {
   EmergencyRoute: EmergencyRoute,
   FeedbackRoute: FeedbackRoute,
   LoginRoute: LoginRoute,
+  PendingRoute: PendingRoute,
+  RegisterRoute: RegisterRoute,
   ReportRoute: ReportRoute,
   ServicesRoute: ServicesRoute,
   LearnSlugRoute: LearnSlugRoute,

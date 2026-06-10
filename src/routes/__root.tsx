@@ -11,6 +11,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SplashScreen } from "@/components/SplashScreen";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { AuthProvider } from "@/lib/auth-context";
 
 import appCss from "../styles.css?url";
 
@@ -94,19 +95,21 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <SplashScreen />
-      <div className="min-h-dvh flex flex-col">
-        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 z-50 rounded bg-primary px-3 py-2 text-sm text-primary-foreground">
-          Skip to content
-        </a>
-        <SiteHeader />
-        <main id="main" className="flex-1 pb-20 md:pb-0">
-          <Outlet />
-        </main>
-        <SiteFooter />
-        <MobileBottomNav />
-      </div>
-      <Toaster richColors position="top-right" />
+      <AuthProvider>
+        <SplashScreen />
+        <div className="min-h-dvh flex flex-col">
+          <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 z-50 rounded bg-primary px-3 py-2 text-sm text-primary-foreground">
+            Skip to content
+          </a>
+          <SiteHeader />
+          <main id="main" className="flex-1 pb-20 md:pb-0">
+            <Outlet />
+          </main>
+          <SiteFooter />
+          <MobileBottomNav />
+        </div>
+        <Toaster richColors position="top-right" />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
