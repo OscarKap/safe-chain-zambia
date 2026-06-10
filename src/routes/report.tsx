@@ -167,7 +167,7 @@ function Report() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <button type="submit" className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90">Submit report</button>
+            <button type="submit" disabled={submitting} className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-60">{submitting ? "Submitting…" : "Submit report"}</button>
             <p className="text-xs text-muted-foreground inline-flex items-center gap-1.5">
               <Lock className="h-3.5 w-3.5" /> Encrypted locally before sending.
             </p>
