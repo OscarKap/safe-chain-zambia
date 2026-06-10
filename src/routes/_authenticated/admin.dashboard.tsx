@@ -124,3 +124,26 @@ function AdminDashboard() {
     </DashboardShell>
   );
 }
+
+function SuperStats({ s }: { s: { totalUsers: number; pendingUsers: number; totalReports: number; openReports: number; resolvedReports: number; totalFacilities: number } }) {
+  return (
+    <>
+      <StatCard label="Total users" value={s.totalUsers} />
+      <StatCard label="Pending users" value={s.pendingUsers} />
+      <StatCard label="Total reports" value={s.totalReports} />
+      <StatCard label="Open reports" value={s.openReports} />
+      <StatCard label="Resolved reports" value={s.resolvedReports} />
+      <StatCard label="Facilities" value={s.totalFacilities} />
+    </>
+  );
+}
+
+function AdminStatsView({ s }: { s: { totalReports: number; assignedReports: number; openReports: number } }) {
+  return (
+    <>
+      <StatCard label="Total reports" value={s.totalReports} />
+      <StatCard label="Assigned" value={s.assignedReports} />
+      <StatCard label="Open" value={s.openReports} />
+    </>
+  );
+}

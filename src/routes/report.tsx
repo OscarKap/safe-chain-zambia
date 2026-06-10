@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Lock, ShieldCheck, CheckCircle2, ChevronDown } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { PROVINCES, ZAMBIA } from "@/data/facilities";
+import { reports, apiErrorMessage } from "@/lib/api";
 
 export const Route = createFileRoute("/report")({
   head: () => ({ meta: [{ title: "Safe Reporting — Safe Chain" }, { name: "description", content: "Anonymously report SRHR concerns, GBV incidents and service complaints. Track your case privately." }] }),
@@ -12,48 +13,56 @@ export const Route = createFileRoute("/report")({
 });
 
 const categories = [
-  { id: "gbv", label: "Gender-based violence" },
-  { id: "assault", label: "Sexual assault" },
-  { id: "service", label: "Service complaint" },
-  { id: "sti", label: "STI / health concern" },
-  { id: "other", label: "Other" },
+  { id: "GBV", label: "Gender-based violence" },
+  { id: "Assault", label: "Sexual assault" },
+  { id: "Service", label: "Service complaint" },
+  { id: "STI", label: "STI / health concern" },
+  { id: "Other", label: "Other" },
 ];
 
 const schema = z.object({
   category: z.string().min(1, "Choose a category"),
-  district: z.string().trim().min(2, "District is required").max(60),
   description: z.string().trim().min(20, "Please add at least 20 characters").max(2000),
   contact: z.string().trim().max(120).optional(),
 });
 
 function Report() {
-  const [submitted, setSubmitted] = useState<string | null>(null);
+  const [submittedId, setSubmittedId] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const [anonymous, setAnonymous] = useState(true);
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const districts = useMemo(() => (province ? ZAMBIA[province] ?? [] : []), [province]);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     if (!province) { toast.error("Choose a province"); return; }
     if (!district) { toast.error("Choose a district"); return; }
     const parsed = schema.safeParse({
       category: fd.get("category"),
-      district: `${district}, ${province}`,
       description: fd.get("description"),
       contact: anonymous ? "" : (fd.get("contact") as string),
     });
-    if (!parsed.success) {
-      toast.error(parsed.error.issues[0].message);
-      return;
+    if (!parsed.success) { toast.error(parsed.error.issues[0].message); return; }
+
+    setSubmitting(true);
+    try {
+      const res = await reports.create({
+        category: parsed.data.category,
+        description: parsed.data.description,
+        province,
+        district,
+        reporter_name: anonymous ? "Anonymous" : undefined,
+        reporter_phone: anonymous ? undefined : parsed.data.contact || undefined,
+      });
+      setSubmittedId(res.id);
+      toast.success("Report received");
+    } catch (err) {
+      toast.error(apiErrorMessage(err));
+    } finally {
+      setSubmitting(false);
     }
-    const ref = "SC-" + Math.random().toString(36).slice(2, 8).toUpperCase();
-    const reports = JSON.parse(localStorage.getItem("sc_reports") || "[]");
-    reports.unshift({ ref, ...parsed.data, status: "Received", createdAt: new Date().toISOString() });
-    localStorage.setItem("sc_reports", JSON.stringify(reports));
-    setSubmitted(ref);
-    toast.success("Report received");
   }
 
   if (submitted) {
