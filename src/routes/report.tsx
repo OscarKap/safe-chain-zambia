@@ -65,7 +65,7 @@ function Report() {
     }
   }
 
-  if (submitted) {
+  if (submittedId) {
     return (
       <>
         <PageHeader eyebrow="You're safe" title="Report received" description="Thank you for trusting Safe Chain. Save this reference to track your case." />
@@ -73,11 +73,11 @@ function Report() {
           <div className="card-soft mx-auto max-w-xl p-8 text-center">
             <CheckCircle2 className="mx-auto h-12 w-12 text-brand" />
             <p className="mt-4 text-sm text-muted-foreground">Your reference number</p>
-            <p className="mt-1 text-3xl font-bold tracking-wider">{submitted}</p>
+            <p className="mt-1 text-3xl font-bold tracking-wider break-all">{submittedId}</p>
             <p className="mt-4 text-sm text-muted-foreground">
               A trained responder will review your report. If you shared contact info, we'll reach out within 48 hours.
             </p>
-            <button onClick={() => setSubmitted(null)} className="mt-6 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90">
+            <button onClick={() => setSubmittedId(null)} className="mt-6 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90">
               Submit another
             </button>
           </div>
