@@ -24,7 +24,7 @@ function AdminDashboard() {
 
   const isSuper = user?.role === "super_admin";
 
-  const statsQ = useQuery({
+  const statsQ = useQuery<Awaited<ReturnType<typeof dashboard.superAdmin>> | Awaited<ReturnType<typeof dashboard.admin>>>({
     queryKey: ["dashboard", isSuper ? "super-admin" : "admin"],
     queryFn: () => (isSuper ? dashboard.superAdmin() : dashboard.admin()),
     enabled: !!user,
@@ -56,25 +56,8 @@ function AdminDashboard() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {statsQ.isLoading && <p className="text-sm text-muted-foreground">Loading stats…</p>}
         {statsQ.error && <p className="text-sm text-destructive">{apiErrorMessage(statsQ.error)}</p>}
-        {statsQ.data && isSuper && (() => {
-          const s = statsQ.data as Awaited<ReturnType<typeof dashboard.superAdmin>>;
-          return <>
-            <StatCard label="Total users" value={s.totalUsers} />
-            <StatCard label="Pending users" value={s.pendingUsers} />
-            <StatCard label="Total reports" value={s.totalReports} />
-            <StatCard label="Open reports" value={s.openReports} />
-            <StatCard label="Resolved reports" value={s.resolvedReports} />
-            <StatCard label="Facilities" value={s.totalFacilities} />
-          </>;
-        })()}
-        {statsQ.data && !isSuper && (() => {
-          const s = statsQ.data as Awaited<ReturnType<typeof dashboard.admin>>;
-          return <>
-            <StatCard label="Total reports" value={s.totalReports} />
-            <StatCard label="Assigned" value={s.assignedReports} />
-            <StatCard label="Open" value={s.openReports} />
-          </>;
-        })()}
+        {statsQ.data && isSuper && <SuperStats s={statsQ.data as Awaited<ReturnType<typeof dashboard.superAdmin>>} />}
+        {statsQ.data && !isSuper && <AdminStatsView s={statsQ.data as Awaited<ReturnType<typeof dashboard.admin>>} />}
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
