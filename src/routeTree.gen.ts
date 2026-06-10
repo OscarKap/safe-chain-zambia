@@ -23,8 +23,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
-import { Route as AuthenticatedAdminConsoleRouteImport } from './routes/_authenticated/admin-console'
-import { Route as AuthenticatedAccountSetupRouteImport } from './routes/_authenticated/account.setup'
+import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -95,16 +94,10 @@ const LearnSlugRoute = LearnSlugRouteImport.update({
   path: '/learn/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminConsoleRoute =
-  AuthenticatedAdminConsoleRouteImport.update({
-    id: '/admin-console',
-    path: '/admin-console',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAccountSetupRoute =
-  AuthenticatedAccountSetupRouteImport.update({
-    id: '/account/setup',
-    path: '/account/setup',
+const AuthenticatedAdminDashboardRoute =
+  AuthenticatedAdminDashboardRouteImport.update({
+    id: '/admin/dashboard',
+    path: '/admin/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
@@ -120,10 +113,9 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
-  '/admin-console': typeof AuthenticatedAdminConsoleRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
-  '/account/setup': typeof AuthenticatedAccountSetupRoute
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -137,10 +129,9 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
-  '/admin-console': typeof AuthenticatedAdminConsoleRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn': typeof LearnIndexRoute
-  '/account/setup': typeof AuthenticatedAccountSetupRoute
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -156,10 +147,9 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
-  '/_authenticated/admin-console': typeof AuthenticatedAdminConsoleRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
-  '/_authenticated/account/setup': typeof AuthenticatedAccountSetupRoute
+  '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -175,10 +165,9 @@ export interface FileRouteTypes {
     | '/register'
     | '/report'
     | '/services'
-    | '/admin-console'
     | '/learn/$slug'
     | '/learn/'
-    | '/account/setup'
+    | '/admin/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -192,10 +181,9 @@ export interface FileRouteTypes {
     | '/register'
     | '/report'
     | '/services'
-    | '/admin-console'
     | '/learn/$slug'
     | '/learn'
-    | '/account/setup'
+    | '/admin/dashboard'
   id:
     | '__root__'
     | '/'
@@ -210,10 +198,9 @@ export interface FileRouteTypes {
     | '/register'
     | '/report'
     | '/services'
-    | '/_authenticated/admin-console'
     | '/learn/$slug'
     | '/learn/'
-    | '/_authenticated/account/setup'
+    | '/_authenticated/admin/dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -333,31 +320,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin-console': {
-      id: '/_authenticated/admin-console'
-      path: '/admin-console'
-      fullPath: '/admin-console'
-      preLoaderRoute: typeof AuthenticatedAdminConsoleRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/account/setup': {
-      id: '/_authenticated/account/setup'
-      path: '/account/setup'
-      fullPath: '/account/setup'
-      preLoaderRoute: typeof AuthenticatedAccountSetupRouteImport
+    '/_authenticated/admin/dashboard': {
+      id: '/_authenticated/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminConsoleRoute: typeof AuthenticatedAdminConsoleRoute
-  AuthenticatedAccountSetupRoute: typeof AuthenticatedAccountSetupRoute
+  AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminConsoleRoute: AuthenticatedAdminConsoleRoute,
-  AuthenticatedAccountSetupRoute: AuthenticatedAccountSetupRoute,
+  AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
