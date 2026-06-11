@@ -31,12 +31,16 @@ function AdminDashboard() {
 
   const isSuper = user?.role === "super_admin";
 
-  const statsQ = useQuery({
+  const statsQ = useQuery<Record<string, number>>({
     queryKey: ["dashboard", isSuper ? "super-admin" : "admin"],
-    queryFn: () => (isSuper ? dashboard.superAdmin() : dashboard.admin()),
+    queryFn: async () => {
+      const data = isSuper ? await dashboard.superAdmin() : await dashboard.admin();
+      return data as unknown as Record<string, number>;
+    },
     enabled: !!user,
     refetchInterval: 60_000,
   });
+
 
   const pendingQ = useQuery({ queryKey: ["users", "pending"], queryFn: users.pending, enabled: isSuper, refetchInterval: 60_000 });
   const reportsQ = useQuery({ queryKey: ["reports"], queryFn: () => reports.list(), enabled: !!user, refetchInterval: 60_000 });
@@ -85,10 +89,10 @@ function AdminDashboard() {
   return (
     <DashboardShell title={isSuper ? "Super Admin Dashboard" : "Admin Dashboard"}>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {statsQ.isLoading && <p className="text-sm text-muted-foreground">Loading stats…</p>}
-        {statsQ.error && <p className="text-sm text-destructive">{apiErrorMessage(statsQ.error)}</p>}
-        {statsQ.data && isSuper && <SuperStats s={statsQ.data as Awaited<ReturnType<typeof dashboard.superAdmin>>} unread={notifQ.data?.filter((n) => !n.read).length} />}
-        {statsQ.data && !isSuper && <AdminStatsView s={statsQ.data as Awaited<ReturnType<typeof dashboard.admin>>} />}
+        {statsQ.isLoading ? <p className="text-sm text-muted-foreground">Loading stats…</p> : null}
+        {statsQ.error ? <p className="text-sm text-destructive">{apiErrorMessage(statsQ.error)}</p> : null}
+        {statsQ.data && isSuper ? <SuperStats s={statsQ.data as unknown as Awaited<ReturnType<typeof dashboard.superAdmin>>} unread={notifQ.data?.filter((n) => !n.read).length} /> : null}
+        {statsQ.data && !isSuper ? <AdminStatsView s={statsQ.data as unknown as Awaited<ReturnType<typeof dashboard.admin>>} /> : null}
       </div>
 
       {isSuper && (
