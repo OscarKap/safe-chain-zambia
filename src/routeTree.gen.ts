@@ -27,7 +27,9 @@ import { Route as AuthenticatedResponderDashboardRouteImport } from './routes/_a
 import { Route as AuthenticatedGbvDashboardRouteImport } from './routes/_authenticated/gbv.dashboard'
 import { Route as AuthenticatedDeveloperDashboardRouteImport } from './routes/_authenticated/developer.dashboard'
 import { Route as AuthenticatedCounsellorDashboardRouteImport } from './routes/_authenticated/counsellor.dashboard'
+import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin.reports'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
+import { Route as AuthenticatedAdminReportsIdRouteImport } from './routes/_authenticated/admin.reports.$id'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -122,11 +124,23 @@ const AuthenticatedCounsellorDashboardRoute =
     path: '/counsellor/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminReportsRoute =
+  AuthenticatedAdminReportsRouteImport.update({
+    id: '/admin/reports',
+    path: '/admin/reports',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminDashboardRoute =
   AuthenticatedAdminDashboardRouteImport.update({
     id: '/admin/dashboard',
     path: '/admin/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminReportsIdRoute =
+  AuthenticatedAdminReportsIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => AuthenticatedAdminReportsRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -144,10 +158,12 @@ export interface FileRoutesByFullPath {
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
   '/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
   '/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
   '/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
+  '/admin/reports/$id': typeof AuthenticatedAdminReportsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -164,10 +180,12 @@ export interface FileRoutesByTo {
   '/learn/$slug': typeof LearnSlugRoute
   '/learn': typeof LearnIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
   '/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
   '/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
   '/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
+  '/admin/reports/$id': typeof AuthenticatedAdminReportsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -186,10 +204,12 @@ export interface FileRoutesById {
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
   '/_authenticated/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
   '/_authenticated/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/_authenticated/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
   '/_authenticated/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
+  '/_authenticated/admin/reports/$id': typeof AuthenticatedAdminReportsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -208,10 +228,12 @@ export interface FileRouteTypes {
     | '/learn/$slug'
     | '/learn/'
     | '/admin/dashboard'
+    | '/admin/reports'
     | '/counsellor/dashboard'
     | '/developer/dashboard'
     | '/gbv/dashboard'
     | '/responder/dashboard'
+    | '/admin/reports/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -228,10 +250,12 @@ export interface FileRouteTypes {
     | '/learn/$slug'
     | '/learn'
     | '/admin/dashboard'
+    | '/admin/reports'
     | '/counsellor/dashboard'
     | '/developer/dashboard'
     | '/gbv/dashboard'
     | '/responder/dashboard'
+    | '/admin/reports/$id'
   id:
     | '__root__'
     | '/'
@@ -249,10 +273,12 @@ export interface FileRouteTypes {
     | '/learn/$slug'
     | '/learn/'
     | '/_authenticated/admin/dashboard'
+    | '/_authenticated/admin/reports'
     | '/_authenticated/counsellor/dashboard'
     | '/_authenticated/developer/dashboard'
     | '/_authenticated/gbv/dashboard'
     | '/_authenticated/responder/dashboard'
+    | '/_authenticated/admin/reports/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -400,6 +426,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCounsellorDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/reports': {
+      id: '/_authenticated/admin/reports'
+      path: '/admin/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AuthenticatedAdminReportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/dashboard': {
       id: '/_authenticated/admin/dashboard'
       path: '/admin/dashboard'
@@ -407,11 +440,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/reports/$id': {
+      id: '/_authenticated/admin/reports/$id'
+      path: '/$id'
+      fullPath: '/admin/reports/$id'
+      preLoaderRoute: typeof AuthenticatedAdminReportsIdRouteImport
+      parentRoute: typeof AuthenticatedAdminReportsRoute
+    }
   }
 }
 
+interface AuthenticatedAdminReportsRouteChildren {
+  AuthenticatedAdminReportsIdRoute: typeof AuthenticatedAdminReportsIdRoute
+}
+
+const AuthenticatedAdminReportsRouteChildren: AuthenticatedAdminReportsRouteChildren =
+  {
+    AuthenticatedAdminReportsIdRoute: AuthenticatedAdminReportsIdRoute,
+  }
+
+const AuthenticatedAdminReportsRouteWithChildren =
+  AuthenticatedAdminReportsRoute._addFileChildren(
+    AuthenticatedAdminReportsRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
+  AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRouteWithChildren
   AuthenticatedCounsellorDashboardRoute: typeof AuthenticatedCounsellorDashboardRoute
   AuthenticatedDeveloperDashboardRoute: typeof AuthenticatedDeveloperDashboardRoute
   AuthenticatedGbvDashboardRoute: typeof AuthenticatedGbvDashboardRoute
@@ -420,6 +475,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
+  AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRouteWithChildren,
   AuthenticatedCounsellorDashboardRoute: AuthenticatedCounsellorDashboardRoute,
   AuthenticatedDeveloperDashboardRoute: AuthenticatedDeveloperDashboardRoute,
   AuthenticatedGbvDashboardRoute: AuthenticatedGbvDashboardRoute,
@@ -448,13 +504,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

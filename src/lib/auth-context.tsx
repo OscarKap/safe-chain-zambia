@@ -1,11 +1,11 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { auth as authApi, setTokens, getToken, type AuthUser, type Role } from "./api";
+import { auth as authApi, setTokens, getToken, setOnUnauthorized, type AuthUser, type Role } from "./api";
 
 interface AuthState {
   user: AuthUser | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<AuthUser>;
-  logout: () => void;
+  logout: () => Promise<void>;
   refresh: () => Promise<void>;
 }
 
@@ -28,7 +28,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  useEffect(() => { void refresh(); }, [refresh]);
+  useEffect(() => {
+    void refresh();
+    setOnUnauthorized(() => setUser(null));
+    return () => setOnUnauthorized(null);
+  }, [refresh]);
 
   const login = useCallback(async (email: string, password: string) => {
     const res = await authApi.login({ email, password });
@@ -37,7 +41,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return res.user;
   }, []);
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
+    try { await authApi.logout(); } catch { /* ignore */ }
     setTokens(null, null);
     setUser(null);
   }, []);
