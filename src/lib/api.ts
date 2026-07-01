@@ -1,101 +1,9 @@
-import axios, { AxiosError, type AxiosRequestConfig } from "axios";
+// SafeChain API layer — Lovable Cloud (Supabase) backed.
+// Keeps the previous surface (auth/users/reports/notifications/dashboard/facilities)
+// so existing routes continue to work without changes.
 
-export const API_BASE_URL =
-  (import.meta.env.VITE_API_BASE_URL as string | undefined) ??
-  "https://safechain-backend.onrender.com";
-
-const TOKEN_KEY = "sc_access_token";
-const REFRESH_KEY = "sc_refresh_token";
-
-export function getToken(): string | null {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem(TOKEN_KEY);
-}
-export function getRefreshToken(): string | null {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem(REFRESH_KEY);
-}
-export function setTokens(access: string | null, refresh?: string | null) {
-  if (typeof window === "undefined") return;
-  if (access) localStorage.setItem(TOKEN_KEY, access);
-  else localStorage.removeItem(TOKEN_KEY);
-  if (refresh !== undefined) {
-    if (refresh) localStorage.setItem(REFRESH_KEY, refresh);
-    else localStorage.removeItem(REFRESH_KEY);
-  }
-}
-
-export const api = axios.create({
-  baseURL: `${API_BASE_URL}/api`,
-  headers: { "Content-Type": "application/json" },
-  timeout: 30_000,
-});
-
-api.interceptors.request.use((config) => {
-  const t = getToken();
-  if (t) {
-    config.headers = config.headers ?? {};
-    (config.headers as Record<string, string>).Authorization = `Bearer ${t}`;
-  }
-  return config;
-});
-
-// ---- Refresh-token logic with single-flight queue ----
-let refreshing: Promise<string | null> | null = null;
-let onUnauthorized: (() => void) | null = null;
-export function setOnUnauthorized(cb: (() => void) | null) {
-  onUnauthorized = cb;
-}
-
-async function performRefresh(): Promise<string | null> {
-  const rt = getRefreshToken();
-  if (!rt) return null;
-  try {
-    const res = await axios.post<{ accessToken: string; refreshToken?: string }>(
-      `${API_BASE_URL}/api/auth/refresh`,
-      { refreshToken: rt },
-      { headers: { "Content-Type": "application/json" }, timeout: 15_000 }
-    );
-    setTokens(res.data.accessToken, res.data.refreshToken ?? rt);
-    return res.data.accessToken;
-  } catch {
-    setTokens(null, null);
-    return null;
-  }
-}
-
-api.interceptors.response.use(
-  (r) => r,
-  async (err: AxiosError<{ message?: string; error?: string }>) => {
-    const status = err.response?.status;
-    const original = err.config as (AxiosRequestConfig & { _retry?: boolean }) | undefined;
-    const isRefreshCall = typeof original?.url === "string" && original.url.includes("/auth/refresh");
-    if (status === 401 && original && !original._retry && !isRefreshCall && getRefreshToken()) {
-      original._retry = true;
-      refreshing = refreshing ?? performRefresh();
-      const newToken = await refreshing;
-      refreshing = null;
-      if (newToken) {
-        original.headers = original.headers ?? {};
-        (original.headers as Record<string, string>).Authorization = `Bearer ${newToken}`;
-        return api.request(original);
-      }
-    }
-    if (status === 401) {
-      setTokens(null, null);
-      onUnauthorized?.();
-    }
-    return Promise.reject(err);
-  }
-);
-
-export function apiErrorMessage(err: unknown): string {
-  if (axios.isAxiosError(err)) {
-    const data = err.response?.data as { message?: string; error?: string } | undefined;
-    return data?.message || data?.error || err.message || "Request failed";
-  }
-  return err instanceof Error ? err.message : "Request failed";
-}
+import { supabase } from "@/integrations/supabase/client";
+import facilitiesData from "@/data/facilities.json";
 
 // ============ Types ============
 export type Role =
@@ -124,13 +32,18 @@ export const ROLE_DASHBOARD: Record<Role, string> = {
   developer: "/developer/dashboard",
 };
 
-export const ALL_ROLES: Role[] = ["super_admin", "admin", "responder", "gbv_officer", "counsellor", "developer"];
+export const ALL_ROLES: Role[] = [
+  "super_admin", "admin", "responder", "gbv_officer", "counsellor", "developer",
+];
 
 export type UserStatus = "pending" | "active" | "suspended" | "rejected";
 export const REPORT_STATUSES = ["New", "Assigned", "In_Progress", "Escalated", "Resolved", "Closed"] as const;
 export type ReportStatus = typeof REPORT_STATUSES[number];
 
-export interface AuthUser { id: string; email: string; role: Role; first_name?: string; last_name?: string; status?: UserStatus; }
+export interface AuthUser {
+  id: string; email: string; role: Role;
+  first_name?: string; last_name?: string; status?: UserStatus;
+}
 export interface LoginResponse { accessToken: string; refreshToken?: string; user: AuthUser; }
 
 export interface PendingUser {
@@ -169,58 +82,340 @@ export interface AdminStats {
 }
 export interface FacilityItem { id: string; name: string; province?: string; district?: string; type?: string; }
 
-// ============ Endpoint helpers ============
+// ============ Helpers ============
+export function apiErrorMessage(err: unknown): string {
+  if (err && typeof err === "object" && "message" in err) return String((err as { message: unknown }).message);
+  return err instanceof Error ? err.message : "Request failed";
+}
+
+// Legacy no-op token helpers (kept for backward-compat with imports)
+export function getToken(): string | null { return null; }
+export function setTokens(_a: string | null, _b?: string | null): void { /* no-op */ }
+export function setOnUnauthorized(_cb: (() => void) | null): void { /* no-op */ }
+
+async function loadRole(userId: string): Promise<Role> {
+  const { data } = await supabase
+    .from("user_roles").select("role").eq("user_id", userId);
+  const roles = (data ?? []).map((r) => r.role as Role);
+  const priority: Role[] = ["super_admin", "admin", "developer", "gbv_officer", "responder", "counsellor"];
+  for (const r of priority) if (roles.includes(r)) return r;
+  return roles[0] ?? "responder";
+}
+
+async function loadCurrentUser(): Promise<AuthUser | null> {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return null;
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("first_name,last_name,status,email")
+    .eq("user_id", user.id)
+    .maybeSingle();
+  const role = await loadRole(user.id);
+  return {
+    id: user.id,
+    email: profile?.email ?? user.email ?? "",
+    role,
+    first_name: profile?.first_name ?? undefined,
+    last_name: profile?.last_name ?? undefined,
+    status: (profile?.status as UserStatus | undefined) ?? "pending",
+  };
+}
+
+// ============ auth ============
 export const auth = {
-  login: (body: { email: string; password: string }) =>
-    api.post<LoginResponse>("/auth/login", body).then((r) => r.data),
-  register: (body: { first_name: string; last_name: string; email: string; password: string; phone: string; role: Role }) =>
-    api.post<{ success: boolean; message: string }>("/auth/register", body).then((r) => r.data),
-  me: () => api.get<AuthUser>("/auth/me").then((r) => r.data),
-  logout: () => api.post<{ success: boolean }>("/auth/logout").then((r) => r.data).catch(() => ({ success: false })),
-};
+  async login({ email, password }: { email: string; password: string }): Promise<LoginResponse> {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error || !data.session) throw new Error(error?.message || "Invalid credentials");
+    const me = await loadCurrentUser();
+    if (!me) throw new Error("Could not load account");
+    if (me.status === "pending") { await supabase.auth.signOut(); throw new Error("Your account is awaiting approval"); }
+    if (me.status === "suspended") { await supabase.auth.signOut(); throw new Error("Your account has been suspended"); }
+    if (me.status === "rejected") { await supabase.auth.signOut(); throw new Error("Your account request was rejected"); }
+    return { accessToken: data.session.access_token, refreshToken: data.session.refresh_token, user: me };
+  },
 
-export const users = {
-  list: (params?: { role?: Role; status?: UserStatus; q?: string }) =>
-    api.get<ManagedUser[]>("/users", { params }).then((r) => r.data),
-  pending: () => api.get<PendingUser[]>("/users/pending").then((r) => r.data),
-  approve: (id: string) => api.patch<{ success: boolean }>(`/users/${id}/approve`).then((r) => r.data),
-  reject: (id: string) => api.patch<{ success: boolean }>(`/users/${id}/reject`).then((r) => r.data),
-  suspend: (id: string) => api.patch<{ success: boolean }>(`/users/${id}/suspend`).then((r) => r.data),
-  reactivate: (id: string) => api.patch<{ success: boolean }>(`/users/${id}/reactivate`).then((r) => r.data),
-  setRole: (id: string, role: Role) => api.patch<{ success: boolean }>(`/users/${id}/role`, { role }).then((r) => r.data),
-};
+  async register(body: {
+    first_name: string; last_name: string; email: string;
+    password: string; phone: string; role: Role;
+  }): Promise<{ success: boolean; message: string }> {
+    const emailRedirectTo = typeof window !== "undefined" ? window.location.origin : undefined;
+    const { data, error } = await supabase.auth.signUp({
+      email: body.email,
+      password: body.password,
+      options: {
+        emailRedirectTo,
+        data: {
+          first_name: body.first_name,
+          last_name: body.last_name,
+          phone: body.phone,
+          role: body.role,
+        },
+      },
+    });
+    if (error) throw new Error(error.message);
+    // If session auto-created (email confirmation off), immediately sign out so
+    // the user cannot access anything until approved.
+    if (data.session) await supabase.auth.signOut();
+    return { success: true, message: "Request submitted for approval" };
+  },
 
-export const reports = {
-  list: (params?: { status?: ReportStatus; q?: string; assignedTo?: string }) =>
-    api.get<ReportListItem[]>("/reports", { params }).then((r) => r.data),
-  get: (id: string) => api.get<ReportDetail>(`/reports/${id}`).then((r) => r.data),
-  create: (body: ReportInput) => api.post<{ id: string; status: string }>("/reports", body).then((r) => r.data),
-  setStatus: (id: string, status: ReportStatus) =>
-    api.patch<{ success: boolean }>(`/reports/${id}/status`, { status }).then((r) => r.data),
-  assign: (id: string, responder_id: string) =>
-    api.post<{ success: boolean }>(`/reports/${id}/assign`, { responder_id }).then((r) => r.data),
-  addNote: (id: string, body: string) =>
-    api.post<{ success: boolean; note: ReportNote }>(`/reports/${id}/notes`, { body }).then((r) => r.data),
-  upload: (id: string, file: File) => {
-    const fd = new FormData();
-    fd.append("file", file);
-    return api.post<{ success: boolean; attachment: ReportAttachment }>(`/reports/${id}/attachments`, fd, {
-      headers: { "Content-Type": "multipart/form-data" },
-    }).then((r) => r.data);
+  async me(): Promise<AuthUser> {
+    const me = await loadCurrentUser();
+    if (!me) throw new Error("Not signed in");
+    return me;
+  },
+
+  async logout(): Promise<{ success: boolean }> {
+    await supabase.auth.signOut();
+    return { success: true };
   },
 };
 
-export const notifications = {
-  list: () => api.get<NotificationItem[]>("/notifications").then((r) => r.data),
-  markRead: (id: string) => api.patch<{ success: boolean }>(`/notifications/${id}/read`).then((r) => r.data),
-  markAllRead: () => api.patch<{ success: boolean }>(`/notifications/read-all`).then((r) => r.data),
+// ============ users ============
+async function fetchUsers(filters?: { status?: UserStatus; role?: Role; q?: string }): Promise<ManagedUser[]> {
+  let q = supabase.from("profiles").select("user_id,first_name,last_name,email,phone,province,district,status,pending_role,created_at");
+  if (filters?.status) q = q.eq("status", filters.status);
+  if (filters?.q) {
+    const t = `%${filters.q}%`;
+    q = q.or(`email.ilike.${t},first_name.ilike.${t},last_name.ilike.${t}`);
+  }
+  const { data, error } = await q.order("created_at", { ascending: false });
+  if (error) throw new Error(error.message);
+  const rows = data ?? [];
+
+  // Batch-load roles
+  const ids = rows.map((r) => r.user_id);
+  const roleMap = new Map<string, Role>();
+  if (ids.length) {
+    const { data: rs } = await supabase.from("user_roles").select("user_id,role").in("user_id", ids);
+    (rs ?? []).forEach((r) => {
+      const prev = roleMap.get(r.user_id);
+      // Priority: super_admin > admin > ...
+      const priority: Role[] = ["super_admin", "admin", "developer", "gbv_officer", "responder", "counsellor"];
+      const nextR = r.role as Role;
+      if (!prev || priority.indexOf(nextR) < priority.indexOf(prev)) roleMap.set(r.user_id, nextR);
+    });
+  }
+
+  let out: ManagedUser[] = rows.map((r) => ({
+    id: r.user_id,
+    first_name: r.first_name ?? "",
+    last_name: r.last_name ?? "",
+    email: r.email,
+    phone: r.phone ?? undefined,
+    province: r.province ?? undefined,
+    district: r.district ?? undefined,
+    created_at: r.created_at ?? undefined,
+    status: r.status as UserStatus,
+    role: (roleMap.get(r.user_id) ?? (r.pending_role as Role | null) ?? "responder") as Role,
+  }));
+  if (filters?.role) out = out.filter((u) => u.role === filters.role);
+  return out;
+}
+
+export const users = {
+  list: (params?: { role?: Role; status?: UserStatus; q?: string }) => fetchUsers(params),
+  pending: () => fetchUsers({ status: "pending" }) as Promise<PendingUser[]>,
+
+  async approve(id: string): Promise<{ success: boolean }> {
+    // Read pending_role → grant it, then activate.
+    const { data: prof, error: pe } = await supabase
+      .from("profiles").select("pending_role").eq("user_id", id).maybeSingle();
+    if (pe) throw new Error(pe.message);
+    const role = (prof?.pending_role as Role | null) ?? "responder";
+    const { error: re } = await supabase.from("user_roles")
+      .upsert({ user_id: id, role }, { onConflict: "user_id,role" });
+    if (re) throw new Error(re.message);
+    const { error: ue } = await supabase.from("profiles")
+      .update({ status: "active" }).eq("user_id", id);
+    if (ue) throw new Error(ue.message);
+    return { success: true };
+  },
+
+  async reject(id: string): Promise<{ success: boolean }> {
+    const { error } = await supabase.from("profiles").update({ status: "rejected" }).eq("user_id", id);
+    if (error) throw new Error(error.message);
+    return { success: true };
+  },
+
+  async suspend(id: string): Promise<{ success: boolean }> {
+    const { error } = await supabase.from("profiles").update({ status: "suspended" }).eq("user_id", id);
+    if (error) throw new Error(error.message);
+    return { success: true };
+  },
+
+  async reactivate(id: string): Promise<{ success: boolean }> {
+    const { error } = await supabase.from("profiles").update({ status: "active" }).eq("user_id", id);
+    if (error) throw new Error(error.message);
+    return { success: true };
+  },
+
+  async setRole(id: string, role: Role): Promise<{ success: boolean }> {
+    // Wipe existing role rows and insert new (simple single-role model at app layer)
+    const { error: de } = await supabase.from("user_roles").delete().eq("user_id", id);
+    if (de) throw new Error(de.message);
+    const { error: ie } = await supabase.from("user_roles").insert({ user_id: id, role });
+    if (ie) throw new Error(ie.message);
+    return { success: true };
+  },
 };
+
+// ============ reports ============
+export const reports = {
+  async list(params?: { status?: ReportStatus; q?: string; assignedTo?: string }): Promise<ReportListItem[]> {
+    let q = supabase.from("reports").select("id,category,status,created_at,province,district,assigned_to");
+    if (params?.status) q = q.eq("status", params.status);
+    if (params?.assignedTo) q = q.eq("assigned_to", params.assignedTo);
+    if (params?.q) q = q.ilike("description", `%${params.q}%`);
+    const { data, error } = await q.order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    return (data ?? []) as ReportListItem[];
+  },
+
+  async get(id: string): Promise<ReportDetail> {
+    const { data: r, error } = await supabase.from("reports").select("*").eq("id", id).maybeSingle();
+    if (error) throw new Error(error.message);
+    if (!r) throw new Error("Report not found");
+    const [{ data: notes }, { data: history }] = await Promise.all([
+      supabase.from("report_notes").select("id,body,author_id,created_at").eq("report_id", id).order("created_at"),
+      supabase.from("report_history").select("id,action,details,actor_id,created_at").eq("report_id", id).order("created_at"),
+    ]);
+    return {
+      id: r.id,
+      category: r.category,
+      status: r.status as ReportStatus,
+      created_at: r.created_at,
+      province: r.province ?? undefined,
+      district: r.district ?? undefined,
+      assigned_to: r.assigned_to ?? null,
+      description: r.description ?? undefined,
+      reporter_name: r.reporter_name ?? undefined,
+      reporter_phone: r.reporter_phone ?? undefined,
+      notes: (notes ?? []).map((n) => ({ id: n.id, body: n.body, author: n.author_id ?? undefined, created_at: n.created_at })),
+      history: (history ?? []).map((h) => ({ id: h.id, action: h.action, details: h.details ?? undefined, actor: h.actor_id ?? undefined, created_at: h.created_at })),
+      attachments: [],
+    };
+  },
+
+  async create(body: ReportInput): Promise<{ id: string; status: string }> {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data, error } = await supabase.from("reports").insert({
+      category: body.category,
+      description: body.description,
+      province: body.province,
+      district: body.district,
+      reporter_name: body.reporter_name ?? null,
+      reporter_phone: body.reporter_phone ?? null,
+      submitted_by: user?.id ?? null,
+    }).select("id,status").single();
+    if (error) throw new Error(error.message);
+    return { id: data.id, status: data.status };
+  },
+
+  async setStatus(id: string, status: ReportStatus): Promise<{ success: boolean }> {
+    const { error } = await supabase.from("reports").update({ status }).eq("id", id);
+    if (error) throw new Error(error.message);
+    const { data: { user } } = await supabase.auth.getUser();
+    await supabase.from("report_history").insert({ report_id: id, action: `status:${status}`, actor_id: user?.id ?? null });
+    return { success: true };
+  },
+
+  async assign(id: string, responder_id: string): Promise<{ success: boolean }> {
+    const { error } = await supabase.from("reports").update({ assigned_to: responder_id, status: "Assigned" }).eq("id", id);
+    if (error) throw new Error(error.message);
+    const { data: { user } } = await supabase.auth.getUser();
+    await supabase.from("report_history").insert({ report_id: id, action: "assigned", details: responder_id, actor_id: user?.id ?? null });
+    await supabase.from("notifications").insert({ user_id: responder_id, message: `New case assigned to you (${id.slice(0, 8)})`, type: "assignment" });
+    return { success: true };
+  },
+
+  async addNote(id: string, body: string): Promise<{ success: boolean; note: ReportNote }> {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data, error } = await supabase.from("report_notes")
+      .insert({ report_id: id, body, author_id: user?.id ?? null })
+      .select("id,body,author_id,created_at").single();
+    if (error) throw new Error(error.message);
+    return { success: true, note: { id: data.id, body: data.body, author: data.author_id ?? undefined, created_at: data.created_at } };
+  },
+
+  async upload(_id: string, _file: File): Promise<{ success: boolean; attachment: ReportAttachment }> {
+    throw new Error("File uploads not yet enabled");
+  },
+};
+
+// ============ notifications ============
+export const notifications = {
+  async list(): Promise<NotificationItem[]> {
+    const { data, error } = await supabase.from("notifications")
+      .select("id,message,read,created_at,type").order("created_at", { ascending: false }).limit(50);
+    if (error) throw new Error(error.message);
+    return (data ?? []) as NotificationItem[];
+  },
+  async markRead(id: string): Promise<{ success: boolean }> {
+    const { error } = await supabase.from("notifications").update({ read: true }).eq("id", id);
+    if (error) throw new Error(error.message);
+    return { success: true };
+  },
+  async markAllRead(): Promise<{ success: boolean }> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { success: false };
+    const { error } = await supabase.from("notifications").update({ read: true }).eq("user_id", user.id).eq("read", false);
+    if (error) throw new Error(error.message);
+    return { success: true };
+  },
+};
+
+// ============ dashboard ============
+async function countTable(table: "profiles" | "reports", statusFilter?: string | string[]): Promise<number> {
+  let q = table === "profiles"
+    ? supabase.from("profiles").select("*", { count: "exact", head: true })
+    : supabase.from("reports").select("*", { count: "exact", head: true });
+  if (typeof statusFilter === "string") q = q.eq("status", statusFilter);
+  else if (Array.isArray(statusFilter)) q = q.in("status", statusFilter);
+  const { count } = await q;
+  return count ?? 0;
+}
 
 export const dashboard = {
-  superAdmin: () => api.get<SuperAdminStats>("/dashboard/super-admin").then((r) => r.data),
-  admin: () => api.get<AdminStats>("/dashboard/admin").then((r) => r.data),
+  async superAdmin(): Promise<SuperAdminStats> {
+    const [totalUsers, pendingUsers, activeUsers, totalReports, resolvedReports] = await Promise.all([
+      countTable("profiles"),
+      countTable("profiles", "pending"),
+      countTable("profiles", "active"),
+      countTable("reports"),
+      countTable("reports", ["Resolved", "Closed"]),
+    ]);
+    return {
+      totalUsers, pendingUsers, activeUsers, totalReports,
+      openReports: Math.max(0, totalReports - resolvedReports),
+      resolvedReports,
+      totalFacilities: (facilitiesData as unknown[]).length,
+    };
+  },
+  async admin(): Promise<AdminStats> {
+    const [totalReports, assignedReports, resolvedReports] = await Promise.all([
+      countTable("reports"),
+      countTable("reports", "Assigned"),
+      countTable("reports", ["Resolved", "Closed"]),
+    ]);
+    return {
+      totalReports, assignedReports,
+      openReports: Math.max(0, totalReports - resolvedReports),
+      resolvedReports,
+    };
+  },
 };
 
+// ============ facilities ============
 export const facilities = {
-  list: () => api.get<FacilityItem[]>("/facilities").then((r) => r.data),
+  async list(): Promise<FacilityItem[]> {
+    return (facilitiesData as Array<{ code?: string; name: string; province?: string; district?: string; type?: string }>).map((f, i) => ({
+      id: f.code ?? String(i),
+      name: f.name,
+      province: f.province,
+      district: f.district,
+      type: f.type,
+    }));
+  },
 };
+export const API_BASE_URL = "lovable-cloud";
