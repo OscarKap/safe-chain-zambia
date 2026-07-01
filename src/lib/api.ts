@@ -283,7 +283,7 @@ export const reports = {
     return {
       id: r.id,
       category: r.category,
-      status: r.status,
+      status: r.status as ReportStatus,
       created_at: r.created_at,
       province: r.province ?? undefined,
       district: r.district ?? undefined,
