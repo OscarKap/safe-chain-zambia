@@ -197,6 +197,10 @@ export type Database = {
         | "community_volunteer"
         | "counsellor"
         | "data_reviewer"
+        | "admin"
+        | "responder"
+        | "gbv_officer"
+        | "developer"
       request_status: "pending" | "approved" | "rejected" | "suspended"
     }
     CompositeTypes: {
@@ -332,6 +336,10 @@ export const Constants = {
         "community_volunteer",
         "counsellor",
         "data_reviewer",
+        "admin",
+        "responder",
+        "gbv_officer",
+        "developer",
       ],
       request_status: ["pending", "approved", "rejected", "suspended"],
     },
