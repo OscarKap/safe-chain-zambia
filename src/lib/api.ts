@@ -366,10 +366,12 @@ export const notifications = {
 };
 
 // ============ dashboard ============
-async function countRows(table: string, filter?: (q: ReturnType<typeof supabase.from>) => ReturnType<typeof supabase.from>): Promise<number> {
-  const base = supabase.from(table).select("*", { count: "exact", head: true });
-  const q = filter ? filter(base as unknown as ReturnType<typeof supabase.from>) : base;
-  // @ts-expect-error runtime supabase count response
+async function countTable(table: "profiles" | "reports", statusFilter?: string | string[]): Promise<number> {
+  let q = table === "profiles"
+    ? supabase.from("profiles").select("*", { count: "exact", head: true })
+    : supabase.from("reports").select("*", { count: "exact", head: true });
+  if (typeof statusFilter === "string") q = q.eq("status", statusFilter);
+  else if (Array.isArray(statusFilter)) q = q.in("status", statusFilter);
   const { count } = await q;
   return count ?? 0;
 }
@@ -377,20 +379,14 @@ async function countRows(table: string, filter?: (q: ReturnType<typeof supabase.
 export const dashboard = {
   async superAdmin(): Promise<SuperAdminStats> {
     const [totalUsers, pendingUsers, activeUsers, totalReports, resolvedReports] = await Promise.all([
-      countRows("profiles"),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      countRows("profiles", (q: any) => q.eq("status", "pending")),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      countRows("profiles", (q: any) => q.eq("status", "active")),
-      countRows("reports"),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      countRows("reports", (q: any) => q.in("status", ["Resolved", "Closed"])),
+      countTable("profiles"),
+      countTable("profiles", "pending"),
+      countTable("profiles", "active"),
+      countTable("reports"),
+      countTable("reports", ["Resolved", "Closed"]),
     ]);
     return {
-      totalUsers,
-      pendingUsers,
-      activeUsers,
-      totalReports,
+      totalUsers, pendingUsers, activeUsers, totalReports,
       openReports: Math.max(0, totalReports - resolvedReports),
       resolvedReports,
       totalFacilities: (facilitiesData as unknown[]).length,
@@ -398,15 +394,12 @@ export const dashboard = {
   },
   async admin(): Promise<AdminStats> {
     const [totalReports, assignedReports, resolvedReports] = await Promise.all([
-      countRows("reports"),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      countRows("reports", (q: any) => q.eq("status", "Assigned")),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      countRows("reports", (q: any) => q.in("status", ["Resolved", "Closed"])),
+      countTable("reports"),
+      countTable("reports", "Assigned"),
+      countTable("reports", ["Resolved", "Closed"]),
     ]);
     return {
-      totalReports,
-      assignedReports,
+      totalReports, assignedReports,
       openReports: Math.max(0, totalReports - resolvedReports),
       resolvedReports,
     };
