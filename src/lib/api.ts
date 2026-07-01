@@ -409,6 +409,13 @@ export const dashboard = {
 // ============ facilities ============
 export const facilities = {
   async list(): Promise<FacilityItem[]> {
-    return (facilitiesData as FacilityItem[]);
+    return (facilitiesData as Array<{ code?: string; name: string; province?: string; district?: string; type?: string }>).map((f, i) => ({
+      id: f.code ?? String(i),
+      name: f.name,
+      province: f.province,
+      district: f.district,
+      type: f.type,
+    }));
   },
 };
+export const API_BASE_URL = "lovable-cloud";
