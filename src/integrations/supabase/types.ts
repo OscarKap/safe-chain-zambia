@@ -368,7 +368,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      admin_approve_user: { Args: { _target: string }; Returns: undefined }
+      admin_delete_user: { Args: { _target: string }; Returns: undefined }
+      admin_reactivate_user: { Args: { _target: string }; Returns: undefined }
+      admin_reject_user: { Args: { _target: string }; Returns: undefined }
+      admin_set_user_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _target: string
+        }
+        Returns: undefined
+      }
+      admin_suspend_user: { Args: { _target: string }; Returns: undefined }
     }
     Enums: {
       app_role:

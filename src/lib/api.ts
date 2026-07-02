@@ -218,44 +218,33 @@ export const users = {
   pending: () => fetchUsers({ status: "pending" }) as Promise<PendingUser[]>,
 
   async approve(id: string): Promise<{ success: boolean }> {
-    // Read pending_role → grant it, then activate.
-    const { data: prof, error: pe } = await supabase
-      .from("profiles").select("pending_role").eq("user_id", id).maybeSingle();
-    if (pe) throw new Error(pe.message);
-    const role = (prof?.pending_role as Role | null) ?? "responder";
-    const { error: re } = await supabase.from("user_roles")
-      .upsert({ user_id: id, role }, { onConflict: "user_id,role" });
-    if (re) throw new Error(re.message);
-    const { error: ue } = await supabase.from("profiles")
-      .update({ status: "active" }).eq("user_id", id);
-    if (ue) throw new Error(ue.message);
+    const { error } = await supabase.rpc("admin_approve_user", { _target: id });
+    if (error) throw new Error(error.message);
     return { success: true };
   },
-
   async reject(id: string): Promise<{ success: boolean }> {
-    const { error } = await supabase.from("profiles").update({ status: "rejected" }).eq("user_id", id);
+    const { error } = await supabase.rpc("admin_reject_user", { _target: id });
     if (error) throw new Error(error.message);
     return { success: true };
   },
-
   async suspend(id: string): Promise<{ success: boolean }> {
-    const { error } = await supabase.from("profiles").update({ status: "suspended" }).eq("user_id", id);
+    const { error } = await supabase.rpc("admin_suspend_user", { _target: id });
     if (error) throw new Error(error.message);
     return { success: true };
   },
-
   async reactivate(id: string): Promise<{ success: boolean }> {
-    const { error } = await supabase.from("profiles").update({ status: "active" }).eq("user_id", id);
+    const { error } = await supabase.rpc("admin_reactivate_user", { _target: id });
     if (error) throw new Error(error.message);
     return { success: true };
   },
-
   async setRole(id: string, role: Role): Promise<{ success: boolean }> {
-    // Wipe existing role rows and insert new (simple single-role model at app layer)
-    const { error: de } = await supabase.from("user_roles").delete().eq("user_id", id);
-    if (de) throw new Error(de.message);
-    const { error: ie } = await supabase.from("user_roles").insert({ user_id: id, role });
-    if (ie) throw new Error(ie.message);
+    const { error } = await supabase.rpc("admin_set_user_role", { _target: id, _role: role });
+    if (error) throw new Error(error.message);
+    return { success: true };
+  },
+  async remove(id: string): Promise<{ success: boolean }> {
+    const { error } = await supabase.rpc("admin_delete_user", { _target: id });
+    if (error) throw new Error(error.message);
     return { success: true };
   },
 };
