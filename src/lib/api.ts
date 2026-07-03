@@ -37,8 +37,16 @@ export const ALL_ROLES: Role[] = [
 ];
 
 export type UserStatus = "pending" | "active" | "suspended" | "rejected";
-export const REPORT_STATUSES = ["New", "Assigned", "In_Progress", "Escalated", "Resolved", "Closed"] as const;
+export const REPORT_STATUSES = [
+  "New", "Awaiting_Review", "Assigned", "Accepted", "En_Route", "On_Scene",
+  "In_Progress", "Escalated", "Resolved", "Closed",
+] as const;
 export type ReportStatus = typeof REPORT_STATUSES[number];
+export const REPORT_WORKFLOW: ReportStatus[] = [
+  "New", "Awaiting_Review", "Assigned", "Accepted", "En_Route", "On_Scene", "In_Progress", "Resolved", "Closed",
+];
+export const REPORT_PRIORITIES = ["low", "normal", "high", "critical"] as const;
+export type ReportPriority = typeof REPORT_PRIORITIES[number];
 
 export interface AuthUser {
   id: string; email: string; role: Role;
