@@ -63,17 +63,20 @@ export interface ManagedUser extends PendingUser { status: UserStatus; }
 export interface ReportListItem {
   id: string; category: string; status: ReportStatus; created_at: string;
   province?: string; district?: string; assigned_to?: string | null;
+  priority?: ReportPriority;
 }
 export interface ReportHistoryEntry { id: string; action: string; actor?: string; created_at: string; details?: string; }
 export interface ReportNote { id: string; body: string; author?: string; created_at: string; }
 export interface ReportAttachment { id: string; filename: string; url: string; uploaded_at?: string; }
 export interface ReportDetail extends ReportListItem {
   description?: string; reporter_name?: string; reporter_phone?: string;
+  gps_lat?: number | null; gps_lng?: number | null;
   notes?: ReportNote[]; history?: ReportHistoryEntry[]; attachments?: ReportAttachment[];
 }
 export interface ReportInput {
   category: string; description: string; province: string; district: string;
   reporter_name?: string; reporter_phone?: string;
+  priority?: ReportPriority; gps_lat?: number | null; gps_lng?: number | null;
 }
 
 export interface NotificationItem {
