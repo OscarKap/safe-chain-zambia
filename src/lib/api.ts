@@ -262,9 +262,13 @@ export const users = {
 
 // ============ reports ============
 export const reports = {
-  async list(params?: { status?: ReportStatus; q?: string; assignedTo?: string }): Promise<ReportListItem[]> {
-    let q = supabase.from("reports").select("id,category,status,created_at,province,district,assigned_to");
+  async list(params?: { status?: ReportStatus; priority?: ReportPriority; province?: string; district?: string; category?: string; q?: string; assignedTo?: string }): Promise<ReportListItem[]> {
+    let q = supabase.from("reports").select("id,category,status,priority,created_at,province,district,assigned_to");
     if (params?.status) q = q.eq("status", params.status);
+    if (params?.priority) q = q.eq("priority", params.priority);
+    if (params?.province) q = q.eq("province", params.province);
+    if (params?.district) q = q.eq("district", params.district);
+    if (params?.category) q = q.eq("category", params.category);
     if (params?.assignedTo) q = q.eq("assigned_to", params.assignedTo);
     if (params?.q) q = q.ilike("description", `%${params.q}%`);
     const { data, error } = await q.order("created_at", { ascending: false });
@@ -284,6 +288,7 @@ export const reports = {
       id: r.id,
       category: r.category,
       status: r.status as ReportStatus,
+      priority: (r.priority as ReportPriority | undefined) ?? "normal",
       created_at: r.created_at,
       province: r.province ?? undefined,
       district: r.district ?? undefined,
@@ -291,6 +296,8 @@ export const reports = {
       description: r.description ?? undefined,
       reporter_name: r.reporter_name ?? undefined,
       reporter_phone: r.reporter_phone ?? undefined,
+      gps_lat: (r as { gps_lat?: number | null }).gps_lat ?? null,
+      gps_lng: (r as { gps_lng?: number | null }).gps_lng ?? null,
       notes: (notes ?? []).map((n) => ({ id: n.id, body: n.body, author: n.author_id ?? undefined, created_at: n.created_at })),
       history: (history ?? []).map((h) => ({ id: h.id, action: h.action, details: h.details ?? undefined, actor: h.actor_id ?? undefined, created_at: h.created_at })),
       attachments: [],
@@ -306,6 +313,9 @@ export const reports = {
       district: body.district,
       reporter_name: body.reporter_name ?? null,
       reporter_phone: body.reporter_phone ?? null,
+      priority: body.priority ?? "normal",
+      gps_lat: body.gps_lat ?? null,
+      gps_lng: body.gps_lng ?? null,
       submitted_by: user?.id ?? null,
     }).select("id,status").single();
     if (error) throw new Error(error.message);
@@ -317,6 +327,14 @@ export const reports = {
     if (error) throw new Error(error.message);
     const { data: { user } } = await supabase.auth.getUser();
     await supabase.from("report_history").insert({ report_id: id, action: `status:${status}`, actor_id: user?.id ?? null });
+    return { success: true };
+  },
+
+  async setPriority(id: string, priority: ReportPriority): Promise<{ success: boolean }> {
+    const { error } = await supabase.from("reports").update({ priority }).eq("id", id);
+    if (error) throw new Error(error.message);
+    const { data: { user } } = await supabase.auth.getUser();
+    await supabase.from("report_history").insert({ report_id: id, action: `priority:${priority}`, actor_id: user?.id ?? null });
     return { success: true };
   },
 
@@ -342,6 +360,7 @@ export const reports = {
     throw new Error("File uploads not yet enabled");
   },
 };
+
 
 // ============ notifications ============
 export const notifications = {
