@@ -301,7 +301,10 @@ export type Database = {
           created_at: string
           description: string
           district: string | null
+          gps_lat: number | null
+          gps_lng: number | null
           id: string
+          priority: string
           province: string | null
           reporter_name: string | null
           reporter_phone: string | null
@@ -315,7 +318,10 @@ export type Database = {
           created_at?: string
           description: string
           district?: string | null
+          gps_lat?: number | null
+          gps_lng?: number | null
           id?: string
+          priority?: string
           province?: string | null
           reporter_name?: string | null
           reporter_phone?: string | null
@@ -329,7 +335,10 @@ export type Database = {
           created_at?: string
           description?: string
           district?: string | null
+          gps_lat?: number | null
+          gps_lng?: number | null
           id?: string
+          priority?: string
           province?: string | null
           reporter_name?: string | null
           reporter_phone?: string | null
