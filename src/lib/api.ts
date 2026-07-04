@@ -57,14 +57,22 @@ export interface LoginResponse { accessToken: string; refreshToken?: string; use
 export interface PendingUser {
   id: string; first_name: string; last_name: string; email: string;
   role: Role; province?: string; district?: string; created_at?: string; phone?: string;
+  specialization?: string;
 }
 export interface ManagedUser extends PendingUser { status: UserStatus; }
+
+export interface ResponderWorkload {
+  user_id: string; first_name?: string; last_name?: string; email: string;
+  province?: string; district?: string; specialization?: string;
+  is_available: boolean; max_active_cases: number; open_cases: number;
+}
 
 export interface ReportListItem {
   id: string; category: string; status: ReportStatus; created_at: string;
   province?: string; district?: string; assigned_to?: string | null;
   priority?: ReportPriority;
 }
+
 export interface ReportHistoryEntry { id: string; action: string; actor?: string; created_at: string; details?: string; }
 export interface ReportNote { id: string; body: string; author?: string; created_at: string; }
 export interface ReportAttachment { id: string; filename: string; url: string; uploaded_at?: string; }
