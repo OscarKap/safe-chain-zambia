@@ -88,6 +88,18 @@ function AdminDashboard() {
 
   return (
     <DashboardShell title={isSuper ? "Super Admin Dashboard" : "Admin Dashboard"}>
+      <div className="flex flex-wrap gap-2 mb-6">
+        <Link to="/eoc" className="rounded-full bg-primary text-primary-foreground px-4 py-2 text-sm font-semibold">
+          Live Operations Centre →
+        </Link>
+        <Link to="/admin/analytics" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">
+          Analytics & Exports
+        </Link>
+        <Link to="/admin/reports" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">
+          All reports
+        </Link>
+      </div>
+
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {statsQ.isLoading ? <p className="text-sm text-muted-foreground">Loading stats…</p> : null}
         {statsQ.error ? <p className="text-sm text-destructive">{apiErrorMessage(statsQ.error)}</p> : null}
