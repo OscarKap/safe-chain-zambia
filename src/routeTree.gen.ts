@@ -23,6 +23,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
+import { Route as AuthenticatedEocRouteImport } from './routes/_authenticated/eoc'
 import { Route as AuthenticatedResponderDashboardRouteImport } from './routes/_authenticated/responder.dashboard'
 import { Route as AuthenticatedGbvDashboardRouteImport } from './routes/_authenticated/gbv.dashboard'
 import { Route as AuthenticatedDeveloperDashboardRouteImport } from './routes/_authenticated/developer.dashboard'
@@ -100,6 +101,11 @@ const LearnSlugRoute = LearnSlugRouteImport.update({
   path: '/learn/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedEocRoute = AuthenticatedEocRouteImport.update({
+  id: '/eoc',
+  path: '/eoc',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedResponderDashboardRoute =
   AuthenticatedResponderDashboardRouteImport.update({
     id: '/responder/dashboard',
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn': typeof LearnIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -201,6 +209,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/_authenticated/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/report'
     | '/services'
+    | '/eoc'
     | '/learn/$slug'
     | '/learn/'
     | '/admin/dashboard'
@@ -247,6 +257,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/report'
     | '/services'
+    | '/eoc'
     | '/learn/$slug'
     | '/learn'
     | '/admin/dashboard'
@@ -270,6 +281,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/report'
     | '/services'
+    | '/_authenticated/eoc'
     | '/learn/$slug'
     | '/learn/'
     | '/_authenticated/admin/dashboard'
@@ -398,6 +410,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/eoc': {
+      id: '/_authenticated/eoc'
+      path: '/eoc'
+      fullPath: '/eoc'
+      preLoaderRoute: typeof AuthenticatedEocRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/responder/dashboard': {
       id: '/_authenticated/responder/dashboard'
       path: '/responder/dashboard'
@@ -465,6 +484,7 @@ const AuthenticatedAdminReportsRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedEocRoute: typeof AuthenticatedEocRoute
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
   AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRouteWithChildren
   AuthenticatedCounsellorDashboardRoute: typeof AuthenticatedCounsellorDashboardRoute
@@ -474,6 +494,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedEocRoute: AuthenticatedEocRoute,
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
   AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRouteWithChildren,
   AuthenticatedCounsellorDashboardRoute: AuthenticatedCounsellorDashboardRoute,
