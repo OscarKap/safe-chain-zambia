@@ -58,6 +58,12 @@ function ReportDetail() {
     onSuccess: () => { toast.success("Responder assigned"); setAssignTo(""); qc.invalidateQueries({ queryKey: ["report", id] }); },
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
+  const autoAssign = useMutation({
+    mutationFn: () => reports.autoAssign(id),
+    onSuccess: () => { toast.success("Auto-assigned to best-matched responder"); qc.invalidateQueries({ queryKey: ["report", id] }); },
+    onError: (e) => toast.error(apiErrorMessage(e)),
+  });
+
   const addNote = useMutation({
     mutationFn: (body: string) => reports.addNote(id, body),
     onSuccess: () => { toast.success("Note added"); setNote(""); qc.invalidateQueries({ queryKey: ["report", id] }); },
