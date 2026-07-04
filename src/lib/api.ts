@@ -395,6 +395,12 @@ export const reports = {
     return { success: true };
   },
 
+  async autoAssign(id: string): Promise<{ success: boolean; responder_id: string }> {
+    const { data, error } = await supabase.rpc("auto_assign_report", { _report_id: id });
+    if (error) throw new Error(error.message);
+    return { success: true, responder_id: String(data) };
+  },
+
   async addNote(id: string, body: string): Promise<{ success: boolean; note: ReportNote }> {
     const { data: { user } } = await supabase.auth.getUser();
     const { data, error } = await supabase.from("report_notes")
