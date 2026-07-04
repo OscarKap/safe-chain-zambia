@@ -492,3 +492,83 @@ export const facilities = {
   },
 };
 export const API_BASE_URL = "lovable-cloud";
+
+// ============ analytics ============
+export interface AnalyticsBucket { key: string; count: number }
+export interface AnalyticsOverview {
+  totalReports: number;
+  byStatus: AnalyticsBucket[];
+  byPriority: AnalyticsBucket[];
+  byCategory: AnalyticsBucket[];
+  byProvince: AnalyticsBucket[];
+  byDay: AnalyticsBucket[];
+  avgResolutionHours: number | null;
+}
+
+function bucket(rows: Array<Record<string, unknown>>, field: string): AnalyticsBucket[] {
+  const m = new Map<string, number>();
+  for (const r of rows) {
+    const k = (r[field] as string | null | undefined) ?? "unknown";
+    m.set(k, (m.get(k) ?? 0) + 1);
+  }
+  return Array.from(m.entries()).map(([key, count]) => ({ key, count })).sort((a, b) => b.count - a.count);
+}
+
+export const analytics = {
+  async overview(range?: { from?: string; to?: string }): Promise<AnalyticsOverview> {
+    let q = supabase.from("reports").select("id,status,priority,category,province,created_at,updated_at");
+    if (range?.from) q = q.gte("created_at", range.from);
+    if (range?.to) q = q.lte("created_at", range.to);
+    const { data, error } = await q;
+    if (error) throw new Error(error.message);
+    const rows = (data ?? []) as Array<Record<string, unknown>>;
+
+    // avg resolution time for resolved/closed
+    const resolved = rows.filter((r) => ["Resolved", "Closed"].includes(r.status as string));
+    const hours = resolved
+      .map((r) => (new Date(r.updated_at as string).getTime() - new Date(r.created_at as string).getTime()) / 3600000)
+      .filter((h) => Number.isFinite(h) && h >= 0);
+    const avg = hours.length ? hours.reduce((a, b) => a + b, 0) / hours.length : null;
+
+    // per-day for last 30 days
+    const dayMap = new Map<string, number>();
+    for (const r of rows) {
+      const d = new Date(r.created_at as string).toISOString().slice(0, 10);
+      dayMap.set(d, (dayMap.get(d) ?? 0) + 1);
+    }
+    const byDay = Array.from(dayMap.entries()).map(([key, count]) => ({ key, count })).sort((a, b) => a.key.localeCompare(b.key));
+
+    return {
+      totalReports: rows.length,
+      byStatus: bucket(rows, "status"),
+      byPriority: bucket(rows, "priority"),
+      byCategory: bucket(rows, "category"),
+      byProvince: bucket(rows, "province"),
+      byDay,
+      avgResolutionHours: avg,
+    };
+  },
+
+  toCSV(rows: ReportListItem[]): string {
+    const headers = ["id", "category", "status", "priority", "province", "district", "assigned_to", "created_at"];
+    const escape = (v: unknown) => {
+      const s = v == null ? "" : String(v);
+      return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    const lines = [headers.join(",")];
+    for (const r of rows) {
+      lines.push(headers.map((h) => escape((r as unknown as Record<string, unknown>)[h])).join(","));
+    }
+    return lines.join("\n");
+  },
+
+  downloadCSV(filename: string, csv: string) {
+    if (typeof window === "undefined") return;
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename; a.click();
+    URL.revokeObjectURL(url);
+  },
+};
+
