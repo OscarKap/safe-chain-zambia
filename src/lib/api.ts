@@ -156,6 +156,7 @@ export const auth = {
   async register(body: {
     first_name: string; last_name: string; email: string;
     password: string; phone: string; role: Role;
+    province?: string; district?: string; specialization?: string;
   }): Promise<{ success: boolean; message: string }> {
     const emailRedirectTo = typeof window !== "undefined" ? window.location.origin : undefined;
     const { data, error } = await supabase.auth.signUp({
@@ -168,15 +169,27 @@ export const auth = {
           last_name: body.last_name,
           phone: body.phone,
           role: body.role,
+          province: body.province,
+          district: body.district,
+          specialization: body.specialization,
         },
       },
     });
     if (error) throw new Error(error.message);
-    // If session auto-created (email confirmation off), immediately sign out so
-    // the user cannot access anything until approved.
+    // Best-effort: fill province/district/specialization on the freshly created profile.
+    if (data.user && (body.province || body.district || body.specialization)) {
+      try {
+        await supabase.from("profiles").update({
+          province: body.province ?? null,
+          district: body.district ?? null,
+          specialization: body.specialization ?? null,
+        }).eq("user_id", data.user.id);
+      } catch { /* ignore */ }
+    }
     if (data.session) await supabase.auth.signOut();
     return { success: true, message: "Request submitted for approval" };
   },
+
 
   async me(): Promise<AuthUser> {
     const me = await loadCurrentUser();
