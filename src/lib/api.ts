@@ -57,14 +57,22 @@ export interface LoginResponse { accessToken: string; refreshToken?: string; use
 export interface PendingUser {
   id: string; first_name: string; last_name: string; email: string;
   role: Role; province?: string; district?: string; created_at?: string; phone?: string;
+  specialization?: string;
 }
 export interface ManagedUser extends PendingUser { status: UserStatus; }
+
+export interface ResponderWorkload {
+  user_id: string; first_name?: string; last_name?: string; email: string;
+  province?: string; district?: string; specialization?: string;
+  is_available: boolean; max_active_cases: number; open_cases: number;
+}
 
 export interface ReportListItem {
   id: string; category: string; status: ReportStatus; created_at: string;
   province?: string; district?: string; assigned_to?: string | null;
   priority?: ReportPriority;
 }
+
 export interface ReportHistoryEntry { id: string; action: string; actor?: string; created_at: string; details?: string; }
 export interface ReportNote { id: string; body: string; author?: string; created_at: string; }
 export interface ReportAttachment { id: string; filename: string; url: string; uploaded_at?: string; }
@@ -148,6 +156,7 @@ export const auth = {
   async register(body: {
     first_name: string; last_name: string; email: string;
     password: string; phone: string; role: Role;
+    province?: string; district?: string; specialization?: string;
   }): Promise<{ success: boolean; message: string }> {
     const emailRedirectTo = typeof window !== "undefined" ? window.location.origin : undefined;
     const { data, error } = await supabase.auth.signUp({
@@ -160,15 +169,27 @@ export const auth = {
           last_name: body.last_name,
           phone: body.phone,
           role: body.role,
+          province: body.province,
+          district: body.district,
+          specialization: body.specialization,
         },
       },
     });
     if (error) throw new Error(error.message);
-    // If session auto-created (email confirmation off), immediately sign out so
-    // the user cannot access anything until approved.
+    // Best-effort: fill province/district/specialization on the freshly created profile.
+    if (data.user && (body.province || body.district || body.specialization)) {
+      try {
+        await supabase.from("profiles").update({
+          province: body.province ?? null,
+          district: body.district ?? null,
+          specialization: body.specialization ?? null,
+        }).eq("user_id", data.user.id);
+      } catch { /* ignore */ }
+    }
     if (data.session) await supabase.auth.signOut();
     return { success: true, message: "Request submitted for approval" };
   },
+
 
   async me(): Promise<AuthUser> {
     const me = await loadCurrentUser();
@@ -260,7 +281,34 @@ export const users = {
   },
 };
 
-// ============ reports ============
+// ============ responders (assignment engine) ============
+export const responders = {
+  async list(): Promise<ResponderWorkload[]> {
+    const { data, error } = await supabase.rpc("responder_workload");
+    if (error) throw new Error(error.message);
+    return ((data ?? []) as ResponderWorkload[]).map((r) => ({
+      ...r, open_cases: Number(r.open_cases ?? 0),
+    }));
+  },
+  async setAvailability(available: boolean): Promise<{ success: boolean }> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not signed in");
+    const { error } = await supabase.from("profiles")
+      .update({ is_available: available }).eq("user_id", user.id);
+    if (error) throw new Error(error.message);
+    return { success: true };
+  },
+  async setSpecialization(specialization: string): Promise<{ success: boolean }> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not signed in");
+    const { error } = await supabase.from("profiles")
+      .update({ specialization }).eq("user_id", user.id);
+    if (error) throw new Error(error.message);
+    return { success: true };
+  },
+};
+
+
 export const reports = {
   async list(params?: { status?: ReportStatus; priority?: ReportPriority; province?: string; district?: string; category?: string; q?: string; assignedTo?: string }): Promise<ReportListItem[]> {
     let q = supabase.from("reports").select("id,category,status,priority,created_at,province,district,assigned_to");
@@ -345,6 +393,12 @@ export const reports = {
     await supabase.from("report_history").insert({ report_id: id, action: "assigned", details: responder_id, actor_id: user?.id ?? null });
     await supabase.from("notifications").insert({ user_id: responder_id, message: `New case assigned to you (${id.slice(0, 8)})`, type: "assignment" });
     return { success: true };
+  },
+
+  async autoAssign(id: string): Promise<{ success: boolean; responder_id: string }> {
+    const { data, error } = await supabase.rpc("auto_assign_report", { _report_id: id });
+    if (error) throw new Error(error.message);
+    return { success: true, responder_id: String(data) };
   },
 
   async addNote(id: string, body: string): Promise<{ success: boolean; note: ReportNote }> {
@@ -438,3 +492,83 @@ export const facilities = {
   },
 };
 export const API_BASE_URL = "lovable-cloud";
+
+// ============ analytics ============
+export interface AnalyticsBucket { key: string; count: number }
+export interface AnalyticsOverview {
+  totalReports: number;
+  byStatus: AnalyticsBucket[];
+  byPriority: AnalyticsBucket[];
+  byCategory: AnalyticsBucket[];
+  byProvince: AnalyticsBucket[];
+  byDay: AnalyticsBucket[];
+  avgResolutionHours: number | null;
+}
+
+function bucket(rows: Array<Record<string, unknown>>, field: string): AnalyticsBucket[] {
+  const m = new Map<string, number>();
+  for (const r of rows) {
+    const k = (r[field] as string | null | undefined) ?? "unknown";
+    m.set(k, (m.get(k) ?? 0) + 1);
+  }
+  return Array.from(m.entries()).map(([key, count]) => ({ key, count })).sort((a, b) => b.count - a.count);
+}
+
+export const analytics = {
+  async overview(range?: { from?: string; to?: string }): Promise<AnalyticsOverview> {
+    let q = supabase.from("reports").select("id,status,priority,category,province,created_at,updated_at");
+    if (range?.from) q = q.gte("created_at", range.from);
+    if (range?.to) q = q.lte("created_at", range.to);
+    const { data, error } = await q;
+    if (error) throw new Error(error.message);
+    const rows = (data ?? []) as Array<Record<string, unknown>>;
+
+    // avg resolution time for resolved/closed
+    const resolved = rows.filter((r) => ["Resolved", "Closed"].includes(r.status as string));
+    const hours = resolved
+      .map((r) => (new Date(r.updated_at as string).getTime() - new Date(r.created_at as string).getTime()) / 3600000)
+      .filter((h) => Number.isFinite(h) && h >= 0);
+    const avg = hours.length ? hours.reduce((a, b) => a + b, 0) / hours.length : null;
+
+    // per-day for last 30 days
+    const dayMap = new Map<string, number>();
+    for (const r of rows) {
+      const d = new Date(r.created_at as string).toISOString().slice(0, 10);
+      dayMap.set(d, (dayMap.get(d) ?? 0) + 1);
+    }
+    const byDay = Array.from(dayMap.entries()).map(([key, count]) => ({ key, count })).sort((a, b) => a.key.localeCompare(b.key));
+
+    return {
+      totalReports: rows.length,
+      byStatus: bucket(rows, "status"),
+      byPriority: bucket(rows, "priority"),
+      byCategory: bucket(rows, "category"),
+      byProvince: bucket(rows, "province"),
+      byDay,
+      avgResolutionHours: avg,
+    };
+  },
+
+  toCSV(rows: ReportListItem[]): string {
+    const headers = ["id", "category", "status", "priority", "province", "district", "assigned_to", "created_at"];
+    const escape = (v: unknown) => {
+      const s = v == null ? "" : String(v);
+      return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    const lines = [headers.join(",")];
+    for (const r of rows) {
+      lines.push(headers.map((h) => escape((r as unknown as Record<string, unknown>)[h])).join(","));
+    }
+    return lines.join("\n");
+  },
+
+  downloadCSV(filename: string, csv: string) {
+    if (typeof window === "undefined") return;
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename; a.click();
+    URL.revokeObjectURL(url);
+  },
+};
+

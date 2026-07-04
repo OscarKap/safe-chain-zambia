@@ -191,10 +191,13 @@ export type Database = {
           district: string | null
           email: string
           first_name: string | null
+          is_available: boolean
           last_name: string | null
+          max_active_cases: number
           pending_role: Database["public"]["Enums"]["app_role"] | null
           phone: string | null
           province: string | null
+          specialization: string | null
           status: string
           updated_at: string
           user_id: string
@@ -204,10 +207,13 @@ export type Database = {
           district?: string | null
           email: string
           first_name?: string | null
+          is_available?: boolean
           last_name?: string | null
+          max_active_cases?: number
           pending_role?: Database["public"]["Enums"]["app_role"] | null
           phone?: string | null
           province?: string | null
+          specialization?: string | null
           status?: string
           updated_at?: string
           user_id: string
@@ -217,10 +223,13 @@ export type Database = {
           district?: string | null
           email?: string
           first_name?: string | null
+          is_available?: boolean
           last_name?: string | null
+          max_active_cases?: number
           pending_role?: Database["public"]["Enums"]["app_role"] | null
           phone?: string | null
           province?: string | null
+          specialization?: string | null
           status?: string
           updated_at?: string
           user_id?: string
@@ -389,6 +398,22 @@ export type Database = {
         Returns: undefined
       }
       admin_suspend_user: { Args: { _target: string }; Returns: undefined }
+      auto_assign_report: { Args: { _report_id: string }; Returns: string }
+      responder_workload: {
+        Args: never
+        Returns: {
+          district: string
+          email: string
+          first_name: string
+          is_available: boolean
+          last_name: string
+          max_active_cases: number
+          open_cases: number
+          province: string
+          specialization: string
+          user_id: string
+        }[]
+      }
     }
     Enums: {
       app_role:

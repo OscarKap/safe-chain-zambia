@@ -23,12 +23,14 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
+import { Route as AuthenticatedEocRouteImport } from './routes/_authenticated/eoc'
 import { Route as AuthenticatedResponderDashboardRouteImport } from './routes/_authenticated/responder.dashboard'
 import { Route as AuthenticatedGbvDashboardRouteImport } from './routes/_authenticated/gbv.dashboard'
 import { Route as AuthenticatedDeveloperDashboardRouteImport } from './routes/_authenticated/developer.dashboard'
 import { Route as AuthenticatedCounsellorDashboardRouteImport } from './routes/_authenticated/counsellor.dashboard'
 import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin.reports'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
+import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
 import { Route as AuthenticatedAdminReportsIdRouteImport } from './routes/_authenticated/admin.reports.$id'
 
 const ServicesRoute = ServicesRouteImport.update({
@@ -100,6 +102,11 @@ const LearnSlugRoute = LearnSlugRouteImport.update({
   path: '/learn/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedEocRoute = AuthenticatedEocRouteImport.update({
+  id: '/eoc',
+  path: '/eoc',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedResponderDashboardRoute =
   AuthenticatedResponderDashboardRouteImport.update({
     id: '/responder/dashboard',
@@ -136,6 +143,12 @@ const AuthenticatedAdminDashboardRoute =
     path: '/admin/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminAnalyticsRoute =
+  AuthenticatedAdminAnalyticsRouteImport.update({
+    id: '/admin/analytics',
+    path: '/admin/analytics',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminReportsIdRoute =
   AuthenticatedAdminReportsIdRouteImport.update({
     id: '/$id',
@@ -155,8 +168,10 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
+  '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
   '/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
@@ -177,8 +192,10 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn': typeof LearnIndexRoute
+  '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
   '/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
@@ -201,8 +218,10 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/_authenticated/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/learn/': typeof LearnIndexRoute
+  '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
   '/_authenticated/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
@@ -225,8 +244,10 @@ export interface FileRouteTypes {
     | '/register'
     | '/report'
     | '/services'
+    | '/eoc'
     | '/learn/$slug'
     | '/learn/'
+    | '/admin/analytics'
     | '/admin/dashboard'
     | '/admin/reports'
     | '/counsellor/dashboard'
@@ -247,8 +268,10 @@ export interface FileRouteTypes {
     | '/register'
     | '/report'
     | '/services'
+    | '/eoc'
     | '/learn/$slug'
     | '/learn'
+    | '/admin/analytics'
     | '/admin/dashboard'
     | '/admin/reports'
     | '/counsellor/dashboard'
@@ -270,8 +293,10 @@ export interface FileRouteTypes {
     | '/register'
     | '/report'
     | '/services'
+    | '/_authenticated/eoc'
     | '/learn/$slug'
     | '/learn/'
+    | '/_authenticated/admin/analytics'
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/reports'
     | '/_authenticated/counsellor/dashboard'
@@ -398,6 +423,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/eoc': {
+      id: '/_authenticated/eoc'
+      path: '/eoc'
+      fullPath: '/eoc'
+      preLoaderRoute: typeof AuthenticatedEocRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/responder/dashboard': {
       id: '/_authenticated/responder/dashboard'
       path: '/responder/dashboard'
@@ -440,6 +472,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/analytics': {
+      id: '/_authenticated/admin/analytics'
+      path: '/admin/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AuthenticatedAdminAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/reports/$id': {
       id: '/_authenticated/admin/reports/$id'
       path: '/$id'
@@ -465,6 +504,8 @@ const AuthenticatedAdminReportsRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedEocRoute: typeof AuthenticatedEocRoute
+  AuthenticatedAdminAnalyticsRoute: typeof AuthenticatedAdminAnalyticsRoute
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
   AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRouteWithChildren
   AuthenticatedCounsellorDashboardRoute: typeof AuthenticatedCounsellorDashboardRoute
@@ -474,6 +515,8 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedEocRoute: AuthenticatedEocRoute,
+  AuthenticatedAdminAnalyticsRoute: AuthenticatedAdminAnalyticsRoute,
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
   AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRouteWithChildren,
   AuthenticatedCounsellorDashboardRoute: AuthenticatedCounsellorDashboardRoute,

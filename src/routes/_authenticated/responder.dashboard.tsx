@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { reports, apiErrorMessage } from "@/lib/api";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { reports, responders, apiErrorMessage } from "@/lib/api";
+import { supabase } from "@/integrations/supabase/client";
 import { DashboardShell, SectionCard, StatCard } from "@/components/DashboardShell";
 import { useAuth } from "@/lib/auth-context";
 
@@ -11,24 +13,58 @@ export const Route = createFileRoute("/_authenticated/responder/dashboard")({
 
 function ResponderDashboard() {
   const { user } = useAuth();
+  const qc = useQueryClient();
   const reportsQ = useQuery({
     queryKey: ["reports", "mine", user?.id],
     queryFn: () => reports.list({ assignedTo: user?.id }),
     enabled: !!user,
-    refetchInterval: 60_000,
+    refetchInterval: 30_000,
+  });
+  const meQ = useQuery({
+    queryKey: ["me-profile", user?.id],
+    queryFn: async () => {
+      const { data } = await supabase.from("profiles")
+        .select("is_available,specialization,max_active_cases").eq("user_id", user!.id).maybeSingle();
+      return data;
+    },
+    enabled: !!user,
+  });
+  const setAvail = useMutation({
+    mutationFn: (a: boolean) => responders.setAvailability(a),
+    onSuccess: () => { toast.success("Availability updated"); qc.invalidateQueries({ queryKey: ["me-profile", user?.id] }); },
+    onError: (e) => toast.error(apiErrorMessage(e)),
   });
 
   const list = reportsQ.data ?? [];
-  const active = list.filter((r) => r.status === "Assigned" || r.status === "In_Progress" || r.status === "Escalated");
+  const active = list.filter((r) => !["Resolved", "Closed"].includes(r.status));
   const closed = list.filter((r) => r.status === "Resolved" || r.status === "Closed");
+  const available = meQ.data?.is_available ?? true;
 
   return (
     <DashboardShell title="Responder Dashboard">
+      <div className="card-soft p-4 mb-6 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-sm font-medium">Duty status</p>
+          <p className="text-xs text-muted-foreground">
+            {available ? "You are receiving new case assignments." : "You are OFF DUTY. No new cases will be auto-assigned."}
+            {meQ.data?.specialization && ` · Specialization: ${meQ.data.specialization}`}
+          </p>
+        </div>
+        <button
+          onClick={() => setAvail.mutate(!available)}
+          disabled={setAvail.isPending}
+          className={`rounded-full px-4 py-2 text-sm font-semibold ${available ? "bg-emerald-500 text-white" : "bg-muted text-foreground"} disabled:opacity-60`}
+        >
+          {available ? "● Available" : "○ Off duty"}
+        </button>
+      </div>
+
       <div className="grid sm:grid-cols-3 gap-4 mb-8">
         <StatCard label="Assigned cases" value={list.length} />
         <StatCard label="Active" value={active.length} />
         <StatCard label="Closed" value={closed.length} />
       </div>
+
 
       <SectionCard title="My cases">
         {reportsQ.isLoading && <p className="text-sm text-muted-foreground">Loading…</p>}
