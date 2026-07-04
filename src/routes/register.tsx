@@ -1,10 +1,16 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { ShieldCheck, CheckCircle2 } from "lucide-react";
 import { auth, ROLE_LABEL, apiErrorMessage, type Role } from "@/lib/api";
+import { ZAMBIA, PROVINCES } from "@/data/facilities";
 
 const ROLE_OPTIONS: Role[] = ["responder", "gbv_officer", "counsellor", "admin", "developer"];
+
+const RESPONDER_SPECIALIZATIONS = [
+  "Legal", "GBV", "Police", "VSU", "Hospital", "Counsellor",
+  "Child Protection", "Emergency Medical", "Fire & Rescue", "Other",
+];
 
 export const Route = createFileRoute("/register")({
   ssr: false,
@@ -21,6 +27,9 @@ function Register() {
   const navigate = useNavigate();
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [role, setRole] = useState<Role | "">("");
+  const [province, setProvince] = useState<string>("");
+  const districts = useMemo(() => (province ? ZAMBIA[province] ?? [] : []), [province]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,8 +41,14 @@ function Register() {
       phone: String(f.get("phone") ?? "").trim(),
       password: String(f.get("password") ?? ""),
       role: String(f.get("role") ?? "") as Role,
+      province: String(f.get("province") ?? "") || undefined,
+      district: String(f.get("district") ?? "") || undefined,
+      specialization: String(f.get("specialization") ?? "") || undefined,
     };
     if (body.password.length < 8) { toast.error("Password must be at least 8 characters"); return; }
+    if (body.role === "responder" && !body.specialization) {
+      toast.error("Responders must select a specialization"); return;
+    }
     setLoading(true);
     try {
       await auth.register(body);
@@ -84,10 +99,36 @@ function Register() {
           <Field label="Phone" name="phone" type="tel" required placeholder="+260…" />
           <Field label="Password" name="password" type="password" required placeholder="At least 8 characters" />
 
+          <div className="grid gap-5 md:grid-cols-2">
+            <label className="grid gap-1.5 text-sm">
+              <span className="font-medium">Province <span className="text-destructive">*</span></span>
+              <select
+                name="province" required value={province}
+                onChange={(e) => setProvince(e.target.value)}
+                className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring"
+              >
+                <option value="" disabled>Select province…</option>
+                {PROVINCES.map((p) => <option key={p} value={p}>{p}</option>)}
+              </select>
+            </label>
+            <label className="grid gap-1.5 text-sm">
+              <span className="font-medium">District <span className="text-destructive">*</span></span>
+              <select
+                name="district" required disabled={!province}
+                className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring disabled:opacity-60"
+                defaultValue=""
+              >
+                <option value="" disabled>{province ? "Select district…" : "Select province first"}</option>
+                {districts.map((d) => <option key={d} value={d}>{d}</option>)}
+              </select>
+            </label>
+          </div>
+
           <label className="grid gap-1.5 text-sm">
             <span className="font-medium">Role <span className="text-destructive">*</span></span>
             <select
-              name="role" required defaultValue=""
+              name="role" required value={role}
+              onChange={(e) => setRole(e.target.value as Role)}
               className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring"
             >
               <option value="" disabled>Select role…</option>
@@ -96,6 +137,20 @@ function Register() {
               ))}
             </select>
           </label>
+
+          {role === "responder" && (
+            <label className="grid gap-1.5 text-sm">
+              <span className="font-medium">Specialization <span className="text-destructive">*</span></span>
+              <select
+                name="specialization" required defaultValue=""
+                className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring"
+              >
+                <option value="" disabled>Select case type…</option>
+                {RESPONDER_SPECIALIZATIONS.map((s) => <option key={s} value={s}>{s}</option>)}
+              </select>
+              <span className="text-xs text-muted-foreground">Cases matching this type will be prioritized when auto-assigning.</span>
+            </label>
+          )}
 
           <button
             type="submit" disabled={loading}
