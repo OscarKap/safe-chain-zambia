@@ -281,7 +281,34 @@ export const users = {
   },
 };
 
-// ============ reports ============
+// ============ responders (assignment engine) ============
+export const responders = {
+  async list(): Promise<ResponderWorkload[]> {
+    const { data, error } = await supabase.rpc("responder_workload");
+    if (error) throw new Error(error.message);
+    return ((data ?? []) as ResponderWorkload[]).map((r) => ({
+      ...r, open_cases: Number(r.open_cases ?? 0),
+    }));
+  },
+  async setAvailability(available: boolean): Promise<{ success: boolean }> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not signed in");
+    const { error } = await supabase.from("profiles")
+      .update({ is_available: available }).eq("user_id", user.id);
+    if (error) throw new Error(error.message);
+    return { success: true };
+  },
+  async setSpecialization(specialization: string): Promise<{ success: boolean }> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not signed in");
+    const { error } = await supabase.from("profiles")
+      .update({ specialization }).eq("user_id", user.id);
+    if (error) throw new Error(error.message);
+    return { success: true };
+  },
+};
+
+
 export const reports = {
   async list(params?: { status?: ReportStatus; priority?: ReportPriority; province?: string; district?: string; category?: string; q?: string; assignedTo?: string }): Promise<ReportListItem[]> {
     let q = supabase.from("reports").select("id,category,status,priority,created_at,province,district,assigned_to");
