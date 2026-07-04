@@ -233,9 +233,17 @@ function ReportDetail() {
                     );
                   })}
                 </select>
-                <button disabled={!assignTo || assign.isPending} className="w-full rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-60">
-                  {assign.isPending ? "Assigning…" : "Assign"}
-                </button>
+                <div className="flex gap-2">
+                  <button disabled={!assignTo || assign.isPending} className="flex-1 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-60">
+                    {assign.isPending ? "Assigning…" : "Assign"}
+                  </button>
+                  <button type="button" disabled={autoAssign.isPending}
+                    onClick={() => autoAssign.mutate()}
+                    className="rounded-full border border-border px-4 py-2 text-sm font-semibold hover:bg-muted disabled:opacity-60">
+                    {autoAssign.isPending ? "…" : "Auto-assign"}
+                  </button>
+                </div>
+
               </form>
               {r.assigned_to && <p className="mt-2 text-xs text-muted-foreground">Currently assigned to: {r.assigned_to}</p>}
             </SectionCard>
