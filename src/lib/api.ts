@@ -394,9 +394,7 @@ export const reports = {
   },
 
   async autoAssign(id: string): Promise<{ success: boolean; responder_id: string }> {
-    const { data, error } = await supabase.rpc("auto_assign_report", { _report_id: id });
-    if (error) throw new Error(error.message);
-    return { success: true, responder_id: String(data) };
+    return await autoAssignReportFn({ data: { reportId: id } });
   },
 
   async addNote(id: string, body: string): Promise<{ success: boolean; note: ReportNote }> {
