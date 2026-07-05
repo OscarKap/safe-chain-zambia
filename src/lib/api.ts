@@ -7,7 +7,7 @@ import facilitiesData from "@/data/facilities.json";
 import {
   adminApproveUserFn, adminRejectUserFn, adminSuspendUserFn,
   adminReactivateUserFn, adminSetRoleFn, adminDeleteUserFn,
-  responderWorkloadFn, autoAssignReportFn,
+  responderWorkloadFn, autoAssignReportFn, assignReportFn,
 } from "@/lib/admin.functions";
 
 // ============ Types ============
