@@ -35,13 +35,21 @@ function ReportDetail() {
     refetchInterval: 30_000,
   });
   const respondersQ = useQuery({
-    queryKey: ["users", "responders"],
-    queryFn: () => users.list({ role: "responder", status: "active" }),
+    queryKey: ["responders", "workload"],
+    queryFn: () => responders.list(),
     enabled: canManage,
+  });
+  const attachmentsQ = useQuery({
+    queryKey: ["report", id, "attachments"],
+    queryFn: () => reports.listAttachments(id),
+  });
+  const actionsQ = useQuery({
+    queryKey: ["report", id, "action-reports"],
+    queryFn: () => reports.listActionReports(id),
   });
 
   const [note, setNote] = useState("");
-  const [assignTo, setAssignTo] = useState("");
+  const [assignOpen, setAssignOpen] = useState(false);
 
   const setStatus = useMutation({
     mutationFn: (s: ReportStatus) => reports.setStatus(id, s),
@@ -55,7 +63,7 @@ function ReportDetail() {
   });
   const assign = useMutation({
     mutationFn: (rid: string) => reports.assign(id, rid),
-    onSuccess: () => { toast.success("Responder assigned"); setAssignTo(""); qc.invalidateQueries({ queryKey: ["report", id] }); },
+    onSuccess: () => { toast.success("Responder assigned & notified"); setAssignOpen(false); qc.invalidateQueries({ queryKey: ["report", id] }); qc.invalidateQueries({ queryKey: ["responders"] }); },
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
   const autoAssign = useMutation({
@@ -71,7 +79,7 @@ function ReportDetail() {
   });
   const uploadFile = useMutation({
     mutationFn: (file: File) => reports.upload(id, file),
-    onSuccess: () => { toast.success("File uploaded"); qc.invalidateQueries({ queryKey: ["report", id] }); },
+    onSuccess: () => { toast.success("File uploaded"); qc.invalidateQueries({ queryKey: ["report", id, "attachments"] }); },
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
 
@@ -79,11 +87,8 @@ function ReportDetail() {
   if (reportQ.error || !reportQ.data) return <DashboardShell title="Case"><p className="text-sm text-destructive">{apiErrorMessage(reportQ.error) || "Not found"}</p></DashboardShell>;
   const r = reportQ.data;
   const priority = r.priority ?? "normal";
-  const recommended = (respondersQ.data ?? []).slice().sort((a, b) => {
-    const score = (u: typeof a) => (u.district && r.district && u.district === r.district ? 2 : 0)
-      + (u.province && r.province && u.province === r.province ? 1 : 0);
-    return score(b) - score(a);
-  });
+  const attachments = attachmentsQ.data ?? [];
+  const actionReports = actionsQ.data ?? [];
 
   return (
     <DashboardShell title={`Case ${r.id.slice(0, 8).toUpperCase()}`}>
