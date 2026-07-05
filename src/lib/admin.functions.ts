@@ -91,3 +91,15 @@ export const autoAssignReportFn = createServerFn({ method: "POST" })
     const responderId = await callAdminRpc("auto_assign_report", { _report_id: data.reportId, _caller: context.userId });
     return { success: true, responder_id: String(responderId) };
   });
+
+export const assignReportFn = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d) => assignSchema.parse(d))
+  .handler(async ({ data, context }) => {
+    await callAdminRpc("assign_report_to", {
+      _report_id: data.reportId,
+      _responder_id: data.responderId,
+      _caller: context.userId,
+    });
+    return { success: true };
+  });
