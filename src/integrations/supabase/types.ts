@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      action_reports: {
+        Row: {
+          created_at: string
+          id: string
+          outcome: string
+          recommendations: string | null
+          report_id: string
+          responder_id: string
+          summary: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          outcome: string
+          recommendations?: string | null
+          report_id: string
+          responder_id: string
+          summary: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          outcome?: string
+          recommendations?: string | null
+          report_id?: string
+          responder_id?: string
+          summary?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "action_reports_report_id_fkey"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       admin_access_requests: {
         Row: {
           created_at: string
@@ -157,6 +198,57 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      case_attachments: {
+        Row: {
+          action_report_id: string | null
+          content_type: string | null
+          created_at: string
+          filename: string
+          id: string
+          report_id: string
+          size_bytes: number | null
+          storage_path: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          action_report_id?: string | null
+          content_type?: string | null
+          created_at?: string
+          filename: string
+          id?: string
+          report_id: string
+          size_bytes?: number | null
+          storage_path: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          action_report_id?: string | null
+          content_type?: string | null
+          created_at?: string
+          filename?: string
+          id?: string
+          report_id?: string
+          size_bytes?: number | null
+          storage_path?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_attachments_action_report_id_fkey"
+            columns: ["action_report_id"]
+            isOneToOne: false
+            referencedRelation: "action_reports"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "case_attachments_report_id_fkey"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "reports"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       notifications: {
         Row: {
@@ -412,6 +504,10 @@ export type Database = {
       }
       admin_suspend_user: {
         Args: { _caller: string; _target: string }
+        Returns: undefined
+      }
+      assign_report_to: {
+        Args: { _caller: string; _report_id: string; _responder_id: string }
         Returns: undefined
       }
       auto_assign_report: {
