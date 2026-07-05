@@ -255,33 +255,27 @@ export const users = {
   pending: () => fetchUsers({ status: "pending" }) as Promise<PendingUser[]>,
 
   async approve(id: string): Promise<{ success: boolean }> {
-    const { error } = await supabase.rpc("admin_approve_user", { _target: id });
-    if (error) throw new Error(error.message);
+    await adminApproveUserFn({ data: { target: id } });
     return { success: true };
   },
   async reject(id: string): Promise<{ success: boolean }> {
-    const { error } = await supabase.rpc("admin_reject_user", { _target: id });
-    if (error) throw new Error(error.message);
+    await adminRejectUserFn({ data: { target: id } });
     return { success: true };
   },
   async suspend(id: string): Promise<{ success: boolean }> {
-    const { error } = await supabase.rpc("admin_suspend_user", { _target: id });
-    if (error) throw new Error(error.message);
+    await adminSuspendUserFn({ data: { target: id } });
     return { success: true };
   },
   async reactivate(id: string): Promise<{ success: boolean }> {
-    const { error } = await supabase.rpc("admin_reactivate_user", { _target: id });
-    if (error) throw new Error(error.message);
+    await adminReactivateUserFn({ data: { target: id } });
     return { success: true };
   },
   async setRole(id: string, role: Role): Promise<{ success: boolean }> {
-    const { error } = await supabase.rpc("admin_set_user_role", { _target: id, _role: role });
-    if (error) throw new Error(error.message);
+    await adminSetRoleFn({ data: { target: id, role } });
     return { success: true };
   },
   async remove(id: string): Promise<{ success: boolean }> {
-    const { error } = await supabase.rpc("admin_delete_user", { _target: id });
-    if (error) throw new Error(error.message);
+    await adminDeleteUserFn({ data: { target: id } });
     return { success: true };
   },
 };
@@ -289,8 +283,7 @@ export const users = {
 // ============ responders (assignment engine) ============
 export const responders = {
   async list(): Promise<ResponderWorkload[]> {
-    const { data, error } = await supabase.rpc("responder_workload");
-    if (error) throw new Error(error.message);
+    const data = await responderWorkloadFn();
     return ((data ?? []) as ResponderWorkload[]).map((r) => ({
       ...r, open_cases: Number(r.open_cases ?? 0),
     }));
