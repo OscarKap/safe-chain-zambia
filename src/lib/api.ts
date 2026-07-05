@@ -4,6 +4,11 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import facilitiesData from "@/data/facilities.json";
+import {
+  adminApproveUserFn, adminRejectUserFn, adminSuspendUserFn,
+  adminReactivateUserFn, adminSetRoleFn, adminDeleteUserFn,
+  responderWorkloadFn, autoAssignReportFn,
+} from "@/lib/admin.functions";
 
 // ============ Types ============
 export type Role =
