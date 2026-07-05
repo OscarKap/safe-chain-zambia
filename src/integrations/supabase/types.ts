@@ -386,19 +386,38 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      admin_approve_user: { Args: { _target: string }; Returns: undefined }
-      admin_delete_user: { Args: { _target: string }; Returns: undefined }
-      admin_reactivate_user: { Args: { _target: string }; Returns: undefined }
-      admin_reject_user: { Args: { _target: string }; Returns: undefined }
+      admin_approve_user: {
+        Args: { _caller: string; _target: string }
+        Returns: undefined
+      }
+      admin_delete_user: {
+        Args: { _caller: string; _target: string }
+        Returns: undefined
+      }
+      admin_reactivate_user: {
+        Args: { _caller: string; _target: string }
+        Returns: undefined
+      }
+      admin_reject_user: {
+        Args: { _caller: string; _target: string }
+        Returns: undefined
+      }
       admin_set_user_role: {
         Args: {
+          _caller: string
           _role: Database["public"]["Enums"]["app_role"]
           _target: string
         }
         Returns: undefined
       }
-      admin_suspend_user: { Args: { _target: string }; Returns: undefined }
-      auto_assign_report: { Args: { _report_id: string }; Returns: string }
+      admin_suspend_user: {
+        Args: { _caller: string; _target: string }
+        Returns: undefined
+      }
+      auto_assign_report: {
+        Args: { _caller: string; _report_id: string }
+        Returns: string
+      }
       responder_workload: {
         Args: never
         Returns: {
