@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { ChevronLeft, MapPin, AlertTriangle, CheckCircle2, Circle } from "lucide-react";
+import { ChevronLeft, MapPin, AlertTriangle, CheckCircle2, Circle, Phone, Mail, X } from "lucide-react";
 import {
-  reports, users, apiErrorMessage,
+  reports, responders, apiErrorMessage,
   REPORT_STATUSES, REPORT_WORKFLOW, REPORT_PRIORITIES,
-  type ReportStatus, type ReportPriority,
+  type ReportStatus, type ReportPriority, type ResponderWorkload,
 } from "@/lib/api";
 import { DashboardShell, SectionCard } from "@/components/DashboardShell";
 import { useAuth } from "@/lib/auth-context";
@@ -35,13 +35,21 @@ function ReportDetail() {
     refetchInterval: 30_000,
   });
   const respondersQ = useQuery({
-    queryKey: ["users", "responders"],
-    queryFn: () => users.list({ role: "responder", status: "active" }),
+    queryKey: ["responders", "workload"],
+    queryFn: () => responders.list(),
     enabled: canManage,
+  });
+  const attachmentsQ = useQuery({
+    queryKey: ["report", id, "attachments"],
+    queryFn: () => reports.listAttachments(id),
+  });
+  const actionsQ = useQuery({
+    queryKey: ["report", id, "action-reports"],
+    queryFn: () => reports.listActionReports(id),
   });
 
   const [note, setNote] = useState("");
-  const [assignTo, setAssignTo] = useState("");
+  const [assignOpen, setAssignOpen] = useState(false);
 
   const setStatus = useMutation({
     mutationFn: (s: ReportStatus) => reports.setStatus(id, s),
@@ -55,7 +63,7 @@ function ReportDetail() {
   });
   const assign = useMutation({
     mutationFn: (rid: string) => reports.assign(id, rid),
-    onSuccess: () => { toast.success("Responder assigned"); setAssignTo(""); qc.invalidateQueries({ queryKey: ["report", id] }); },
+    onSuccess: () => { toast.success("Responder assigned & notified"); setAssignOpen(false); qc.invalidateQueries({ queryKey: ["report", id] }); qc.invalidateQueries({ queryKey: ["responders"] }); },
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
   const autoAssign = useMutation({
@@ -71,7 +79,7 @@ function ReportDetail() {
   });
   const uploadFile = useMutation({
     mutationFn: (file: File) => reports.upload(id, file),
-    onSuccess: () => { toast.success("File uploaded"); qc.invalidateQueries({ queryKey: ["report", id] }); },
+    onSuccess: () => { toast.success("File uploaded"); qc.invalidateQueries({ queryKey: ["report", id, "attachments"] }); },
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
 
@@ -79,11 +87,8 @@ function ReportDetail() {
   if (reportQ.error || !reportQ.data) return <DashboardShell title="Case"><p className="text-sm text-destructive">{apiErrorMessage(reportQ.error) || "Not found"}</p></DashboardShell>;
   const r = reportQ.data;
   const priority = r.priority ?? "normal";
-  const recommended = (respondersQ.data ?? []).slice().sort((a, b) => {
-    const score = (u: typeof a) => (u.district && r.district && u.district === r.district ? 2 : 0)
-      + (u.province && r.province && u.province === r.province ? 1 : 0);
-    return score(b) - score(a);
-  });
+  const attachments = attachmentsQ.data ?? [];
+  const actionReports = actionsQ.data ?? [];
 
   return (
     <DashboardShell title={`Case ${r.id.slice(0, 8).toUpperCase()}`}>
@@ -172,17 +177,38 @@ function ReportDetail() {
             </ul>
           </SectionCard>
 
-          <SectionCard title="Attachments">
+          <SectionCard title={`Attachments (${attachments.length})`}>
             <input
               type="file"
+              accept="image/*,application/pdf"
               onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadFile.mutate(f); }}
               className="text-sm file:mr-3 file:rounded-full file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-primary-foreground hover:file:opacity-90"
             />
-            {(!r.attachments || r.attachments.length === 0) && <p className="mt-3 text-sm text-muted-foreground">No attachments.</p>}
+            {attachments.length === 0 && <p className="mt-3 text-sm text-muted-foreground">No attachments.</p>}
             <ul className="mt-3 space-y-1 text-sm">
-              {r.attachments?.map((a) => (
+              {attachments.map((a) => (
                 <li key={a.id}>
                   <a href={a.url} target="_blank" rel="noreferrer" className="text-brand hover:underline">{a.filename}</a>
+                  {a.uploaded_at && <span className="ml-2 text-xs text-muted-foreground">{new Date(a.uploaded_at).toLocaleString()}</span>}
+                </li>
+              ))}
+            </ul>
+          </SectionCard>
+
+          <SectionCard title={`Action reports (${actionReports.length})`}>
+            {actionReports.length === 0 && <p className="text-sm text-muted-foreground">No action reports submitted yet.</p>}
+            <ul className="space-y-3">
+              {actionReports.map((ar) => (
+                <li key={ar.id} className="rounded-lg border border-border p-3 text-sm">
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground">Outcome</p>
+                  <p className="font-medium">{ar.outcome}</p>
+                  <p className="mt-2 text-xs uppercase tracking-wide text-muted-foreground">Summary</p>
+                  <p className="whitespace-pre-wrap">{ar.summary}</p>
+                  {ar.recommendations && <>
+                    <p className="mt-2 text-xs uppercase tracking-wide text-muted-foreground">Recommendations</p>
+                    <p className="whitespace-pre-wrap">{ar.recommendations}</p>
+                  </>}
+                  <p className="mt-2 text-xs text-muted-foreground">Submitted {new Date(ar.created_at).toLocaleString()}</p>
                 </li>
               ))}
             </ul>
@@ -216,36 +242,23 @@ function ReportDetail() {
           </SectionCard>
 
           {canManage && (
-            <SectionCard title="Assign responder">
-              <form onSubmit={(e) => { e.preventDefault(); if (assignTo) assign.mutate(assignTo); }} className="space-y-2">
-                <select
-                  value={assignTo} onChange={(e) => setAssignTo(e.target.value)}
-                  className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+            <SectionCard title="Assignment">
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => setAssignOpen(true)}
+                  className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
                 >
-                  <option value="">Recommended first…</option>
-                  {recommended.map((u) => {
-                    const match = u.district === r.district ? " · same district"
-                      : u.province === r.province ? " · same province" : "";
-                    return (
-                      <option key={u.id} value={u.id}>
-                        {u.first_name} {u.last_name}{match}
-                      </option>
-                    );
-                  })}
-                </select>
-                <div className="flex gap-2">
-                  <button disabled={!assignTo || assign.isPending} className="flex-1 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-60">
-                    {assign.isPending ? "Assigning…" : "Assign"}
-                  </button>
-                  <button type="button" disabled={autoAssign.isPending}
-                    onClick={() => autoAssign.mutate()}
-                    className="rounded-full border border-border px-4 py-2 text-sm font-semibold hover:bg-muted disabled:opacity-60">
-                    {autoAssign.isPending ? "…" : "Auto-assign"}
-                  </button>
-                </div>
-
-              </form>
-              {r.assigned_to && <p className="mt-2 text-xs text-muted-foreground">Currently assigned to: {r.assigned_to}</p>}
+                  {r.assigned_to ? "Reassign case" : "Assign case"}
+                </button>
+                <button
+                  disabled={autoAssign.isPending}
+                  onClick={() => autoAssign.mutate()}
+                  className="rounded-full border border-border px-4 py-2 text-sm font-semibold hover:bg-muted disabled:opacity-60"
+                >
+                  {autoAssign.isPending ? "Working…" : "Auto-assign (best match)"}
+                </button>
+              </div>
+              {r.assigned_to && <p className="mt-3 text-xs text-muted-foreground">Currently assigned to <span className="font-mono">{r.assigned_to.slice(0,8)}…</span></p>}
             </SectionCard>
           )}
 
@@ -263,7 +276,105 @@ function ReportDetail() {
           </SectionCard>
         </div>
       </div>
+
+      {assignOpen && (
+        <AssignDialog
+          reportDistrict={r.district ?? undefined}
+          reportProvince={r.province ?? undefined}
+          responders={respondersQ.data ?? []}
+          currentAssignee={r.assigned_to ?? undefined}
+          pending={assign.isPending}
+          onClose={() => setAssignOpen(false)}
+          onAssign={(rid) => assign.mutate(rid)}
+        />
+      )}
     </DashboardShell>
+  );
+}
+
+function AssignDialog({
+  reportDistrict, reportProvince, responders: pool, currentAssignee, pending, onClose, onAssign,
+}: {
+  reportDistrict?: string; reportProvince?: string;
+  responders: ResponderWorkload[]; currentAssignee?: string;
+  pending: boolean; onClose: () => void; onAssign: (id: string) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const inDistrict = pool.filter((u) => reportDistrict && u.district === reportDistrict);
+    const primary = inDistrict.length > 0
+      ? inDistrict
+      : pool.filter((u) => reportProvince && u.province === reportProvince);
+    const list = (primary.length > 0 ? primary : pool)
+      .filter((u) => u.is_available)
+      .filter((u) => !q || [u.first_name, u.last_name, u.email, u.specialization, u.district, u.province]
+        .filter(Boolean).join(" ").toLowerCase().includes(q))
+      .slice().sort((a, b) => a.open_cases - b.open_cases);
+    return list;
+  }, [pool, query, reportDistrict, reportProvince]);
+
+  const scopeLabel = filtered === pool ? "all responders"
+    : reportDistrict && pool.some((u) => u.district === reportDistrict) ? `district: ${reportDistrict}`
+    : reportProvince ? `province: ${reportProvince}` : "all responders";
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={onClose}>
+      <div className="w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-2xl bg-card shadow-xl border border-border flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between p-4 border-b border-border">
+          <div>
+            <h3 className="text-lg font-semibold">Assign case</h3>
+            <p className="text-xs text-muted-foreground">Approved & available responders · scope: {scopeLabel}</p>
+          </div>
+          <button onClick={onClose} className="rounded-full p-1 hover:bg-muted"><X className="h-4 w-4" /></button>
+        </div>
+        <div className="p-4 border-b border-border">
+          <input
+            value={query} onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search by name, email, specialization…"
+            className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+          />
+        </div>
+        <div className="overflow-y-auto flex-1 divide-y divide-border">
+          {filtered.length === 0 && <p className="p-6 text-sm text-muted-foreground text-center">No available responders match.</p>}
+          {filtered.map((u) => {
+            const isCurrent = currentAssignee === u.user_id;
+            const load = u.max_active_cases > 0 ? u.open_cases / u.max_active_cases : 0;
+            return (
+              <div key={u.user_id} className="p-4 flex items-start gap-3">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="font-medium">{u.first_name} {u.last_name}</p>
+                    <span className="text-xs rounded-full bg-muted px-2 py-0.5">Responder</span>
+                    {u.specialization && <span className="text-xs rounded-full bg-sky-50 text-sky-700 px-2 py-0.5">{u.specialization}</span>}
+                    {u.district === reportDistrict && <span className="text-xs rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5">same district</span>}
+                    {u.district !== reportDistrict && u.province === reportProvince && <span className="text-xs rounded-full bg-amber-50 text-amber-700 px-2 py-0.5">same province</span>}
+                  </div>
+                  <p className="mt-1 text-xs text-muted-foreground">{u.district ?? "—"}, {u.province ?? "—"}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1"><Mail className="h-3 w-3" /> {u.email}</span>
+                    {u.phone && <span className="inline-flex items-center gap-1"><Phone className="h-3 w-3" /> {u.phone}</span>}
+                  </div>
+                  <div className="mt-2">
+                    <div className="h-1.5 bg-muted rounded overflow-hidden w-40">
+                      <div className={`h-full ${load >= 1 ? "bg-red-500" : load > 0.7 ? "bg-orange-500" : "bg-emerald-500"}`} style={{ width: `${Math.min(100, load * 100)}%` }} />
+                    </div>
+                    <p className="mt-1 text-[10px] text-muted-foreground">Workload {u.open_cases}/{u.max_active_cases}</p>
+                  </div>
+                </div>
+                <button
+                  disabled={pending || isCurrent || u.open_cases >= u.max_active_cases}
+                  onClick={() => onAssign(u.user_id)}
+                  className="shrink-0 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-50"
+                >
+                  {isCurrent ? "Currently assigned" : u.open_cases >= u.max_active_cases ? "At capacity" : pending ? "…" : "Assign"}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }
 

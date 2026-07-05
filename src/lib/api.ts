@@ -7,7 +7,7 @@ import facilitiesData from "@/data/facilities.json";
 import {
   adminApproveUserFn, adminRejectUserFn, adminSuspendUserFn,
   adminReactivateUserFn, adminSetRoleFn, adminDeleteUserFn,
-  responderWorkloadFn, autoAssignReportFn,
+  responderWorkloadFn, autoAssignReportFn, assignReportFn,
 } from "@/lib/admin.functions";
 
 // ============ Types ============
@@ -70,6 +70,7 @@ export interface ResponderWorkload {
   user_id: string; first_name?: string; last_name?: string; email: string;
   province?: string; district?: string; specialization?: string;
   is_available: boolean; max_active_cases: number; open_cases: number;
+  phone?: string;
 }
 
 export interface ReportListItem {
@@ -81,6 +82,10 @@ export interface ReportListItem {
 export interface ReportHistoryEntry { id: string; action: string; actor?: string; created_at: string; details?: string; }
 export interface ReportNote { id: string; body: string; author?: string; created_at: string; }
 export interface ReportAttachment { id: string; filename: string; url: string; uploaded_at?: string; }
+export interface ActionReport {
+  id: string; summary: string; outcome: string;
+  recommendations?: string; responder_id: string; created_at: string;
+}
 export interface ReportDetail extends ReportListItem {
   description?: string; reporter_name?: string; reporter_phone?: string;
   gps_lat?: number | null; gps_lng?: number | null;
@@ -284,9 +289,15 @@ export const users = {
 export const responders = {
   async list(): Promise<ResponderWorkload[]> {
     const data = await responderWorkloadFn();
-    return ((data ?? []) as ResponderWorkload[]).map((r) => ({
+    const list = ((data ?? []) as ResponderWorkload[]).map((r) => ({
       ...r, open_cases: Number(r.open_cases ?? 0),
     }));
+    if (list.length === 0) return list;
+    const ids = list.map((r) => r.user_id);
+    const { data: phones } = await supabase.from("profiles")
+      .select("user_id,phone").in("user_id", ids);
+    const phoneMap = new Map((phones ?? []).map((p) => [p.user_id, p.phone ?? undefined]));
+    return list.map((r) => ({ ...r, phone: phoneMap.get(r.user_id) }));
   },
   async setAvailability(available: boolean): Promise<{ success: boolean }> {
     const { data: { user } } = await supabase.auth.getUser();
@@ -385,11 +396,7 @@ export const reports = {
   },
 
   async assign(id: string, responder_id: string): Promise<{ success: boolean }> {
-    const { error } = await supabase.from("reports").update({ assigned_to: responder_id, status: "Assigned" }).eq("id", id);
-    if (error) throw new Error(error.message);
-    const { data: { user } } = await supabase.auth.getUser();
-    await supabase.from("report_history").insert({ report_id: id, action: "assigned", details: responder_id, actor_id: user?.id ?? null });
-    await supabase.from("notifications").insert({ user_id: responder_id, message: `New case assigned to you (${id.slice(0, 8)})`, type: "assignment" });
+    await assignReportFn({ data: { reportId: id, responderId: responder_id } });
     return { success: true };
   },
 
@@ -406,8 +413,100 @@ export const reports = {
     return { success: true, note: { id: data.id, body: data.body, author: data.author_id ?? undefined, created_at: data.created_at } };
   },
 
-  async upload(_id: string, _file: File): Promise<{ success: boolean; attachment: ReportAttachment }> {
-    throw new Error("File uploads not yet enabled");
+  async listAttachments(id: string): Promise<ReportAttachment[]> {
+    const { data, error } = await supabase.from("case_attachments")
+      .select("id,filename,storage_path,created_at,uploaded_by,content_type")
+      .eq("report_id", id)
+      .order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    const out: ReportAttachment[] = [];
+    for (const a of data ?? []) {
+      const { data: signed } = await supabase.storage.from("case-attachments")
+        .createSignedUrl(a.storage_path, 60 * 60);
+      out.push({
+        id: a.id,
+        filename: a.filename,
+        url: signed?.signedUrl ?? "",
+        uploaded_at: a.created_at ?? undefined,
+      });
+    }
+    return out;
+  },
+
+  async upload(id: string, file: File): Promise<{ success: boolean; attachment: ReportAttachment }> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not signed in");
+    const safeName = file.name.replace(/[^\w.\-]+/g, "_");
+    const path = `${id}/${Date.now()}-${safeName}`;
+    const { error: upErr } = await supabase.storage.from("case-attachments")
+      .upload(path, file, { contentType: file.type, upsert: false });
+    if (upErr) throw new Error(upErr.message);
+    const { data, error } = await supabase.from("case_attachments").insert({
+      report_id: id,
+      storage_path: path,
+      filename: file.name,
+      content_type: file.type,
+      size_bytes: file.size,
+      uploaded_by: user.id,
+    }).select("id,filename,created_at").single();
+    if (error) throw new Error(error.message);
+    const { data: signed } = await supabase.storage.from("case-attachments").createSignedUrl(path, 60 * 60);
+    return {
+      success: true,
+      attachment: { id: data.id, filename: data.filename, url: signed?.signedUrl ?? "", uploaded_at: data.created_at },
+    };
+  },
+
+  async listActionReports(id: string): Promise<ActionReport[]> {
+    const { data, error } = await supabase.from("action_reports")
+      .select("id,summary,outcome,recommendations,responder_id,created_at")
+      .eq("report_id", id)
+      .order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    return (data ?? []).map((r) => ({
+      id: r.id,
+      summary: r.summary,
+      outcome: r.outcome,
+      recommendations: r.recommendations ?? undefined,
+      responder_id: r.responder_id,
+      created_at: r.created_at,
+    }));
+  },
+
+  async submitActionReport(id: string, body: { summary: string; outcome: string; recommendations?: string; files?: File[] }): Promise<{ success: boolean }> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Not signed in");
+    const { data: ar, error } = await supabase.from("action_reports").insert({
+      report_id: id,
+      responder_id: user.id,
+      summary: body.summary,
+      outcome: body.outcome,
+      recommendations: body.recommendations ?? null,
+    }).select("id").single();
+    if (error) throw new Error(error.message);
+    for (const file of body.files ?? []) {
+      const safeName = file.name.replace(/[^\w.\-]+/g, "_");
+      const path = `${id}/action-${ar.id}/${Date.now()}-${safeName}`;
+      const { error: upErr } = await supabase.storage.from("case-attachments")
+        .upload(path, file, { contentType: file.type, upsert: false });
+      if (upErr) throw new Error(upErr.message);
+      await supabase.from("case_attachments").insert({
+        report_id: id,
+        action_report_id: ar.id,
+        storage_path: path,
+        filename: file.name,
+        content_type: file.type,
+        size_bytes: file.size,
+        uploaded_by: user.id,
+      });
+    }
+    await supabase.from("report_history").insert({
+      report_id: id,
+      action: "action_report_submitted",
+      details: ar.id,
+      actor_id: user.id,
+    });
+    return { success: true };
   },
 };
 
