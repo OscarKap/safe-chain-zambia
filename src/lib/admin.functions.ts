@@ -18,6 +18,10 @@ const setRoleSchema = z.object({
   role: z.enum(roleValues),
 });
 const reportIdSchema = z.object({ reportId: z.string().uuid() });
+const assignSchema = z.object({
+  reportId: z.string().uuid(),
+  responderId: z.string().uuid(),
+});
 
 async function callAdminRpc(name: string, args: Record<string, unknown>) {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
