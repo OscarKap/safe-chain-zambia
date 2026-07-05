@@ -177,17 +177,38 @@ function ReportDetail() {
             </ul>
           </SectionCard>
 
-          <SectionCard title="Attachments">
+          <SectionCard title={`Attachments (${attachments.length})`}>
             <input
               type="file"
+              accept="image/*,application/pdf"
               onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadFile.mutate(f); }}
               className="text-sm file:mr-3 file:rounded-full file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-primary-foreground hover:file:opacity-90"
             />
-            {(!r.attachments || r.attachments.length === 0) && <p className="mt-3 text-sm text-muted-foreground">No attachments.</p>}
+            {attachments.length === 0 && <p className="mt-3 text-sm text-muted-foreground">No attachments.</p>}
             <ul className="mt-3 space-y-1 text-sm">
-              {r.attachments?.map((a) => (
+              {attachments.map((a) => (
                 <li key={a.id}>
                   <a href={a.url} target="_blank" rel="noreferrer" className="text-brand hover:underline">{a.filename}</a>
+                  {a.uploaded_at && <span className="ml-2 text-xs text-muted-foreground">{new Date(a.uploaded_at).toLocaleString()}</span>}
+                </li>
+              ))}
+            </ul>
+          </SectionCard>
+
+          <SectionCard title={`Action reports (${actionReports.length})`}>
+            {actionReports.length === 0 && <p className="text-sm text-muted-foreground">No action reports submitted yet.</p>}
+            <ul className="space-y-3">
+              {actionReports.map((ar) => (
+                <li key={ar.id} className="rounded-lg border border-border p-3 text-sm">
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground">Outcome</p>
+                  <p className="font-medium">{ar.outcome}</p>
+                  <p className="mt-2 text-xs uppercase tracking-wide text-muted-foreground">Summary</p>
+                  <p className="whitespace-pre-wrap">{ar.summary}</p>
+                  {ar.recommendations && <>
+                    <p className="mt-2 text-xs uppercase tracking-wide text-muted-foreground">Recommendations</p>
+                    <p className="whitespace-pre-wrap">{ar.recommendations}</p>
+                  </>}
+                  <p className="mt-2 text-xs text-muted-foreground">Submitted {new Date(ar.created_at).toLocaleString()}</p>
                 </li>
               ))}
             </ul>
@@ -221,36 +242,23 @@ function ReportDetail() {
           </SectionCard>
 
           {canManage && (
-            <SectionCard title="Assign responder">
-              <form onSubmit={(e) => { e.preventDefault(); if (assignTo) assign.mutate(assignTo); }} className="space-y-2">
-                <select
-                  value={assignTo} onChange={(e) => setAssignTo(e.target.value)}
-                  className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+            <SectionCard title="Assignment">
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => setAssignOpen(true)}
+                  className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
                 >
-                  <option value="">Recommended first…</option>
-                  {recommended.map((u) => {
-                    const match = u.district === r.district ? " · same district"
-                      : u.province === r.province ? " · same province" : "";
-                    return (
-                      <option key={u.id} value={u.id}>
-                        {u.first_name} {u.last_name}{match}
-                      </option>
-                    );
-                  })}
-                </select>
-                <div className="flex gap-2">
-                  <button disabled={!assignTo || assign.isPending} className="flex-1 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-60">
-                    {assign.isPending ? "Assigning…" : "Assign"}
-                  </button>
-                  <button type="button" disabled={autoAssign.isPending}
-                    onClick={() => autoAssign.mutate()}
-                    className="rounded-full border border-border px-4 py-2 text-sm font-semibold hover:bg-muted disabled:opacity-60">
-                    {autoAssign.isPending ? "…" : "Auto-assign"}
-                  </button>
-                </div>
-
-              </form>
-              {r.assigned_to && <p className="mt-2 text-xs text-muted-foreground">Currently assigned to: {r.assigned_to}</p>}
+                  {r.assigned_to ? "Reassign case" : "Assign case"}
+                </button>
+                <button
+                  disabled={autoAssign.isPending}
+                  onClick={() => autoAssign.mutate()}
+                  className="rounded-full border border-border px-4 py-2 text-sm font-semibold hover:bg-muted disabled:opacity-60"
+                >
+                  {autoAssign.isPending ? "Working…" : "Auto-assign (best match)"}
+                </button>
+              </div>
+              {r.assigned_to && <p className="mt-3 text-xs text-muted-foreground">Currently assigned to <span className="font-mono">{r.assigned_to.slice(0,8)}…</span></p>}
             </SectionCard>
           )}
 
