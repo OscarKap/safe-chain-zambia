@@ -289,9 +289,15 @@ export const users = {
 export const responders = {
   async list(): Promise<ResponderWorkload[]> {
     const data = await responderWorkloadFn();
-    return ((data ?? []) as ResponderWorkload[]).map((r) => ({
+    const list = ((data ?? []) as ResponderWorkload[]).map((r) => ({
       ...r, open_cases: Number(r.open_cases ?? 0),
     }));
+    if (list.length === 0) return list;
+    const ids = list.map((r) => r.user_id);
+    const { data: phones } = await supabase.from("profiles")
+      .select("user_id,phone").in("user_id", ids);
+    const phoneMap = new Map((phones ?? []).map((p) => [p.user_id, p.phone ?? undefined]));
+    return list.map((r) => ({ ...r, phone: phoneMap.get(r.user_id) }));
   },
   async setAvailability(available: boolean): Promise<{ success: boolean }> {
     const { data: { user } } = await supabase.auth.getUser();
