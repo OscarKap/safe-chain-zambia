@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { ChevronLeft, MapPin, AlertTriangle, CheckCircle2, Circle } from "lucide-react";
+import { ChevronLeft, MapPin, AlertTriangle, CheckCircle2, Circle, Phone, Mail, X } from "lucide-react";
 import {
-  reports, users, apiErrorMessage,
+  reports, responders, apiErrorMessage,
   REPORT_STATUSES, REPORT_WORKFLOW, REPORT_PRIORITIES,
-  type ReportStatus, type ReportPriority,
+  type ReportStatus, type ReportPriority, type ResponderWorkload,
 } from "@/lib/api";
 import { DashboardShell, SectionCard } from "@/components/DashboardShell";
 import { useAuth } from "@/lib/auth-context";
