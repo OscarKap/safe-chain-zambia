@@ -81,6 +81,10 @@ export interface ReportListItem {
 export interface ReportHistoryEntry { id: string; action: string; actor?: string; created_at: string; details?: string; }
 export interface ReportNote { id: string; body: string; author?: string; created_at: string; }
 export interface ReportAttachment { id: string; filename: string; url: string; uploaded_at?: string; }
+export interface ActionReport {
+  id: string; summary: string; outcome: string;
+  recommendations?: string; responder_id: string; created_at: string;
+}
 export interface ReportDetail extends ReportListItem {
   description?: string; reporter_name?: string; reporter_phone?: string;
   gps_lat?: number | null; gps_lng?: number | null;
