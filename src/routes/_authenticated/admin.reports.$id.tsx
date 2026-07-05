@@ -276,7 +276,105 @@ function ReportDetail() {
           </SectionCard>
         </div>
       </div>
+
+      {assignOpen && (
+        <AssignDialog
+          reportDistrict={r.district ?? undefined}
+          reportProvince={r.province ?? undefined}
+          responders={respondersQ.data ?? []}
+          currentAssignee={r.assigned_to ?? undefined}
+          pending={assign.isPending}
+          onClose={() => setAssignOpen(false)}
+          onAssign={(rid) => assign.mutate(rid)}
+        />
+      )}
     </DashboardShell>
+  );
+}
+
+function AssignDialog({
+  reportDistrict, reportProvince, responders: pool, currentAssignee, pending, onClose, onAssign,
+}: {
+  reportDistrict?: string; reportProvince?: string;
+  responders: ResponderWorkload[]; currentAssignee?: string;
+  pending: boolean; onClose: () => void; onAssign: (id: string) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const inDistrict = pool.filter((u) => reportDistrict && u.district === reportDistrict);
+    const primary = inDistrict.length > 0
+      ? inDistrict
+      : pool.filter((u) => reportProvince && u.province === reportProvince);
+    const list = (primary.length > 0 ? primary : pool)
+      .filter((u) => u.is_available)
+      .filter((u) => !q || [u.first_name, u.last_name, u.email, u.specialization, u.district, u.province]
+        .filter(Boolean).join(" ").toLowerCase().includes(q))
+      .slice().sort((a, b) => a.open_cases - b.open_cases);
+    return list;
+  }, [pool, query, reportDistrict, reportProvince]);
+
+  const scopeLabel = filtered === pool ? "all responders"
+    : reportDistrict && pool.some((u) => u.district === reportDistrict) ? `district: ${reportDistrict}`
+    : reportProvince ? `province: ${reportProvince}` : "all responders";
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={onClose}>
+      <div className="w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-2xl bg-card shadow-xl border border-border flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between p-4 border-b border-border">
+          <div>
+            <h3 className="text-lg font-semibold">Assign case</h3>
+            <p className="text-xs text-muted-foreground">Approved & available responders · scope: {scopeLabel}</p>
+          </div>
+          <button onClick={onClose} className="rounded-full p-1 hover:bg-muted"><X className="h-4 w-4" /></button>
+        </div>
+        <div className="p-4 border-b border-border">
+          <input
+            value={query} onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search by name, email, specialization…"
+            className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+          />
+        </div>
+        <div className="overflow-y-auto flex-1 divide-y divide-border">
+          {filtered.length === 0 && <p className="p-6 text-sm text-muted-foreground text-center">No available responders match.</p>}
+          {filtered.map((u) => {
+            const isCurrent = currentAssignee === u.user_id;
+            const load = u.max_active_cases > 0 ? u.open_cases / u.max_active_cases : 0;
+            return (
+              <div key={u.user_id} className="p-4 flex items-start gap-3">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="font-medium">{u.first_name} {u.last_name}</p>
+                    <span className="text-xs rounded-full bg-muted px-2 py-0.5">Responder</span>
+                    {u.specialization && <span className="text-xs rounded-full bg-sky-50 text-sky-700 px-2 py-0.5">{u.specialization}</span>}
+                    {u.district === reportDistrict && <span className="text-xs rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5">same district</span>}
+                    {u.district !== reportDistrict && u.province === reportProvince && <span className="text-xs rounded-full bg-amber-50 text-amber-700 px-2 py-0.5">same province</span>}
+                  </div>
+                  <p className="mt-1 text-xs text-muted-foreground">{u.district ?? "—"}, {u.province ?? "—"}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1"><Mail className="h-3 w-3" /> {u.email}</span>
+                    {u.phone && <span className="inline-flex items-center gap-1"><Phone className="h-3 w-3" /> {u.phone}</span>}
+                  </div>
+                  <div className="mt-2">
+                    <div className="h-1.5 bg-muted rounded overflow-hidden w-40">
+                      <div className={`h-full ${load >= 1 ? "bg-red-500" : load > 0.7 ? "bg-orange-500" : "bg-emerald-500"}`} style={{ width: `${Math.min(100, load * 100)}%` }} />
+                    </div>
+                    <p className="mt-1 text-[10px] text-muted-foreground">Workload {u.open_cases}/{u.max_active_cases}</p>
+                  </div>
+                </div>
+                <button
+                  disabled={pending || isCurrent || u.open_cases >= u.max_active_cases}
+                  onClick={() => onAssign(u.user_id)}
+                  className="shrink-0 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-50"
+                >
+                  {isCurrent ? "Currently assigned" : u.open_cases >= u.max_active_cases ? "At capacity" : pending ? "…" : "Assign"}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }
 
