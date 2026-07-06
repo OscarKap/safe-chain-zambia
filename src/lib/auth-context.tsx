@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { auth as authApi, setTokens, getToken, setOnUnauthorized, type AuthUser, type Role } from "./api";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AuthState {
   user: AuthUser | null;
@@ -16,7 +17,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
-    if (!getToken()) { setUser(null); setLoading(false); return; }
     try {
       const me = await authApi.me();
       setUser(me);
@@ -30,8 +30,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     void refresh();
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_IN" || event === "USER_UPDATED" || event === "TOKEN_REFRESHED") {
+        void refresh();
+      }
+      if (event === "SIGNED_OUT") {
+        setTokens(null, null);
+        setUser(null);
+        setLoading(false);
+      }
+    });
     setOnUnauthorized(() => setUser(null));
-    return () => setOnUnauthorized(null);
+    return () => {
+      subscription.unsubscribe();
+      setOnUnauthorized(null);
+    };
   }, [refresh]);
 
   const login = useCallback(async (email: string, password: string) => {
