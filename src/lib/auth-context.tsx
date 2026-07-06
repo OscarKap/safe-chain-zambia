@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { auth as authApi, setTokens, getToken, setOnUnauthorized, type AuthUser, type Role } from "./api";
+import { auth as authApi, setTokens, setOnUnauthorized, type AuthUser, type Role } from "./api";
 import { supabase } from "@/integrations/supabase/client";
 
 interface AuthState {
@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     void refresh();
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "SIGNED_IN" || event === "USER_UPDATED" || event === "TOKEN_REFRESHED") {
+      if (event === "SIGNED_IN" || event === "USER_UPDATED") {
         void refresh();
       }
       if (event === "SIGNED_OUT") {
