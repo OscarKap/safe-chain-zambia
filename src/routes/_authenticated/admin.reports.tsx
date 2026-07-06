@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
@@ -7,8 +7,14 @@ import { DashboardShell, SectionCard } from "@/components/DashboardShell";
 
 export const Route = createFileRoute("/_authenticated/admin/reports")({
   head: () => ({ meta: [{ title: "Reports — Safe Chain" }, { name: "robots", content: "noindex, nofollow" }] }),
-  component: ReportsList,
+  component: AdminReportsRoute,
 });
+
+function AdminReportsRoute() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname.replace(/\/$/, "") });
+  if (pathname !== "/admin/reports") return <Outlet />;
+  return <ReportsList />;
+}
 
 function ReportsList() {
   const [status, setStatus] = useState<ReportStatus | "">("");
