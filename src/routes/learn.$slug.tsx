@@ -49,7 +49,7 @@ const FONT_KEY = "safechain:fontSize";
 const PROG_KEY = (slug: string) => `safechain:progress:${slug}`;
 
 function ArticleReader() {
-  const { slug } = Route.useLoaderData();
+  const { slug } = Route.useParams();
   const a = articleBySlug(slug)!;
 
   const [progress, setProgress] = useState(0);
