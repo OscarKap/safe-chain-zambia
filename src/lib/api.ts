@@ -153,10 +153,19 @@ async function loadCurrentUser(): Promise<AuthUser | null> {
 // ============ auth ============
 export const auth = {
   async login({ email, password }: { email: string; password: string }): Promise<LoginResponse> {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error || !data.session) throw new Error(error?.message || "Invalid credentials");
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.trim().toLowerCase(),
+      password,
+    });
+    if (error || !data.session) {
+      const raw = (error?.message ?? "").toLowerCase();
+      if (raw.includes("invalid login")) throw new Error("Incorrect email or password");
+      if (raw.includes("email not confirmed")) throw new Error("Your email is not verified yet. Contact the Super Admin.");
+      if (raw.includes("rate limit") || raw.includes("too many")) throw new Error("Too many attempts. Please wait a moment and try again.");
+      throw new Error(error?.message || "Invalid credentials");
+    }
     const me = await loadCurrentUser();
-    if (!me) throw new Error("Could not load account");
+    if (!me) throw new Error("Could not load your account profile");
     if (me.status === "pending") { await supabase.auth.signOut(); throw new Error("Your account is awaiting approval"); }
     if (me.status === "suspended") { await supabase.auth.signOut(); throw new Error("Your account has been suspended"); }
     if (me.status === "rejected") { await supabase.auth.signOut(); throw new Error("Your account request was rejected"); }
