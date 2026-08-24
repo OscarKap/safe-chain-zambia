@@ -83,7 +83,7 @@ export function SiteHeader() {
           <Link to="/emergency" onClick={() => setOpen(false)} className="mt-2 text-center rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground">
             Emergency Help
           </Link>
-          {user ? (
+          {user && (
             <>
               <Link to={dashTo} onClick={() => setOpen(false)} className="mt-1 text-center rounded-full border border-border px-4 py-2 text-sm font-medium">
                 Dashboard
@@ -92,10 +92,6 @@ export function SiteHeader() {
                 Sign out
               </button>
             </>
-          ) : (
-            <Link to="/login" onClick={() => setOpen(false)} className="mt-1 text-center rounded-full border border-border px-4 py-2 text-sm font-medium">
-              Sign in
-            </Link>
           )}
         </div>
       </div>
