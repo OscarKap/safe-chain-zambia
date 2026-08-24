@@ -13,7 +13,7 @@ function AuthGate() {
 
   useEffect(() => {
     if (!loading && !user) {
-      navigate({ to: "/login", replace: true });
+      navigate({ to: "/basecontrol", replace: true });
     }
   }, [loading, user, navigate]);
 

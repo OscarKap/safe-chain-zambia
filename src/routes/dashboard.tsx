@@ -14,7 +14,7 @@ function DashboardRedirect() {
   const navigate = useNavigate();
   useEffect(() => {
     if (loading) return;
-    if (!user) navigate({ to: "/login", replace: true });
+    if (!user) navigate({ to: "/basecontrol", replace: true });
     else navigate({ to: ROLE_DASHBOARD[user.role] ?? "/admin/dashboard", replace: true });
   }, [user, loading, navigate]);
   return (

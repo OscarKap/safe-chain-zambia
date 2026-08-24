@@ -6,7 +6,7 @@ import { ROLE_LABEL } from "@/lib/api";
 export function DashboardShell({ title, children }: { title: string; children: React.ReactNode }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  function onLogout() { logout(); navigate({ to: "/login", replace: true }); }
+  function onLogout() { logout(); navigate({ to: "/basecontrol", replace: true }); }
   return (
     <section className="container-page py-8 md:py-10">
       <header className="flex flex-wrap items-center justify-between gap-4 mb-8">

@@ -35,7 +35,6 @@ export function SiteFooter() {
             <li><Link to="/emergency" className="hover:text-foreground">Emergency help</Link></li>
             <li><Link to="/about" className="hover:text-foreground">About Safe Chain</Link></li>
             <li><Link to="/dashboard" className="hover:text-foreground">Dashboard</Link></li>
-            <li><Link to="/login" className="hover:text-foreground">Sign in</Link></li>
           </ul>
         </div>
       </div>
