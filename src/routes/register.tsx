@@ -159,7 +159,7 @@ function Register() {
             {loading ? "Submitting…" : "Submit request"}
           </button>
           <p className="text-xs text-muted-foreground text-center">
-            Already approved? <Link to="/login" className="text-brand font-medium">Sign in</Link>
+            Already approved? <Link to="/basecontrol" className="text-brand font-medium">Sign in</Link>
           </p>
         </form>
       </div>

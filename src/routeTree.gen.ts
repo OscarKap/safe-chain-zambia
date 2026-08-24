@@ -17,6 +17,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as BasecontrolRouteImport } from './routes/basecontrol'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -71,6 +72,11 @@ const EmergencyRoute = EmergencyRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BasecontrolRoute = BasecontrolRouteImport.update({
+  id: '/basecontrol',
+  path: '/basecontrol',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
+  '/basecontrol': typeof BasecontrolRoute
   '/dashboard': typeof DashboardRoute
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
+  '/basecontrol': typeof BasecontrolRoute
   '/dashboard': typeof DashboardRoute
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
@@ -210,6 +218,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
+  '/basecontrol': typeof BasecontrolRoute
   '/dashboard': typeof DashboardRoute
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
@@ -236,6 +245,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
+    | '/basecontrol'
     | '/dashboard'
     | '/emergency'
     | '/feedback'
@@ -260,6 +270,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
+    | '/basecontrol'
     | '/dashboard'
     | '/emergency'
     | '/feedback'
@@ -285,6 +296,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/admin'
+    | '/basecontrol'
     | '/dashboard'
     | '/emergency'
     | '/feedback'
@@ -311,6 +323,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRoute
+  BasecontrolRoute: typeof BasecontrolRoute
   DashboardRoute: typeof DashboardRoute
   EmergencyRoute: typeof EmergencyRoute
   FeedbackRoute: typeof FeedbackRoute
@@ -379,6 +392,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/basecontrol': {
+      id: '/basecontrol'
+      path: '/basecontrol'
+      fullPath: '/basecontrol'
+      preLoaderRoute: typeof BasecontrolRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -533,6 +553,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AdminRoute: AdminRoute,
+  BasecontrolRoute: BasecontrolRoute,
   DashboardRoute: DashboardRoute,
   EmergencyRoute: EmergencyRoute,
   FeedbackRoute: FeedbackRoute,
@@ -547,3 +568,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

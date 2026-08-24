@@ -19,11 +19,11 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const dashTo = user ? ROLE_DASHBOARD[user.role] ?? "/dashboard" : "/login";
+  const dashTo = user ? ROLE_DASHBOARD[user.role] ?? "/dashboard" : "/basecontrol";
 
   async function handleSignOut() {
     await logout();
-    navigate({ to: "/login", replace: true });
+    navigate({ to: "/basecontrol", replace: true });
   }
 
   return (
@@ -51,7 +51,7 @@ export function SiteHeader() {
           <Link to="/emergency" className="inline-flex items-center gap-2 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground hover:opacity-90 transition">
             Emergency Help
           </Link>
-          {user ? (
+          {user && (
             <>
               <NotificationBell />
               <Link to={dashTo} className="inline-flex items-center rounded-full border border-border px-4 py-2 text-sm font-medium hover:bg-muted transition">
@@ -61,10 +61,6 @@ export function SiteHeader() {
                 <LogOut className="h-4 w-4" /> Sign out
               </button>
             </>
-          ) : (
-            <Link to="/login" className="inline-flex items-center rounded-full border border-border px-4 py-2 text-sm font-medium hover:bg-muted transition">
-              Sign in
-            </Link>
           )}
         </div>
 
@@ -87,7 +83,7 @@ export function SiteHeader() {
           <Link to="/emergency" onClick={() => setOpen(false)} className="mt-2 text-center rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground">
             Emergency Help
           </Link>
-          {user ? (
+          {user && (
             <>
               <Link to={dashTo} onClick={() => setOpen(false)} className="mt-1 text-center rounded-full border border-border px-4 py-2 text-sm font-medium">
                 Dashboard
@@ -96,10 +92,6 @@ export function SiteHeader() {
                 Sign out
               </button>
             </>
-          ) : (
-            <Link to="/login" onClick={() => setOpen(false)} className="mt-1 text-center rounded-full border border-border px-4 py-2 text-sm font-medium">
-              Sign in
-            </Link>
           )}
         </div>
       </div>
