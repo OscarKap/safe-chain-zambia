@@ -19,11 +19,11 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const dashTo = user ? ROLE_DASHBOARD[user.role] ?? "/dashboard" : "/login";
+  const dashTo = user ? ROLE_DASHBOARD[user.role] ?? "/dashboard" : "/basecontrol";
 
   async function handleSignOut() {
     await logout();
-    navigate({ to: "/login", replace: true });
+    navigate({ to: "/basecontrol", replace: true });
   }
 
   return (
