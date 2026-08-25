@@ -328,6 +328,15 @@ export const responders = {
 
 
 export const reports = {
+  /** Records that the signed-in staff member opened this case (audit trail). */
+  async logView(id: string): Promise<void> {
+    try {
+      await supabase.rpc("log_case_view", { _report_id: id });
+    } catch {
+      /* auditing must never block the case view */
+    }
+  },
+
   async list(params?: { status?: ReportStatus; priority?: ReportPriority; province?: string; district?: string; category?: string; q?: string; assignedTo?: string }): Promise<ReportListItem[]> {
     let q = supabase.from("reports").select("id,category,status,priority,created_at,province,district,assigned_to");
     if (params?.status) q = q.eq("status", params.status);

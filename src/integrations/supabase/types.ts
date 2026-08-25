@@ -514,6 +514,7 @@ export type Database = {
         Args: { _caller: string; _report_id: string }
         Returns: string
       }
+      log_case_view: { Args: { _report_id: string }; Returns: undefined }
       responder_workload: {
         Args: never
         Returns: {
