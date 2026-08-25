@@ -29,7 +29,10 @@ function ReportDetail() {
   const qc = useQueryClient();
   const canManage = user?.role === "super_admin" || user?.role === "admin" || user?.role === "gbv_officer";
 
+  useEffect(() => { void reports.logView(id); }, [id]);
+
   const reportQ = useQuery({
+
     queryKey: ["report", id],
     queryFn: () => reports.get(id),
     refetchInterval: 30_000,
