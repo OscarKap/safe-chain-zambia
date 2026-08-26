@@ -199,6 +199,33 @@ export type Database = {
         }
         Relationships: []
       }
+      admin_reauth_grants: {
+        Row: {
+          consumed_at: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          scope: string
+          user_id: string
+        }
+        Insert: {
+          consumed_at?: string | null
+          created_at?: string
+          expires_at: string
+          id?: string
+          scope?: string
+          user_id: string
+        }
+        Update: {
+          consumed_at?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          scope?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       case_attachments: {
         Row: {
           action_report_id: string | null
@@ -250,6 +277,30 @@ export type Database = {
           },
         ]
       }
+      mfa_recovery_codes: {
+        Row: {
+          code_hash: string
+          created_at: string
+          id: string
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          code_hash: string
+          created_at?: string
+          id?: string
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          code_hash?: string
+          created_at?: string
+          id?: string
+          used_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           created_at: string
@@ -286,6 +337,8 @@ export type Database = {
           is_available: boolean
           last_name: string | null
           max_active_cases: number
+          mfa_enrolled_at: string | null
+          mfa_required: boolean
           pending_role: Database["public"]["Enums"]["app_role"] | null
           phone: string | null
           province: string | null
@@ -302,6 +355,8 @@ export type Database = {
           is_available?: boolean
           last_name?: string | null
           max_active_cases?: number
+          mfa_enrolled_at?: string | null
+          mfa_required?: boolean
           pending_role?: Database["public"]["Enums"]["app_role"] | null
           phone?: string | null
           province?: string | null
@@ -318,6 +373,8 @@ export type Database = {
           is_available?: boolean
           last_name?: string | null
           max_active_cases?: number
+          mfa_enrolled_at?: string | null
+          mfa_required?: boolean
           pending_role?: Database["public"]["Enums"]["app_role"] | null
           phone?: string | null
           province?: string | null
@@ -325,6 +382,27 @@ export type Database = {
           status?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      rate_limit_events: {
+        Row: {
+          bucket: string
+          created_at: string
+          id: string
+          key_hash: string
+        }
+        Insert: {
+          bucket: string
+          created_at?: string
+          id?: string
+          key_hash: string
+        }
+        Update: {
+          bucket?: string
+          created_at?: string
+          id?: string
+          key_hash?: string
         }
         Relationships: []
       }
@@ -449,6 +527,78 @@ export type Database = {
         }
         Relationships: []
       }
+      retention_purge_runs: {
+        Row: {
+          actor_user_id: string | null
+          deleted_attachments: number
+          deleted_audit_logs: number
+          deleted_notifications: number
+          deleted_rate_limits: number
+          details: Json
+          dry_run: boolean
+          id: string
+          ran_at: string
+          trigger_source: string
+        }
+        Insert: {
+          actor_user_id?: string | null
+          deleted_attachments?: number
+          deleted_audit_logs?: number
+          deleted_notifications?: number
+          deleted_rate_limits?: number
+          details?: Json
+          dry_run?: boolean
+          id?: string
+          ran_at?: string
+          trigger_source?: string
+        }
+        Update: {
+          actor_user_id?: string | null
+          deleted_attachments?: number
+          deleted_audit_logs?: number
+          deleted_notifications?: number
+          deleted_rate_limits?: number
+          details?: Json
+          dry_run?: boolean
+          id?: string
+          ran_at?: string
+          trigger_source?: string
+        }
+        Relationships: []
+      }
+      retention_settings: {
+        Row: {
+          attachment_days: number
+          audit_log_days: number
+          auto_purge_enabled: boolean
+          id: boolean
+          notification_days: number
+          rate_limit_days: number
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          attachment_days?: number
+          audit_log_days?: number
+          auto_purge_enabled?: boolean
+          id?: boolean
+          notification_days?: number
+          rate_limit_days?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          attachment_days?: number
+          audit_log_days?: number
+          auto_purge_enabled?: boolean
+          id?: boolean
+          notification_days?: number
+          rate_limit_days?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           granted_at: string
@@ -529,6 +679,10 @@ export type Database = {
           specialization: string
           user_id: string
         }[]
+      }
+      run_retention_purge: {
+        Args: { _actor?: string; _dry_run?: boolean; _source?: string }
+        Returns: Json
       }
     }
     Enums: {
