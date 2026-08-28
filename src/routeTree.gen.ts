@@ -13,6 +13,8 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ReportRouteImport } from './routes/report'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as PendingRouteImport } from './routes/pending'
+import { Route as MfaVerifyRouteImport } from './routes/mfa-verify'
+import { Route as MfaRecoveryRouteImport } from './routes/mfa-recovery'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as EmergencyRouteImport } from './routes/emergency'
@@ -25,6 +27,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 import { Route as AuthenticatedEocRouteImport } from './routes/_authenticated/eoc'
+import { Route as ApiPublicRetentionPurgeRouteImport } from './routes/api/public/retention-purge'
 import { Route as AuthenticatedResponderDashboardRouteImport } from './routes/_authenticated/responder.dashboard'
 import { Route as AuthenticatedGbvDashboardRouteImport } from './routes/_authenticated/gbv.dashboard'
 import { Route as AuthenticatedDeveloperDashboardRouteImport } from './routes/_authenticated/developer.dashboard'
@@ -52,6 +55,16 @@ const RegisterRoute = RegisterRouteImport.update({
 const PendingRoute = PendingRouteImport.update({
   id: '/pending',
   path: '/pending',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MfaVerifyRoute = MfaVerifyRouteImport.update({
+  id: '/mfa-verify',
+  path: '/mfa-verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MfaRecoveryRoute = MfaRecoveryRouteImport.update({
+  id: '/mfa-recovery',
+  path: '/mfa-recovery',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -113,6 +126,11 @@ const AuthenticatedEocRoute = AuthenticatedEocRouteImport.update({
   path: '/eoc',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiPublicRetentionPurgeRoute = ApiPublicRetentionPurgeRouteImport.update({
+  id: '/api/public/retention-purge',
+  path: '/api/public/retention-purge',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedResponderDashboardRoute =
   AuthenticatedResponderDashboardRouteImport.update({
     id: '/responder/dashboard',
@@ -171,6 +189,8 @@ export interface FileRoutesByFullPath {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/mfa-recovery': typeof MfaRecoveryRoute
+  '/mfa-verify': typeof MfaVerifyRoute
   '/pending': typeof PendingRoute
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
@@ -185,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
   '/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
+  '/api/public/retention-purge': typeof ApiPublicRetentionPurgeRoute
   '/admin/reports/$id': typeof AuthenticatedAdminReportsIdRoute
 }
 export interface FileRoutesByTo {
@@ -196,6 +217,8 @@ export interface FileRoutesByTo {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/mfa-recovery': typeof MfaRecoveryRoute
+  '/mfa-verify': typeof MfaVerifyRoute
   '/pending': typeof PendingRoute
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
@@ -210,6 +233,7 @@ export interface FileRoutesByTo {
   '/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
   '/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
+  '/api/public/retention-purge': typeof ApiPublicRetentionPurgeRoute
   '/admin/reports/$id': typeof AuthenticatedAdminReportsIdRoute
 }
 export interface FileRoutesById {
@@ -223,6 +247,8 @@ export interface FileRoutesById {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/mfa-recovery': typeof MfaRecoveryRoute
+  '/mfa-verify': typeof MfaVerifyRoute
   '/pending': typeof PendingRoute
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
@@ -237,6 +263,7 @@ export interface FileRoutesById {
   '/_authenticated/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/_authenticated/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
   '/_authenticated/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
+  '/api/public/retention-purge': typeof ApiPublicRetentionPurgeRoute
   '/_authenticated/admin/reports/$id': typeof AuthenticatedAdminReportsIdRoute
 }
 export interface FileRouteTypes {
@@ -250,6 +277,8 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/mfa-recovery'
+    | '/mfa-verify'
     | '/pending'
     | '/register'
     | '/report'
@@ -264,6 +293,7 @@ export interface FileRouteTypes {
     | '/developer/dashboard'
     | '/gbv/dashboard'
     | '/responder/dashboard'
+    | '/api/public/retention-purge'
     | '/admin/reports/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -275,6 +305,8 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/mfa-recovery'
+    | '/mfa-verify'
     | '/pending'
     | '/register'
     | '/report'
@@ -289,6 +321,7 @@ export interface FileRouteTypes {
     | '/developer/dashboard'
     | '/gbv/dashboard'
     | '/responder/dashboard'
+    | '/api/public/retention-purge'
     | '/admin/reports/$id'
   id:
     | '__root__'
@@ -301,6 +334,8 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/mfa-recovery'
+    | '/mfa-verify'
     | '/pending'
     | '/register'
     | '/report'
@@ -315,6 +350,7 @@ export interface FileRouteTypes {
     | '/_authenticated/developer/dashboard'
     | '/_authenticated/gbv/dashboard'
     | '/_authenticated/responder/dashboard'
+    | '/api/public/retention-purge'
     | '/_authenticated/admin/reports/$id'
   fileRoutesById: FileRoutesById
 }
@@ -328,12 +364,15 @@ export interface RootRouteChildren {
   EmergencyRoute: typeof EmergencyRoute
   FeedbackRoute: typeof FeedbackRoute
   LoginRoute: typeof LoginRoute
+  MfaRecoveryRoute: typeof MfaRecoveryRoute
+  MfaVerifyRoute: typeof MfaVerifyRoute
   PendingRoute: typeof PendingRoute
   RegisterRoute: typeof RegisterRoute
   ReportRoute: typeof ReportRoute
   ServicesRoute: typeof ServicesRoute
   LearnSlugRoute: typeof LearnSlugRoute
   LearnIndexRoute: typeof LearnIndexRoute
+  ApiPublicRetentionPurgeRoute: typeof ApiPublicRetentionPurgeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -364,6 +403,20 @@ declare module '@tanstack/react-router' {
       path: '/pending'
       fullPath: '/pending'
       preLoaderRoute: typeof PendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mfa-verify': {
+      id: '/mfa-verify'
+      path: '/mfa-verify'
+      fullPath: '/mfa-verify'
+      preLoaderRoute: typeof MfaVerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mfa-recovery': {
+      id: '/mfa-recovery'
+      path: '/mfa-recovery'
+      fullPath: '/mfa-recovery'
+      preLoaderRoute: typeof MfaRecoveryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -449,6 +502,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/eoc'
       preLoaderRoute: typeof AuthenticatedEocRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/retention-purge': {
+      id: '/api/public/retention-purge'
+      path: '/api/public/retention-purge'
+      fullPath: '/api/public/retention-purge'
+      preLoaderRoute: typeof ApiPublicRetentionPurgeRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/responder/dashboard': {
       id: '/_authenticated/responder/dashboard'
@@ -558,12 +618,15 @@ const rootRouteChildren: RootRouteChildren = {
   EmergencyRoute: EmergencyRoute,
   FeedbackRoute: FeedbackRoute,
   LoginRoute: LoginRoute,
+  MfaRecoveryRoute: MfaRecoveryRoute,
+  MfaVerifyRoute: MfaVerifyRoute,
   PendingRoute: PendingRoute,
   RegisterRoute: RegisterRoute,
   ReportRoute: ReportRoute,
   ServicesRoute: ServicesRoute,
   LearnSlugRoute: LearnSlugRoute,
   LearnIndexRoute: LearnIndexRoute,
+  ApiPublicRetentionPurgeRoute: ApiPublicRetentionPurgeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
