@@ -13,6 +13,8 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ReportRouteImport } from './routes/report'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as PendingRouteImport } from './routes/pending'
+import { Route as MfaVerifyRouteImport } from './routes/mfa-verify'
+import { Route as MfaRecoveryRouteImport } from './routes/mfa-recovery'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as EmergencyRouteImport } from './routes/emergency'
@@ -53,6 +55,16 @@ const RegisterRoute = RegisterRouteImport.update({
 const PendingRoute = PendingRouteImport.update({
   id: '/pending',
   path: '/pending',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MfaVerifyRoute = MfaVerifyRouteImport.update({
+  id: '/mfa-verify',
+  path: '/mfa-verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MfaRecoveryRoute = MfaRecoveryRouteImport.update({
+  id: '/mfa-recovery',
+  path: '/mfa-recovery',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -177,6 +189,8 @@ export interface FileRoutesByFullPath {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/mfa-recovery': typeof MfaRecoveryRoute
+  '/mfa-verify': typeof MfaVerifyRoute
   '/pending': typeof PendingRoute
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
@@ -203,6 +217,8 @@ export interface FileRoutesByTo {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/mfa-recovery': typeof MfaRecoveryRoute
+  '/mfa-verify': typeof MfaVerifyRoute
   '/pending': typeof PendingRoute
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
@@ -231,6 +247,8 @@ export interface FileRoutesById {
   '/emergency': typeof EmergencyRoute
   '/feedback': typeof FeedbackRoute
   '/login': typeof LoginRoute
+  '/mfa-recovery': typeof MfaRecoveryRoute
+  '/mfa-verify': typeof MfaVerifyRoute
   '/pending': typeof PendingRoute
   '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
@@ -259,6 +277,8 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/mfa-recovery'
+    | '/mfa-verify'
     | '/pending'
     | '/register'
     | '/report'
@@ -285,6 +305,8 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/mfa-recovery'
+    | '/mfa-verify'
     | '/pending'
     | '/register'
     | '/report'
@@ -312,6 +334,8 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/feedback'
     | '/login'
+    | '/mfa-recovery'
+    | '/mfa-verify'
     | '/pending'
     | '/register'
     | '/report'
@@ -340,6 +364,8 @@ export interface RootRouteChildren {
   EmergencyRoute: typeof EmergencyRoute
   FeedbackRoute: typeof FeedbackRoute
   LoginRoute: typeof LoginRoute
+  MfaRecoveryRoute: typeof MfaRecoveryRoute
+  MfaVerifyRoute: typeof MfaVerifyRoute
   PendingRoute: typeof PendingRoute
   RegisterRoute: typeof RegisterRoute
   ReportRoute: typeof ReportRoute
@@ -377,6 +403,20 @@ declare module '@tanstack/react-router' {
       path: '/pending'
       fullPath: '/pending'
       preLoaderRoute: typeof PendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mfa-verify': {
+      id: '/mfa-verify'
+      path: '/mfa-verify'
+      fullPath: '/mfa-verify'
+      preLoaderRoute: typeof MfaVerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mfa-recovery': {
+      id: '/mfa-recovery'
+      path: '/mfa-recovery'
+      fullPath: '/mfa-recovery'
+      preLoaderRoute: typeof MfaRecoveryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -578,6 +618,8 @@ const rootRouteChildren: RootRouteChildren = {
   EmergencyRoute: EmergencyRoute,
   FeedbackRoute: FeedbackRoute,
   LoginRoute: LoginRoute,
+  MfaRecoveryRoute: MfaRecoveryRoute,
+  MfaVerifyRoute: MfaVerifyRoute,
   PendingRoute: PendingRoute,
   RegisterRoute: RegisterRoute,
   ReportRoute: ReportRoute,
