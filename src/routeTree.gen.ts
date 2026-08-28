@@ -25,6 +25,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 import { Route as AuthenticatedEocRouteImport } from './routes/_authenticated/eoc'
+import { Route as ApiPublicRetentionPurgeRouteImport } from './routes/api/public/retention-purge'
 import { Route as AuthenticatedResponderDashboardRouteImport } from './routes/_authenticated/responder.dashboard'
 import { Route as AuthenticatedGbvDashboardRouteImport } from './routes/_authenticated/gbv.dashboard'
 import { Route as AuthenticatedDeveloperDashboardRouteImport } from './routes/_authenticated/developer.dashboard'
@@ -113,6 +114,11 @@ const AuthenticatedEocRoute = AuthenticatedEocRouteImport.update({
   path: '/eoc',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiPublicRetentionPurgeRoute = ApiPublicRetentionPurgeRouteImport.update({
+  id: '/api/public/retention-purge',
+  path: '/api/public/retention-purge',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedResponderDashboardRoute =
   AuthenticatedResponderDashboardRouteImport.update({
     id: '/responder/dashboard',
@@ -185,6 +191,7 @@ export interface FileRoutesByFullPath {
   '/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
   '/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
+  '/api/public/retention-purge': typeof ApiPublicRetentionPurgeRoute
   '/admin/reports/$id': typeof AuthenticatedAdminReportsIdRoute
 }
 export interface FileRoutesByTo {
@@ -210,6 +217,7 @@ export interface FileRoutesByTo {
   '/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
   '/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
+  '/api/public/retention-purge': typeof ApiPublicRetentionPurgeRoute
   '/admin/reports/$id': typeof AuthenticatedAdminReportsIdRoute
 }
 export interface FileRoutesById {
@@ -237,6 +245,7 @@ export interface FileRoutesById {
   '/_authenticated/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/_authenticated/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
   '/_authenticated/responder/dashboard': typeof AuthenticatedResponderDashboardRoute
+  '/api/public/retention-purge': typeof ApiPublicRetentionPurgeRoute
   '/_authenticated/admin/reports/$id': typeof AuthenticatedAdminReportsIdRoute
 }
 export interface FileRouteTypes {
@@ -264,6 +273,7 @@ export interface FileRouteTypes {
     | '/developer/dashboard'
     | '/gbv/dashboard'
     | '/responder/dashboard'
+    | '/api/public/retention-purge'
     | '/admin/reports/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -289,6 +299,7 @@ export interface FileRouteTypes {
     | '/developer/dashboard'
     | '/gbv/dashboard'
     | '/responder/dashboard'
+    | '/api/public/retention-purge'
     | '/admin/reports/$id'
   id:
     | '__root__'
@@ -315,6 +326,7 @@ export interface FileRouteTypes {
     | '/_authenticated/developer/dashboard'
     | '/_authenticated/gbv/dashboard'
     | '/_authenticated/responder/dashboard'
+    | '/api/public/retention-purge'
     | '/_authenticated/admin/reports/$id'
   fileRoutesById: FileRoutesById
 }
@@ -334,6 +346,7 @@ export interface RootRouteChildren {
   ServicesRoute: typeof ServicesRoute
   LearnSlugRoute: typeof LearnSlugRoute
   LearnIndexRoute: typeof LearnIndexRoute
+  ApiPublicRetentionPurgeRoute: typeof ApiPublicRetentionPurgeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -450,6 +463,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEocRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/retention-purge': {
+      id: '/api/public/retention-purge'
+      path: '/api/public/retention-purge'
+      fullPath: '/api/public/retention-purge'
+      preLoaderRoute: typeof ApiPublicRetentionPurgeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/responder/dashboard': {
       id: '/_authenticated/responder/dashboard'
       path: '/responder/dashboard'
@@ -564,6 +584,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesRoute: ServicesRoute,
   LearnSlugRoute: LearnSlugRoute,
   LearnIndexRoute: LearnIndexRoute,
+  ApiPublicRetentionPurgeRoute: ApiPublicRetentionPurgeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
