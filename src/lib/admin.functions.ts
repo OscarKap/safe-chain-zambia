@@ -30,6 +30,13 @@ async function callAdminRpc(name: string, args: Record<string, unknown>) {
   return data;
 }
 
+// Sensitive actions (suspend, role change, delete) need a fresh password
+// confirmation within the last few minutes.
+async function stepUp(userId: string) {
+  const { requireReauth } = await import("@/lib/security.server");
+  await requireReauth(userId);
+}
+
 export const adminApproveUserFn = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) => uuidSchema.parse(d))
@@ -50,6 +57,7 @@ export const adminSuspendUserFn = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) => uuidSchema.parse(d))
   .handler(async ({ data, context }) => {
+    await stepUp(context.userId);
     await callAdminRpc("admin_suspend_user", { _target: data.target, _caller: context.userId });
     return { success: true };
   });
@@ -66,6 +74,7 @@ export const adminSetRoleFn = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) => setRoleSchema.parse(d))
   .handler(async ({ data, context }) => {
+    await stepUp(context.userId);
     await callAdminRpc("admin_set_user_role", { _target: data.target, _role: data.role, _caller: context.userId });
     return { success: true };
   });
@@ -74,6 +83,7 @@ export const adminDeleteUserFn = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) => uuidSchema.parse(d))
   .handler(async ({ data, context }) => {
+    await stepUp(context.userId);
     await callAdminRpc("admin_delete_user", { _target: data.target, _caller: context.userId });
     return { success: true };
   });

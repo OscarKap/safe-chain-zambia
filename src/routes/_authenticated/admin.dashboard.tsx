@@ -10,6 +10,7 @@ import {
 } from "@/lib/api";
 import { DashboardShell, StatCard, SectionCard } from "@/components/DashboardShell";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { useReauthGate } from "@/components/ReauthDialog";
 
 export const Route = createFileRoute("/_authenticated/admin/dashboard")({
   head: () => ({ meta: [{ title: "Admin dashboard — Safe Chain" }, { name: "robots", content: "noindex, nofollow" }] }),
@@ -55,6 +56,7 @@ function AdminDashboard() {
   });
 
   const [confirm, setConfirm] = useState<Action>(null);
+  const { ensure: ensureReauth, dialog: reauthDialog } = useReauthGate();
 
   const approve = useMutation({
     mutationFn: (id: string) => users.approve(id),
@@ -67,7 +69,10 @@ function AdminDashboard() {
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
   const suspend = useMutation({
-    mutationFn: (id: string) => users.suspend(id),
+    mutationFn: async (id: string) => {
+      if (!(await ensureReauth())) throw new Error("Password confirmation cancelled");
+      return users.suspend(id);
+    },
     onSuccess: () => { toast.success("User suspended"); qc.invalidateQueries({ queryKey: ["users"] }); setConfirm(null); },
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
@@ -77,7 +82,10 @@ function AdminDashboard() {
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
   const setRoleM = useMutation({
-    mutationFn: ({ id, role }: { id: string; role: Role }) => users.setRole(id, role),
+    mutationFn: async ({ id, role }: { id: string; role: Role }) => {
+      if (!(await ensureReauth())) throw new Error("Password confirmation cancelled");
+      return users.setRole(id, role);
+    },
     onSuccess: () => { toast.success("Role updated"); qc.invalidateQueries({ queryKey: ["users"] }); },
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
@@ -88,6 +96,7 @@ function AdminDashboard() {
 
   return (
     <DashboardShell title={isSuper ? "Super Admin Dashboard" : "Admin Dashboard"}>
+      {reauthDialog}
       <div className="flex flex-wrap gap-2 mb-6">
         <Link to="/eoc" className="rounded-full bg-primary text-primary-foreground px-4 py-2 text-sm font-semibold">
           Live Operations Centre →
@@ -97,6 +106,14 @@ function AdminDashboard() {
         </Link>
         <Link to="/admin/reports" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">
           All reports
+        </Link>
+        {isSuper && (
+          <Link to="/admin/retention" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">
+            Data retention
+          </Link>
+        )}
+        <Link to="/account/security" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">
+          Account security
         </Link>
       </div>
 
