@@ -55,6 +55,7 @@ function AdminDashboard() {
   });
 
   const [confirm, setConfirm] = useState<Action>(null);
+  const { ensure: ensureReauth, dialog: reauthDialog } = useReauthGate();
 
   const approve = useMutation({
     mutationFn: (id: string) => users.approve(id),
