@@ -10,6 +10,7 @@ import {
 } from "@/lib/api";
 import { DashboardShell, StatCard, SectionCard } from "@/components/DashboardShell";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { useReauthGate } from "@/components/ReauthDialog";
 
 export const Route = createFileRoute("/_authenticated/admin/dashboard")({
   head: () => ({ meta: [{ title: "Admin dashboard — Safe Chain" }, { name: "robots", content: "noindex, nofollow" }] }),
