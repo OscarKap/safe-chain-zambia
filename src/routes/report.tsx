@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Lock, ShieldCheck, CheckCircle2, ChevronDown } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { PROVINCES, ZAMBIA } from "@/data/facilities";
-import { reports, apiErrorMessage } from "@/lib/api";
+import { apiErrorMessage } from "@/lib/api";
+import { submitPublicReportFn } from "@/lib/security.functions";
 
 export const Route = createFileRoute("/report")({
   head: () => ({ meta: [{ title: "Safe Reporting — Safe Chain" }, { name: "description", content: "Anonymously report SRHR concerns, GBV incidents and service complaints. Track your case privately." }] }),
