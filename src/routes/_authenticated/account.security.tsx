@@ -106,7 +106,7 @@ function AccountSecurity() {
     <div className="container-page py-8 space-y-6">
       <PageHeader
         title="Account security"
-        subtitle="Two-factor authentication is required for all Safe Chain staff accounts."
+        description="Two-factor authentication is required for all Safe Chain staff accounts."
       />
 
       {enrolled === false && !enroll && (
