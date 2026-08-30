@@ -96,6 +96,7 @@ function AdminDashboard() {
 
   return (
     <DashboardShell title={isSuper ? "Super Admin Dashboard" : "Admin Dashboard"}>
+      {reauthDialog}
       <div className="flex flex-wrap gap-2 mb-6">
         <Link to="/eoc" className="rounded-full bg-primary text-primary-foreground px-4 py-2 text-sm font-semibold">
           Live Operations Centre →
@@ -105,6 +106,14 @@ function AdminDashboard() {
         </Link>
         <Link to="/admin/reports" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">
           All reports
+        </Link>
+        {isSuper && (
+          <Link to="/admin/retention" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">
+            Data retention
+          </Link>
+        )}
+        <Link to="/account/security" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">
+          Account security
         </Link>
       </div>
 
