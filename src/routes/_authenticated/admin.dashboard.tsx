@@ -67,7 +67,10 @@ function AdminDashboard() {
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
   const suspend = useMutation({
-    mutationFn: (id: string) => users.suspend(id),
+    mutationFn: async (id: string) => {
+      if (!(await ensureReauth())) throw new Error("Password confirmation cancelled");
+      return users.suspend(id);
+    },
     onSuccess: () => { toast.success("User suspended"); qc.invalidateQueries({ queryKey: ["users"] }); setConfirm(null); },
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
@@ -77,7 +80,10 @@ function AdminDashboard() {
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
   const setRoleM = useMutation({
-    mutationFn: ({ id, role }: { id: string; role: Role }) => users.setRole(id, role),
+    mutationFn: async ({ id, role }: { id: string; role: Role }) => {
+      if (!(await ensureReauth())) throw new Error("Password confirmation cancelled");
+      return users.setRole(id, role);
+    },
     onSuccess: () => { toast.success("Role updated"); qc.invalidateQueries({ queryKey: ["users"] }); },
     onError: (e) => toast.error(apiErrorMessage(e)),
   });
