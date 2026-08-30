@@ -32,6 +32,7 @@ function Report() {
   const [anonymous, setAnonymous] = useState(true);
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
+  const openedAt = useRef(Date.now());
   const districts = useMemo(() => (province ? ZAMBIA[province] ?? [] : []), [province]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -48,13 +49,17 @@ function Report() {
 
     setSubmitting(true);
     try {
-      const res = await reports.create({
-        category: parsed.data.category,
-        description: parsed.data.description,
-        province,
-        district,
-        reporter_name: anonymous ? "Anonymous" : undefined,
-        reporter_phone: anonymous ? undefined : parsed.data.contact || undefined,
+      const res = await submitPublicReportFn({
+        data: {
+          category: parsed.data.category,
+          description: parsed.data.description,
+          province,
+          district,
+          reporter_name: anonymous ? "Anonymous" : undefined,
+          reporter_phone: anonymous ? undefined : parsed.data.contact || undefined,
+          website: String(fd.get("website") ?? ""),
+          elapsedMs: Date.now() - openedAt.current,
+        },
       });
       setSubmittedId(res.id);
       toast.success("Report received");
