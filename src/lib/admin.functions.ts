@@ -30,6 +30,13 @@ async function callAdminRpc(name: string, args: Record<string, unknown>) {
   return data;
 }
 
+// Sensitive actions (suspend, role change, delete) need a fresh password
+// confirmation within the last few minutes.
+async function stepUp(userId: string) {
+  const { requireReauth } = await import("@/lib/security.server");
+  await requireReauth(userId);
+}
+
 export const adminApproveUserFn = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) => uuidSchema.parse(d))
