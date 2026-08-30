@@ -101,6 +101,11 @@ function Report() {
       />
       <section className="container-page py-10 grid lg:grid-cols-3 gap-8">
         <form onSubmit={onSubmit} className="lg:col-span-2 card-soft p-6 md:p-8 space-y-6">
+          {/* Anti-bot honeypot: hidden from people, tempting to scripts. */}
+          <input
+            type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true"
+            className="absolute h-0 w-0 opacity-0 -z-10 pointer-events-none"
+          />
           <fieldset>
             <legend className="text-sm font-semibold">What kind of report?</legend>
             <div className="mt-3 grid sm:grid-cols-2 gap-2">
