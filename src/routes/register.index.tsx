@@ -1,16 +1,5 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { toast } from "sonner";
-import { ShieldCheck, CheckCircle2 } from "lucide-react";
-import { auth, ROLE_LABEL, apiErrorMessage, type Role } from "@/lib/api";
-import { ZAMBIA, PROVINCES } from "@/data/facilities";
-
-const ROLE_OPTIONS: Role[] = ["responder", "gbv_officer", "counsellor", "admin", "developer"];
-
-const RESPONDER_SPECIALIZATIONS = [
-  "Legal", "GBV", "Police", "VSU", "Hospital", "Counsellor",
-  "Child Protection", "Emergency Medical", "Fire & Rescue", "Other",
-];
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ShieldCheck, LifeBuoy, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/register/")({
   ssr: false,
@@ -20,163 +9,72 @@ export const Route = createFileRoute("/register/")({
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
-  component: Register,
+  component: RegisterChooser,
 });
 
-function Register() {
-  const navigate = useNavigate();
-  const [done, setDone] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [role, setRole] = useState<Role | "">("");
-  const [province, setProvince] = useState<string>("");
-  const districts = useMemo(() => (province ? ZAMBIA[province] ?? [] : []), [province]);
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    const body = {
-      first_name: String(f.get("first_name") ?? "").trim(),
-      last_name: String(f.get("last_name") ?? "").trim(),
-      email: String(f.get("email") ?? "").trim(),
-      phone: String(f.get("phone") ?? "").trim(),
-      password: String(f.get("password") ?? ""),
-      role: String(f.get("role") ?? "") as Role,
-      province: String(f.get("province") ?? "") || undefined,
-      district: String(f.get("district") ?? "") || undefined,
-      specialization: String(f.get("specialization") ?? "") || undefined,
-    };
-    if (body.password.length < 8) { toast.error("Password must be at least 8 characters"); return; }
-    if (body.role === "responder" && !body.specialization) {
-      toast.error("Responders must select a specialization"); return;
-    }
-    setLoading(true);
-    try {
-      await auth.register(body);
-      setDone(true);
-      toast.success("Request submitted for approval");
-      setTimeout(() => navigate({ to: "/pending" }), 1500);
-    } catch (err) {
-      toast.error(apiErrorMessage(err));
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  if (done) {
-    return (
-      <section className="min-h-[70vh] flex items-center justify-center px-4 py-10">
-        <div className="card-soft max-w-lg w-full p-8 text-center">
-          <CheckCircle2 className="mx-auto h-12 w-12 text-brand" />
-          <h1 className="mt-4 text-2xl font-bold">Request submitted</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Your registration is awaiting Super Admin approval. You'll be able
-            to sign in once approved.
-          </p>
-        </div>
-      </section>
-    );
-  }
-
+function RegisterChooser() {
   return (
-    <section className="px-4 py-10 md:py-14">
-      <div className="container-narrow max-w-2xl">
-        <div className="flex items-center gap-3">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand/10 text-brand">
-            <ShieldCheck className="h-5 w-5" />
+    <section className="px-4 py-12 md:py-16">
+      <div className="container-narrow max-w-3xl">
+        <div className="text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-muted-foreground">
+            <ShieldCheck className="h-3.5 w-3.5" /> Approval required
           </span>
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold">Request Access</h1>
-            <p className="text-sm text-muted-foreground">All registrations require Super Admin approval.</p>
-          </div>
+          <h1 className="mt-4 text-3xl md:text-4xl font-bold tracking-tight">Request Safe Chain access</h1>
+          <p className="mt-3 text-muted-foreground">
+            Choose the type of account you need. Every request is reviewed and approved
+            by the Safe Chain Super Admin before sign-in is enabled.
+          </p>
         </div>
 
-        <form onSubmit={onSubmit} className="card-soft mt-6 p-6 md:p-8 space-y-5">
-          <div className="grid gap-5 md:grid-cols-2">
-            <Field label="First name" name="first_name" required />
-            <Field label="Last name" name="last_name" required />
-          </div>
-          <Field label="Email" name="email" type="email" required />
-          <Field label="Phone" name="phone" type="tel" required placeholder="+260…" />
-          <Field label="Password" name="password" type="password" required placeholder="At least 8 characters" />
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
+          <ChoiceCard
+            to="/register/admin"
+            icon={<ShieldCheck className="h-5 w-5" />}
+            title="Administrator"
+            blurb="Coordinators, GBV officers and developers who review, allocate and monitor cases from the Base Control console."
+            points={["Case oversight & dispatch", "Approve responders", "Analytics & reporting"]}
+          />
+          <ChoiceCard
+            to="/register/responder"
+            icon={<LifeBuoy className="h-5 w-5" />}
+            title="Responder"
+            blurb="Police VSU, health centres, churches, mental health, counselling and community volunteers who support survivors on the ground."
+            points={["Receive assigned cases", "Matched by province & district", "Matched by case type you handle"]}
+          />
+        </div>
 
-          <div className="grid gap-5 md:grid-cols-2">
-            <label className="grid gap-1.5 text-sm">
-              <span className="font-medium">Province <span className="text-destructive">*</span></span>
-              <select
-                name="province" required value={province}
-                onChange={(e) => setProvince(e.target.value)}
-                className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring"
-              >
-                <option value="" disabled>Select province…</option>
-                {PROVINCES.map((p) => <option key={p} value={p}>{p}</option>)}
-              </select>
-            </label>
-            <label className="grid gap-1.5 text-sm">
-              <span className="font-medium">District <span className="text-destructive">*</span></span>
-              <select
-                name="district" required disabled={!province}
-                className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring disabled:opacity-60"
-                defaultValue=""
-              >
-                <option value="" disabled>{province ? "Select district…" : "Select province first"}</option>
-                {districts.map((d) => <option key={d} value={d}>{d}</option>)}
-              </select>
-            </label>
-          </div>
-
-          <label className="grid gap-1.5 text-sm">
-            <span className="font-medium">Role <span className="text-destructive">*</span></span>
-            <select
-              name="role" required value={role}
-              onChange={(e) => setRole(e.target.value as Role)}
-              className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring"
-            >
-              <option value="" disabled>Select role…</option>
-              {ROLE_OPTIONS.map((r) => (
-                <option key={r} value={r}>{ROLE_LABEL[r]}</option>
-              ))}
-            </select>
-          </label>
-
-          {role === "responder" && (
-            <label className="grid gap-1.5 text-sm">
-              <span className="font-medium">Specialization <span className="text-destructive">*</span></span>
-              <select
-                name="specialization" required defaultValue=""
-                className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring"
-              >
-                <option value="" disabled>Select case type…</option>
-                {RESPONDER_SPECIALIZATIONS.map((s) => <option key={s} value={s}>{s}</option>)}
-              </select>
-              <span className="text-xs text-muted-foreground">Cases matching this type will be prioritized when auto-assigning.</span>
-            </label>
-          )}
-
-          <button
-            type="submit" disabled={loading}
-            className="w-full rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-60"
-          >
-            {loading ? "Submitting…" : "Submit request"}
-          </button>
-          <p className="text-xs text-muted-foreground text-center">
-            Already approved? <Link to="/basecontrol" className="text-brand font-medium">Sign in</Link>
-          </p>
-        </form>
+        <p className="mt-8 text-center text-sm text-muted-foreground">
+          Already approved? <Link to="/basecontrol" className="text-brand font-medium">Sign in</Link>
+        </p>
       </div>
     </section>
   );
 }
 
-function Field({ label, name, type = "text", required, placeholder }: {
-  label: string; name: string; type?: string; required?: boolean; placeholder?: string;
+function ChoiceCard({ to, icon, title, blurb, points }: {
+  to: string; icon: React.ReactNode; title: string; blurb: string; points: string[];
 }) {
   return (
-    <label className="grid gap-1.5 text-sm">
-      <span className="font-medium">{label}{required && <span className="text-destructive"> *</span>}</span>
-      <input
-        name={name} type={type} required={required} placeholder={placeholder}
-        className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring"
-      />
-    </label>
+    <Link
+      to={to}
+      className="group card-soft p-6 transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-ring"
+    >
+      <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-brand/10 text-brand">
+        {icon}
+      </span>
+      <h2 className="mt-4 text-lg font-semibold">{title}</h2>
+      <p className="mt-1.5 text-sm text-muted-foreground">{blurb}</p>
+      <ul className="mt-4 space-y-1.5 text-sm">
+        {points.map((p) => (
+          <li key={p} className="flex items-center gap-2 text-muted-foreground">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand" /> {p}
+          </li>
+        ))}
+      </ul>
+      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brand">
+        Continue <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+      </span>
+    </Link>
   );
 }
