@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ReportRouteImport } from './routes/report'
-import { Route as RegisterRouteImport } from './routes/register'
 import { Route as PendingRouteImport } from './routes/pending'
 import { Route as MfaVerifyRouteImport } from './routes/mfa-verify'
 import { Route as MfaRecoveryRouteImport } from './routes/mfa-recovery'
@@ -24,7 +23,9 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RegisterIndexRouteImport } from './routes/register.index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
+import { Route as RegisterAdminRouteImport } from './routes/register.admin'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 import { Route as AuthenticatedEocRouteImport } from './routes/_authenticated/eoc'
 import { Route as ApiPublicRetentionPurgeRouteImport } from './routes/api/public/retention-purge'
@@ -47,11 +48,6 @@ const ServicesRoute = ServicesRouteImport.update({
 const ReportRoute = ReportRouteImport.update({
   id: '/report',
   path: '/report',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PendingRoute = PendingRouteImport.update({
@@ -113,9 +109,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegisterIndexRoute = RegisterIndexRouteImport.update({
+  id: '/register/',
+  path: '/register/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnIndexRoute = LearnIndexRouteImport.update({
   id: '/learn/',
   path: '/learn/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterAdminRoute = RegisterAdminRouteImport.update({
+  id: '/register/admin',
+  path: '/register/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearnSlugRoute = LearnSlugRouteImport.update({
@@ -206,12 +212,13 @@ export interface FileRoutesByFullPath {
   '/mfa-recovery': typeof MfaRecoveryRoute
   '/mfa-verify': typeof MfaVerifyRoute
   '/pending': typeof PendingRoute
-  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
   '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/register/admin': typeof RegisterAdminRoute
   '/learn/': typeof LearnIndexRoute
+  '/register/': typeof RegisterIndexRoute
   '/account/security': typeof AuthenticatedAccountSecurityRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -236,12 +243,13 @@ export interface FileRoutesByTo {
   '/mfa-recovery': typeof MfaRecoveryRoute
   '/mfa-verify': typeof MfaVerifyRoute
   '/pending': typeof PendingRoute
-  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
   '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/register/admin': typeof RegisterAdminRoute
   '/learn': typeof LearnIndexRoute
+  '/register': typeof RegisterIndexRoute
   '/account/security': typeof AuthenticatedAccountSecurityRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -268,12 +276,13 @@ export interface FileRoutesById {
   '/mfa-recovery': typeof MfaRecoveryRoute
   '/mfa-verify': typeof MfaVerifyRoute
   '/pending': typeof PendingRoute
-  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
   '/_authenticated/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/register/admin': typeof RegisterAdminRoute
   '/learn/': typeof LearnIndexRoute
+  '/register/': typeof RegisterIndexRoute
   '/_authenticated/account/security': typeof AuthenticatedAccountSecurityRoute
   '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -300,12 +309,13 @@ export interface FileRouteTypes {
     | '/mfa-recovery'
     | '/mfa-verify'
     | '/pending'
-    | '/register'
     | '/report'
     | '/services'
     | '/eoc'
     | '/learn/$slug'
+    | '/register/admin'
     | '/learn/'
+    | '/register/'
     | '/account/security'
     | '/admin/analytics'
     | '/admin/dashboard'
@@ -330,12 +340,13 @@ export interface FileRouteTypes {
     | '/mfa-recovery'
     | '/mfa-verify'
     | '/pending'
-    | '/register'
     | '/report'
     | '/services'
     | '/eoc'
     | '/learn/$slug'
+    | '/register/admin'
     | '/learn'
+    | '/register'
     | '/account/security'
     | '/admin/analytics'
     | '/admin/dashboard'
@@ -361,12 +372,13 @@ export interface FileRouteTypes {
     | '/mfa-recovery'
     | '/mfa-verify'
     | '/pending'
-    | '/register'
     | '/report'
     | '/services'
     | '/_authenticated/eoc'
     | '/learn/$slug'
+    | '/register/admin'
     | '/learn/'
+    | '/register/'
     | '/_authenticated/account/security'
     | '/_authenticated/admin/analytics'
     | '/_authenticated/admin/dashboard'
@@ -393,11 +405,12 @@ export interface RootRouteChildren {
   MfaRecoveryRoute: typeof MfaRecoveryRoute
   MfaVerifyRoute: typeof MfaVerifyRoute
   PendingRoute: typeof PendingRoute
-  RegisterRoute: typeof RegisterRoute
   ReportRoute: typeof ReportRoute
   ServicesRoute: typeof ServicesRoute
   LearnSlugRoute: typeof LearnSlugRoute
+  RegisterAdminRoute: typeof RegisterAdminRoute
   LearnIndexRoute: typeof LearnIndexRoute
+  RegisterIndexRoute: typeof RegisterIndexRoute
   ApiPublicRetentionPurgeRoute: typeof ApiPublicRetentionPurgeRoute
 }
 
@@ -415,13 +428,6 @@ declare module '@tanstack/react-router' {
       path: '/report'
       fullPath: '/report'
       preLoaderRoute: typeof ReportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pending': {
@@ -508,11 +514,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/register/': {
+      id: '/register/'
+      path: '/register'
+      fullPath: '/register/'
+      preLoaderRoute: typeof RegisterIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn/': {
       id: '/learn/'
       path: '/learn'
       fullPath: '/learn/'
       preLoaderRoute: typeof LearnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register/admin': {
+      id: '/register/admin'
+      path: '/register/admin'
+      fullPath: '/register/admin'
+      preLoaderRoute: typeof RegisterAdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learn/$slug': {
@@ -665,11 +685,12 @@ const rootRouteChildren: RootRouteChildren = {
   MfaRecoveryRoute: MfaRecoveryRoute,
   MfaVerifyRoute: MfaVerifyRoute,
   PendingRoute: PendingRoute,
-  RegisterRoute: RegisterRoute,
   ReportRoute: ReportRoute,
   ServicesRoute: ServicesRoute,
   LearnSlugRoute: LearnSlugRoute,
+  RegisterAdminRoute: RegisterAdminRoute,
   LearnIndexRoute: LearnIndexRoute,
+  RegisterIndexRoute: RegisterIndexRoute,
   ApiPublicRetentionPurgeRoute: ApiPublicRetentionPurgeRoute,
 }
 export const routeTree = rootRouteImport

@@ -176,6 +176,7 @@ export const auth = {
     first_name: string; last_name: string; email: string;
     password: string; phone: string; role: Role;
     province?: string; district?: string; specialization?: string;
+    department?: string; case_types?: string[];
   }): Promise<{ success: boolean; message: string }> {
     const emailRedirectTo = typeof window !== "undefined" ? window.location.origin : undefined;
     const { data, error } = await supabase.auth.signUp({
@@ -191,17 +192,21 @@ export const auth = {
           province: body.province,
           district: body.district,
           specialization: body.specialization,
+          department: body.department,
+          case_types: body.case_types,
         },
       },
     });
     if (error) throw new Error(error.message);
     // Best-effort: fill province/district/specialization on the freshly created profile.
-    if (data.user && (body.province || body.district || body.specialization)) {
+    if (data.user && (body.province || body.district || body.specialization || body.department || body.case_types)) {
       try {
         await supabase.from("profiles").update({
           province: body.province ?? null,
           district: body.district ?? null,
           specialization: body.specialization ?? null,
+          department: body.department ?? null,
+          case_types: body.case_types ?? [],
         }).eq("user_id", data.user.id);
       } catch { /* ignore */ }
     }
