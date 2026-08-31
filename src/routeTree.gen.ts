@@ -25,6 +25,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RegisterIndexRouteImport } from './routes/register.index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
+import { Route as RegisterAdminRouteImport } from './routes/register.admin'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 import { Route as AuthenticatedEocRouteImport } from './routes/_authenticated/eoc'
 import { Route as ApiPublicRetentionPurgeRouteImport } from './routes/api/public/retention-purge'
@@ -116,6 +117,11 @@ const RegisterIndexRoute = RegisterIndexRouteImport.update({
 const LearnIndexRoute = LearnIndexRouteImport.update({
   id: '/learn/',
   path: '/learn/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterAdminRoute = RegisterAdminRouteImport.update({
+  id: '/register/admin',
+  path: '/register/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearnSlugRoute = LearnSlugRouteImport.update({
@@ -210,6 +216,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/register/admin': typeof RegisterAdminRoute
   '/learn/': typeof LearnIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/account/security': typeof AuthenticatedAccountSecurityRoute
@@ -240,6 +247,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/register/admin': typeof RegisterAdminRoute
   '/learn': typeof LearnIndexRoute
   '/register': typeof RegisterIndexRoute
   '/account/security': typeof AuthenticatedAccountSecurityRoute
@@ -272,6 +280,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/_authenticated/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/register/admin': typeof RegisterAdminRoute
   '/learn/': typeof LearnIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/_authenticated/account/security': typeof AuthenticatedAccountSecurityRoute
@@ -304,6 +313,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/eoc'
     | '/learn/$slug'
+    | '/register/admin'
     | '/learn/'
     | '/register/'
     | '/account/security'
@@ -334,6 +344,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/eoc'
     | '/learn/$slug'
+    | '/register/admin'
     | '/learn'
     | '/register'
     | '/account/security'
@@ -365,6 +376,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/_authenticated/eoc'
     | '/learn/$slug'
+    | '/register/admin'
     | '/learn/'
     | '/register/'
     | '/_authenticated/account/security'
@@ -396,6 +408,7 @@ export interface RootRouteChildren {
   ReportRoute: typeof ReportRoute
   ServicesRoute: typeof ServicesRoute
   LearnSlugRoute: typeof LearnSlugRoute
+  RegisterAdminRoute: typeof RegisterAdminRoute
   LearnIndexRoute: typeof LearnIndexRoute
   RegisterIndexRoute: typeof RegisterIndexRoute
   ApiPublicRetentionPurgeRoute: typeof ApiPublicRetentionPurgeRoute
@@ -513,6 +526,13 @@ declare module '@tanstack/react-router' {
       path: '/learn'
       fullPath: '/learn/'
       preLoaderRoute: typeof LearnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register/admin': {
+      id: '/register/admin'
+      path: '/register/admin'
+      fullPath: '/register/admin'
+      preLoaderRoute: typeof RegisterAdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learn/$slug': {
@@ -668,6 +688,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReportRoute: ReportRoute,
   ServicesRoute: ServicesRoute,
   LearnSlugRoute: LearnSlugRoute,
+  RegisterAdminRoute: RegisterAdminRoute,
   LearnIndexRoute: LearnIndexRoute,
   RegisterIndexRoute: RegisterIndexRoute,
   ApiPublicRetentionPurgeRoute: ApiPublicRetentionPurgeRoute,
