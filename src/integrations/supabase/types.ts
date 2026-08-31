@@ -330,7 +330,9 @@ export type Database = {
       }
       profiles: {
         Row: {
+          case_types: string[]
           created_at: string
+          department: string | null
           district: string | null
           email: string
           first_name: string | null
@@ -348,7 +350,9 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          case_types?: string[]
           created_at?: string
+          department?: string | null
           district?: string | null
           email: string
           first_name?: string | null
@@ -366,7 +370,9 @@ export type Database = {
           user_id: string
         }
         Update: {
+          case_types?: string[]
           created_at?: string
+          department?: string | null
           district?: string | null
           email?: string
           first_name?: string | null
