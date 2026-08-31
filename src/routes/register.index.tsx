@@ -12,7 +12,7 @@ const RESPONDER_SPECIALIZATIONS = [
   "Child Protection", "Emergency Medical", "Fire & Rescue", "Other",
 ];
 
-export const Route = createFileRoute("/register")({
+export const Route = createFileRoute("/register/")({
   ssr: false,
   head: () => ({
     meta: [
