@@ -69,6 +69,7 @@ export interface ManagedUser extends PendingUser { status: UserStatus; }
 export interface ResponderWorkload {
   user_id: string; first_name?: string; last_name?: string; email: string;
   province?: string; district?: string; specialization?: string;
+  department?: string; case_types?: string[];
   is_available: boolean; max_active_cases: number; open_cases: number;
   phone?: string;
 }
