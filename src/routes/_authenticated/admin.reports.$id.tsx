@@ -10,6 +10,7 @@ import {
 } from "@/lib/api";
 import { DashboardShell, SectionCard } from "@/components/DashboardShell";
 import { useAuth } from "@/lib/auth-context";
+import { DEPARTMENT_LABEL } from "@/data/departments";
 
 export const Route = createFileRoute("/_authenticated/admin/reports/$id")({
   head: () => ({ meta: [{ title: "Case — Safe Chain" }, { name: "robots", content: "noindex, nofollow" }] }),
