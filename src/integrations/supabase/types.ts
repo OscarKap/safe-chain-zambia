@@ -674,6 +674,8 @@ export type Database = {
       responder_workload: {
         Args: never
         Returns: {
+          case_types: string[]
+          department: string
           district: string
           email: string
           first_name: string

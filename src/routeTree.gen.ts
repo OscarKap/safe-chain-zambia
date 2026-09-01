@@ -25,6 +25,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RegisterIndexRouteImport } from './routes/register.index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
+import { Route as RegisterResponderRouteImport } from './routes/register.responder'
 import { Route as RegisterAdminRouteImport } from './routes/register.admin'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 import { Route as AuthenticatedEocRouteImport } from './routes/_authenticated/eoc'
@@ -117,6 +118,11 @@ const RegisterIndexRoute = RegisterIndexRouteImport.update({
 const LearnIndexRoute = LearnIndexRouteImport.update({
   id: '/learn/',
   path: '/learn/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterResponderRoute = RegisterResponderRouteImport.update({
+  id: '/register/responder',
+  path: '/register/responder',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterAdminRoute = RegisterAdminRouteImport.update({
@@ -217,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/register/admin': typeof RegisterAdminRoute
+  '/register/responder': typeof RegisterResponderRoute
   '/learn/': typeof LearnIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/account/security': typeof AuthenticatedAccountSecurityRoute
@@ -248,6 +255,7 @@ export interface FileRoutesByTo {
   '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/register/admin': typeof RegisterAdminRoute
+  '/register/responder': typeof RegisterResponderRoute
   '/learn': typeof LearnIndexRoute
   '/register': typeof RegisterIndexRoute
   '/account/security': typeof AuthenticatedAccountSecurityRoute
@@ -281,6 +289,7 @@ export interface FileRoutesById {
   '/_authenticated/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/register/admin': typeof RegisterAdminRoute
+  '/register/responder': typeof RegisterResponderRoute
   '/learn/': typeof LearnIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/_authenticated/account/security': typeof AuthenticatedAccountSecurityRoute
@@ -314,6 +323,7 @@ export interface FileRouteTypes {
     | '/eoc'
     | '/learn/$slug'
     | '/register/admin'
+    | '/register/responder'
     | '/learn/'
     | '/register/'
     | '/account/security'
@@ -345,6 +355,7 @@ export interface FileRouteTypes {
     | '/eoc'
     | '/learn/$slug'
     | '/register/admin'
+    | '/register/responder'
     | '/learn'
     | '/register'
     | '/account/security'
@@ -377,6 +388,7 @@ export interface FileRouteTypes {
     | '/_authenticated/eoc'
     | '/learn/$slug'
     | '/register/admin'
+    | '/register/responder'
     | '/learn/'
     | '/register/'
     | '/_authenticated/account/security'
@@ -409,6 +421,7 @@ export interface RootRouteChildren {
   ServicesRoute: typeof ServicesRoute
   LearnSlugRoute: typeof LearnSlugRoute
   RegisterAdminRoute: typeof RegisterAdminRoute
+  RegisterResponderRoute: typeof RegisterResponderRoute
   LearnIndexRoute: typeof LearnIndexRoute
   RegisterIndexRoute: typeof RegisterIndexRoute
   ApiPublicRetentionPurgeRoute: typeof ApiPublicRetentionPurgeRoute
@@ -526,6 +539,13 @@ declare module '@tanstack/react-router' {
       path: '/learn'
       fullPath: '/learn/'
       preLoaderRoute: typeof LearnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register/responder': {
+      id: '/register/responder'
+      path: '/register/responder'
+      fullPath: '/register/responder'
+      preLoaderRoute: typeof RegisterResponderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register/admin': {
@@ -689,6 +709,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesRoute: ServicesRoute,
   LearnSlugRoute: LearnSlugRoute,
   RegisterAdminRoute: RegisterAdminRoute,
+  RegisterResponderRoute: RegisterResponderRoute,
   LearnIndexRoute: LearnIndexRoute,
   RegisterIndexRoute: RegisterIndexRoute,
   ApiPublicRetentionPurgeRoute: ApiPublicRetentionPurgeRoute,

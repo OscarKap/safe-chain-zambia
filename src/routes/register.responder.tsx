@@ -20,7 +20,7 @@ export const Route = createFileRoute("/register/responder")({
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
-  component: RegisterResponder;
+  component: RegisterResponder,
 });
 
 function RegisterResponder() {

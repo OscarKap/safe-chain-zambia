@@ -10,6 +10,7 @@ import {
 } from "@/lib/api";
 import { DashboardShell, SectionCard } from "@/components/DashboardShell";
 import { useAuth } from "@/lib/auth-context";
+import { DEPARTMENT_LABEL } from "@/data/departments";
 
 export const Route = createFileRoute("/_authenticated/admin/reports/$id")({
   head: () => ({ meta: [{ title: "Case — Safe Chain" }, { name: "robots", content: "noindex, nofollow" }] }),
@@ -284,6 +285,7 @@ function ReportDetail() {
         <AssignDialog
           reportDistrict={r.district ?? undefined}
           reportProvince={r.province ?? undefined}
+          reportCategory={r.category ?? undefined}
           responders={respondersQ.data ?? []}
           currentAssignee={r.assigned_to ?? undefined}
           pending={assign.isPending}
@@ -296,9 +298,9 @@ function ReportDetail() {
 }
 
 function AssignDialog({
-  reportDistrict, reportProvince, responders: pool, currentAssignee, pending, onClose, onAssign,
+  reportDistrict, reportProvince, reportCategory, responders: pool, currentAssignee, pending, onClose, onAssign,
 }: {
-  reportDistrict?: string; reportProvince?: string;
+  reportDistrict?: string; reportProvince?: string; reportCategory?: string;
   responders: ResponderWorkload[]; currentAssignee?: string;
   pending: boolean; onClose: () => void; onAssign: (id: string) => void;
 }) {
@@ -311,7 +313,7 @@ function AssignDialog({
       : pool.filter((u) => reportProvince && u.province === reportProvince);
     const list = (primary.length > 0 ? primary : pool)
       .filter((u) => u.is_available)
-      .filter((u) => !q || [u.first_name, u.last_name, u.email, u.specialization, u.district, u.province]
+      .filter((u) => !q || [u.first_name, u.last_name, u.email, u.specialization, u.department, u.district, u.province, ...(u.case_types ?? [])]
         .filter(Boolean).join(" ").toLowerCase().includes(q))
       .slice().sort((a, b) => a.open_cases - b.open_cases);
     return list;
@@ -334,7 +336,7 @@ function AssignDialog({
         <div className="p-4 border-b border-border">
           <input
             value={query} onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by name, email, specialization…"
+            placeholder="Search by name, email, department, case type…"
             className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
           />
         </div>
@@ -349,7 +351,10 @@ function AssignDialog({
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="font-medium">{u.first_name} {u.last_name}</p>
                     <span className="text-xs rounded-full bg-muted px-2 py-0.5">Responder</span>
-                    {u.specialization && <span className="text-xs rounded-full bg-sky-50 text-sky-700 px-2 py-0.5">{u.specialization}</span>}
+                    {u.department && <span className="text-xs rounded-full bg-indigo-50 text-indigo-700 px-2 py-0.5">{DEPARTMENT_LABEL[u.department] ?? u.department}</span>}
+                    {reportCategory && u.case_types?.includes(reportCategory) && (
+                      <span className="text-xs rounded-full bg-brand/10 text-brand px-2 py-0.5">handles this case type</span>
+                    )}
                     {u.district === reportDistrict && <span className="text-xs rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5">same district</span>}
                     {u.district !== reportDistrict && u.province === reportProvince && <span className="text-xs rounded-full bg-amber-50 text-amber-700 px-2 py-0.5">same province</span>}
                   </div>
