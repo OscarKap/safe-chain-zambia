@@ -86,7 +86,41 @@ export interface ReportAttachment { id: string; filename: string; url: string; u
 export interface ActionReport {
   id: string; summary: string; outcome: string;
   recommendations?: string; responder_id: string; created_at: string;
+  planned_actions?: string; help_provided?: string[];
+  case_opened?: boolean; case_number?: string; referral_agency?: string;
+  victim_condition?: string; follow_up_required?: boolean; follow_up_date?: string;
 }
+export interface ActionReportInput {
+  summary: string; outcome: string; recommendations?: string;
+  planned_actions?: string; help_provided?: string[];
+  case_opened?: boolean; case_number?: string; referral_agency?: string;
+  victim_condition?: string; follow_up_required?: boolean; follow_up_date?: string;
+  files?: File[];
+}
+
+export const HELP_OPTIONS = [
+  "Counselling / psychosocial support",
+  "Medical treatment",
+  "Post-exposure prophylaxis (PEP)",
+  "Forensic / medical examination",
+  "Police statement recorded",
+  "Docket / case opened (VSU)",
+  "Suspect apprehended",
+  "Protection / safety plan",
+  "Safe shelter / accommodation",
+  "Legal advice or representation",
+  "Family mediation",
+  "Child protection referral",
+  "Transport / escort provided",
+  "Food, clothing or material support",
+  "Referred to another service provider",
+  "Follow-up visit scheduled",
+] as const;
+
+export const VICTIM_CONDITIONS = [
+  "Safe and stable", "Safe but needs follow-up", "Receiving medical care",
+  "In temporary shelter", "Still at risk", "Unable to reach",
+] as const;
 export interface ReportDetail extends ReportListItem {
   description?: string; reporter_name?: string; reporter_phone?: string;
   gps_lat?: number | null; gps_lng?: number | null;
@@ -483,7 +517,7 @@ export const reports = {
 
   async listActionReports(id: string): Promise<ActionReport[]> {
     const { data, error } = await supabase.from("action_reports")
-      .select("id,summary,outcome,recommendations,responder_id,created_at")
+      .select("id,summary,outcome,recommendations,responder_id,created_at,planned_actions,help_provided,case_opened,case_number,referral_agency,victim_condition,follow_up_required,follow_up_date")
       .eq("report_id", id)
       .order("created_at", { ascending: false });
     if (error) throw new Error(error.message);
@@ -492,12 +526,20 @@ export const reports = {
       summary: r.summary,
       outcome: r.outcome,
       recommendations: r.recommendations ?? undefined,
+      planned_actions: r.planned_actions ?? undefined,
+      help_provided: r.help_provided ?? [],
+      case_opened: r.case_opened ?? false,
+      case_number: r.case_number ?? undefined,
+      referral_agency: r.referral_agency ?? undefined,
+      victim_condition: r.victim_condition ?? undefined,
+      follow_up_required: r.follow_up_required ?? false,
+      follow_up_date: r.follow_up_date ?? undefined,
       responder_id: r.responder_id,
       created_at: r.created_at,
     }));
   },
 
-  async submitActionReport(id: string, body: { summary: string; outcome: string; recommendations?: string; files?: File[] }): Promise<{ success: boolean }> {
+  async submitActionReport(id: string, body: ActionReportInput): Promise<{ success: boolean }> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Not signed in");
     const { data: ar, error } = await supabase.from("action_reports").insert({
@@ -506,6 +548,14 @@ export const reports = {
       summary: body.summary,
       outcome: body.outcome,
       recommendations: body.recommendations ?? null,
+      planned_actions: body.planned_actions ?? null,
+      help_provided: body.help_provided ?? [],
+      case_opened: body.case_opened ?? false,
+      case_number: body.case_number ?? null,
+      referral_agency: body.referral_agency ?? null,
+      victim_condition: body.victim_condition ?? null,
+      follow_up_required: body.follow_up_required ?? false,
+      follow_up_date: body.follow_up_date ?? null,
     }).select("id").single();
     if (error) throw new Error(error.message);
     for (const file of body.files ?? []) {
