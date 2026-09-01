@@ -16,34 +16,58 @@ export type Database = {
     Tables: {
       action_reports: {
         Row: {
+          case_number: string | null
+          case_opened: boolean
           created_at: string
+          follow_up_date: string | null
+          follow_up_required: boolean
+          help_provided: string[]
           id: string
           outcome: string
+          planned_actions: string | null
           recommendations: string | null
+          referral_agency: string | null
           report_id: string
           responder_id: string
           summary: string
           updated_at: string
+          victim_condition: string | null
         }
         Insert: {
+          case_number?: string | null
+          case_opened?: boolean
           created_at?: string
+          follow_up_date?: string | null
+          follow_up_required?: boolean
+          help_provided?: string[]
           id?: string
           outcome: string
+          planned_actions?: string | null
           recommendations?: string | null
+          referral_agency?: string | null
           report_id: string
           responder_id: string
           summary: string
           updated_at?: string
+          victim_condition?: string | null
         }
         Update: {
+          case_number?: string | null
+          case_opened?: boolean
           created_at?: string
+          follow_up_date?: string | null
+          follow_up_required?: boolean
+          help_provided?: string[]
           id?: string
           outcome?: string
+          planned_actions?: string | null
           recommendations?: string | null
+          referral_agency?: string | null
           report_id?: string
           responder_id?: string
           summary?: string
           updated_at?: string
+          victim_condition?: string | null
         }
         Relationships: [
           {
