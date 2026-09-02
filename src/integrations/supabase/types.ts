@@ -629,6 +629,93 @@ export type Database = {
         }
         Relationships: []
       }
+      translation_failures: {
+        Row: {
+          created_at: string
+          error: string
+          id: string
+          provider: string | null
+          source_text: string | null
+          target_language: string
+          translation_key: string | null
+        }
+        Insert: {
+          created_at?: string
+          error: string
+          id?: string
+          provider?: string | null
+          source_text?: string | null
+          target_language: string
+          translation_key?: string | null
+        }
+        Update: {
+          created_at?: string
+          error?: string
+          id?: string
+          provider?: string | null
+          source_text?: string | null
+          target_language?: string
+          translation_key?: string | null
+        }
+        Relationships: []
+      }
+      translations: {
+        Row: {
+          context: string | null
+          created_at: string
+          human_reviewed: boolean
+          id: string
+          machine_text: string | null
+          model: string | null
+          provider: string | null
+          reviewed_at: string | null
+          reviewer: string | null
+          source_language: string
+          source_text: string
+          status: string
+          target_language: string
+          translated_text: string
+          translation_key: string
+          updated_at: string
+        }
+        Insert: {
+          context?: string | null
+          created_at?: string
+          human_reviewed?: boolean
+          id?: string
+          machine_text?: string | null
+          model?: string | null
+          provider?: string | null
+          reviewed_at?: string | null
+          reviewer?: string | null
+          source_language?: string
+          source_text: string
+          status?: string
+          target_language: string
+          translated_text: string
+          translation_key: string
+          updated_at?: string
+        }
+        Update: {
+          context?: string | null
+          created_at?: string
+          human_reviewed?: boolean
+          id?: string
+          machine_text?: string | null
+          model?: string | null
+          provider?: string | null
+          reviewed_at?: string | null
+          reviewer?: string | null
+          source_language?: string
+          source_text?: string
+          status?: string
+          target_language?: string
+          translated_text?: string
+          translation_key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           granted_at: string
