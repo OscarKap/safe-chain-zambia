@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import {
+import { PartnerLogos } from "@/components/PartnerLogos";
   Bell, Zap, MapPin, Stethoscope, Phone, ShieldAlert, HeartPulse,
   Droplet, Brain, HelpCircle, Scale, Accessibility, MessageSquareWarning,
   Users, ChevronRight, Lock, BookOpen,
@@ -145,6 +146,8 @@ export function MobileHome() {
           <ChevronRight className="h-5 w-5 text-muted-foreground" />
         </Link>
       </div>
+
+      <PartnerLogos className="pb-8 border-t border-border" />
     </div>
   );
 }

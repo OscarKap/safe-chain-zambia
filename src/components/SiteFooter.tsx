@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ShieldCheck } from "lucide-react";
+import { PartnerLogos } from "@/components/PartnerLogos";
 
 export function SiteFooter() {
   return (
@@ -37,6 +38,9 @@ export function SiteFooter() {
             <li><Link to="/dashboard" className="hover:text-foreground">Dashboard</Link></li>
           </ul>
         </div>
+      </div>
+      <div className="border-t border-border">
+        <PartnerLogos />
       </div>
       <div className="border-t border-border">
         <div className="container-page py-5 text-xs text-muted-foreground flex flex-col sm:flex-row gap-2 justify-between">
