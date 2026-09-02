@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import {
-import { PartnerLogos } from "@/components/PartnerLogos";
   Bell, Zap, MapPin, Stethoscope, Phone, ShieldAlert, HeartPulse,
   Droplet, Brain, HelpCircle, Scale, Accessibility, MessageSquareWarning,
   Users, ChevronRight, Lock, BookOpen,
 } from "lucide-react";
+import { PartnerLogos } from "@/components/PartnerLogos";
 
 type Action = {
   to: string;
