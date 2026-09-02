@@ -204,12 +204,42 @@ function ReportDetail() {
             <ul className="space-y-3">
               {actionReports.map((ar) => (
                 <li key={ar.id} className="rounded-lg border border-border p-3 text-sm">
-                  <p className="text-xs uppercase tracking-wide text-muted-foreground">Outcome</p>
-                  <p className="font-medium">{ar.outcome}</p>
-                  <p className="mt-2 text-xs uppercase tracking-wide text-muted-foreground">Summary</p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full bg-primary/10 text-primary px-2 py-0.5 text-xs font-semibold uppercase">{ar.outcome.replace(/_/g, " ")}</span>
+                    {ar.case_opened && (
+                      <span className="rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5 text-xs font-medium">
+                        Case opened{ar.case_number ? ` · ${ar.case_number}` : ""}
+                      </span>
+                    )}
+                    {ar.follow_up_required && (
+                      <span className="rounded-full bg-amber-50 text-amber-700 px-2 py-0.5 text-xs font-medium">
+                        Follow-up{ar.follow_up_date ? ` · ${new Date(ar.follow_up_date).toLocaleDateString()}` : ""}
+                      </span>
+                    )}
+                    {ar.victim_condition && (
+                      <span className="rounded-full bg-sky-50 text-sky-700 px-2 py-0.5 text-xs font-medium">{ar.victim_condition}</span>
+                    )}
+                  </div>
+                  {ar.planned_actions && <>
+                    <p className="mt-3 text-xs uppercase tracking-wide text-muted-foreground">Plan of action</p>
+                    <p className="whitespace-pre-wrap">{ar.planned_actions}</p>
+                  </>}
+                  <p className="mt-3 text-xs uppercase tracking-wide text-muted-foreground">What was done</p>
                   <p className="whitespace-pre-wrap">{ar.summary}</p>
+                  {(ar.help_provided?.length ?? 0) > 0 && <>
+                    <p className="mt-3 text-xs uppercase tracking-wide text-muted-foreground">Help provided</p>
+                    <div className="mt-1 flex flex-wrap gap-1.5">
+                      {ar.help_provided!.map((h) => (
+                        <span key={h} className="rounded-full bg-muted px-2 py-0.5 text-xs">{h}</span>
+                      ))}
+                    </div>
+                  </>}
+                  {ar.referral_agency && <>
+                    <p className="mt-3 text-xs uppercase tracking-wide text-muted-foreground">Referred to</p>
+                    <p>{ar.referral_agency}</p>
+                  </>}
                   {ar.recommendations && <>
-                    <p className="mt-2 text-xs uppercase tracking-wide text-muted-foreground">Recommendations</p>
+                    <p className="mt-3 text-xs uppercase tracking-wide text-muted-foreground">Recommendations</p>
                     <p className="whitespace-pre-wrap">{ar.recommendations}</p>
                   </>}
                   <p className="mt-2 text-xs text-muted-foreground">Submitted {new Date(ar.created_at).toLocaleString()}</p>
