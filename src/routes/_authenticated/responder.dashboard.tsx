@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { AlertTriangle, CheckCircle2, PlayCircle, HandHelping, FileText, X } from "lucide-react";
-import { reports, responders, apiErrorMessage, type ReportStatus, type ReportListItem } from "@/lib/api";
+import { reports, responders, apiErrorMessage, HELP_OPTIONS, VICTIM_CONDITIONS, type ReportStatus, type ReportListItem } from "@/lib/api";
 import { supabase } from "@/integrations/supabase/client";
 import { DashboardShell, SectionCard, StatCard } from "@/components/DashboardShell";
 import { useAuth } from "@/lib/auth-context";
@@ -204,14 +204,40 @@ function RequestSupportDialog({ caseItem, onClose, onDone }: { caseItem: ReportL
 
 function ActionReportDialog({ caseItem, onClose, onDone }: { caseItem: ReportListItem; onClose: () => void; onDone: () => void }) {
   const [summary, setSummary] = useState("");
+  const [plannedActions, setPlannedActions] = useState("");
   const [outcome, setOutcome] = useState("resolved");
+  const [help, setHelp] = useState<string[]>([]);
+  const [caseOpened, setCaseOpened] = useState(false);
+  const [caseNumber, setCaseNumber] = useState("");
+  const [referral, setReferral] = useState("");
+  const [condition, setCondition] = useState("");
+  const [followUp, setFollowUp] = useState(false);
+  const [followUpDate, setFollowUpDate] = useState("");
   const [recommendations, setRecommendations] = useState("");
   const [files, setFiles] = useState<File[]>([]);
 
+  function toggleHelp(v: string) {
+    setHelp((prev) => (prev.includes(v) ? prev.filter((x) => x !== v) : [...prev, v]));
+  }
+
   const submit = useMutation({
     mutationFn: async () => {
-      await reports.submitActionReport(caseItem.id, { summary, outcome, recommendations: recommendations || undefined, files });
+      await reports.submitActionReport(caseItem.id, {
+        summary,
+        outcome,
+        recommendations: recommendations.trim() || undefined,
+        planned_actions: plannedActions.trim() || undefined,
+        help_provided: help,
+        case_opened: caseOpened,
+        case_number: caseOpened ? caseNumber.trim() || undefined : undefined,
+        referral_agency: referral.trim() || undefined,
+        victim_condition: condition || undefined,
+        follow_up_required: followUp,
+        follow_up_date: followUp && followUpDate ? followUpDate : undefined,
+        files,
+      });
       if (outcome === "resolved") await reports.setStatus(caseItem.id, "Resolved");
+      else if (outcome === "pending") await reports.setStatus(caseItem.id, "In_Progress");
     },
     onSuccess: () => { toast.success("Action report submitted"); onDone(); },
     onError: (e) => toast.error(apiErrorMessage(e)),
@@ -219,42 +245,89 @@ function ActionReportDialog({ caseItem, onClose, onDone }: { caseItem: ReportLis
 
   return (
     <Modal title={`Action report — ${caseItem.category}`} onClose={onClose}>
-      <div className="space-y-3">
-        <div>
-          <label className="text-xs uppercase tracking-wide text-muted-foreground">Outcome</label>
-          <select value={outcome} onChange={(e) => setOutcome(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm">
+      <p className="text-sm text-muted-foreground mb-4">
+        Ref <span className="font-mono">{caseItem.id.slice(0, 8).toUpperCase()}</span> · document what you intend to do,
+        what was actually done, and the help the survivor received.
+      </p>
+      <div className="space-y-4">
+        <Field label="Outcome">
+          <select value={outcome} onChange={(e) => setOutcome(e.target.value)} className={INPUT}>
             <option value="resolved">Resolved — case closed</option>
             <option value="referred">Referred to another agency</option>
             <option value="pending">Ongoing — further action required</option>
             <option value="unable_to_reach">Unable to reach reporter</option>
             <option value="other">Other</option>
           </select>
-        </div>
-        <div>
-          <label className="text-xs uppercase tracking-wide text-muted-foreground">Action summary *</label>
+        </Field>
+
+        <Field label="Intended plan of action">
+          <textarea rows={3} value={plannedActions} onChange={(e) => setPlannedActions(e.target.value)}
+            placeholder="What you plan to do next: visit, interview, medical escort, court date…" className={INPUT} />
+        </Field>
+
+        <Field label="Action summary *">
           <textarea rows={4} value={summary} onChange={(e) => setSummary(e.target.value)}
-            placeholder="What actions were taken, by whom, and when?"
-            className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm"
-          />
+            placeholder="What actions were taken, by whom, where and when?" className={INPUT} />
+        </Field>
+
+        <Field label="Help given to the survivor">
+          <div className="mt-1 grid gap-1.5 sm:grid-cols-2">
+            {HELP_OPTIONS.map((h) => (
+              <label key={h} className="flex items-start gap-2 rounded-lg border border-border px-2.5 py-2 text-xs cursor-pointer hover:bg-muted/60">
+                <input type="checkbox" className="mt-0.5" checked={help.includes(h)} onChange={() => toggleHelp(h)} />
+                <span>{h}</span>
+              </label>
+            ))}
+          </div>
+        </Field>
+
+        <div className="rounded-lg border border-border p-3">
+          <label className="flex items-center gap-2 text-sm font-medium">
+            <input type="checkbox" checked={caseOpened} onChange={(e) => setCaseOpened(e.target.checked)} />
+            A formal case / docket was opened (VSU, police, court)
+          </label>
+          {caseOpened && (
+            <input value={caseNumber} onChange={(e) => setCaseNumber(e.target.value)}
+              placeholder="Case / docket number e.g. VSU/LSK/0142/26" className={`${INPUT} mt-2`} />
+          )}
         </div>
-        <div>
-          <label className="text-xs uppercase tracking-wide text-muted-foreground">Recommendations</label>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Referred to (agency / facility)">
+            <input value={referral} onChange={(e) => setReferral(e.target.value)}
+              placeholder="e.g. UTH One-Stop Centre" className={INPUT} />
+          </Field>
+          <Field label="Survivor's condition">
+            <select value={condition} onChange={(e) => setCondition(e.target.value)} className={INPUT}>
+              <option value="">Select…</option>
+              {VICTIM_CONDITIONS.map((c) => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </Field>
+        </div>
+
+        <div className="rounded-lg border border-border p-3">
+          <label className="flex items-center gap-2 text-sm font-medium">
+            <input type="checkbox" checked={followUp} onChange={(e) => setFollowUp(e.target.checked)} />
+            Follow-up required
+          </label>
+          {followUp && (
+            <input type="date" value={followUpDate} onChange={(e) => setFollowUpDate(e.target.value)} className={`${INPUT} mt-2`} />
+          )}
+        </div>
+
+        <Field label="Recommendations">
           <textarea rows={3} value={recommendations} onChange={(e) => setRecommendations(e.target.value)}
-            placeholder="Follow-up, referrals, prevention notes…"
-            className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm"
-          />
-        </div>
-        <div>
-          <label className="text-xs uppercase tracking-wide text-muted-foreground">Supporting files (PDF/JPG/PNG)</label>
+            placeholder="Follow-up, referrals, prevention notes…" className={INPUT} />
+        </Field>
+
+        <Field label="Supporting files (PDF/JPG/PNG)">
           <input type="file" multiple accept="image/*,application/pdf"
             onChange={(e) => setFiles(Array.from(e.target.files ?? []))}
-            className="mt-1 block w-full text-sm file:mr-3 file:rounded-full file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-primary-foreground"
-          />
+            className="mt-1 block w-full text-sm file:mr-3 file:rounded-full file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-primary-foreground" />
           {files.length > 0 && <p className="mt-1 text-xs text-muted-foreground">{files.length} file(s) selected</p>}
-        </div>
+        </Field>
       </div>
-      <div className="mt-4 flex justify-end gap-2">
+      <div className="mt-5 flex justify-end gap-2">
         <button onClick={onClose} className="rounded-full border border-border px-4 py-2 text-sm">Cancel</button>
         <button
           disabled={submit.isPending || summary.trim().length < 10}
@@ -263,6 +336,17 @@ function ActionReportDialog({ caseItem, onClose, onDone }: { caseItem: ReportLis
         >{submit.isPending ? "Submitting…" : "Submit action report"}</button>
       </div>
     </Modal>
+  );
+}
+
+const INPUT = "mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring";
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="text-xs uppercase tracking-wide text-muted-foreground">{label}</label>
+      {children}
+    </div>
   );
 }
 
