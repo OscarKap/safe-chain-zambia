@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth-context";
 import { ROLE_DASHBOARD } from "@/lib/api";
 import { NotificationBell } from "@/components/NotificationBell";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 const nav = [
   { to: "/", label: "Home" },
