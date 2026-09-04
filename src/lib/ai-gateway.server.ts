@@ -1,10 +1,13 @@
+// Server-only Lovable AI gateway provider. Never import from client code.
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 
-/** Server-only Lovable AI provider. Never import this module from client code. */
-export function createLovableAiGatewayProvider(apiKey: string) {
+export function createLovableAiGatewayProvider(lovableApiKey: string) {
   return createOpenAICompatible({
-    name: "lovable-ai",
+    name: "lovable",
     baseURL: "https://ai.gateway.lovable.dev/v1",
-    headers: { "Lovable-API-Key": apiKey },
+    headers: {
+      "Lovable-API-Key": lovableApiKey,
+      "X-Lovable-AIG-SDK": "vercel-ai-sdk",
+    },
   });
 }

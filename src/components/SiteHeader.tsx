@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth-context";
 import { ROLE_DASHBOARD } from "@/lib/api";
 import { NotificationBell } from "@/components/NotificationBell";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -48,6 +49,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
+          <LanguageSelector />
           <Link to="/emergency" className="inline-flex items-center gap-2 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground hover:opacity-90 transition">
             Emergency Help
           </Link>

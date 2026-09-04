@@ -11,6 +11,7 @@ import workshopImg from "@/assets/workshop.jpg";
 import mobileImg from "@/assets/mobile.jpg";
 import { Slideshow } from "@/components/Slideshow";
 import { MobileHome } from "@/components/MobileHome";
+import { LanguagePicker } from "@/components/LanguageSelector";
 
 const slides = [
   { src: heroImg, alt: "Young Zambians smiling together", title: "Your safe link to health & rights", caption: "A youth-built platform for SRHR support, reporting, and community accountability." },
@@ -53,6 +54,10 @@ function Home() {
     <>
       {/* Mobile-first homepage */}
       <MobileHome />
+
+      {/* Language chooser — available on mobile and desktop */}
+      <LanguagePicker />
+
 
       {/* Hero (desktop / tablet) */}
       <section className="gradient-hero hidden md:block">

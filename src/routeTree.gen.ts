@@ -34,6 +34,7 @@ import { Route as AuthenticatedResponderDashboardRouteImport } from './routes/_a
 import { Route as AuthenticatedGbvDashboardRouteImport } from './routes/_authenticated/gbv.dashboard'
 import { Route as AuthenticatedDeveloperDashboardRouteImport } from './routes/_authenticated/developer.dashboard'
 import { Route as AuthenticatedCounsellorDashboardRouteImport } from './routes/_authenticated/counsellor.dashboard'
+import { Route as AuthenticatedAdminTranslationsRouteImport } from './routes/_authenticated/admin.translations'
 import { Route as AuthenticatedAdminRetentionRouteImport } from './routes/_authenticated/admin.retention'
 import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin.reports'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
@@ -169,6 +170,12 @@ const AuthenticatedCounsellorDashboardRoute =
     path: '/counsellor/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminTranslationsRoute =
+  AuthenticatedAdminTranslationsRouteImport.update({
+    id: '/admin/translations',
+    path: '/admin/translations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminRetentionRoute =
   AuthenticatedAdminRetentionRouteImport.update({
     id: '/admin/retention',
@@ -231,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
   '/admin/retention': typeof AuthenticatedAdminRetentionRoute
+  '/admin/translations': typeof AuthenticatedAdminTranslationsRoute
   '/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
   '/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
@@ -263,6 +271,7 @@ export interface FileRoutesByTo {
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
   '/admin/retention': typeof AuthenticatedAdminRetentionRoute
+  '/admin/translations': typeof AuthenticatedAdminTranslationsRoute
   '/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
   '/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
@@ -297,6 +306,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
   '/_authenticated/admin/retention': typeof AuthenticatedAdminRetentionRoute
+  '/_authenticated/admin/translations': typeof AuthenticatedAdminTranslationsRoute
   '/_authenticated/counsellor/dashboard': typeof AuthenticatedCounsellorDashboardRoute
   '/_authenticated/developer/dashboard': typeof AuthenticatedDeveloperDashboardRoute
   '/_authenticated/gbv/dashboard': typeof AuthenticatedGbvDashboardRoute
@@ -331,6 +341,7 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/reports'
     | '/admin/retention'
+    | '/admin/translations'
     | '/counsellor/dashboard'
     | '/developer/dashboard'
     | '/gbv/dashboard'
@@ -363,6 +374,7 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/reports'
     | '/admin/retention'
+    | '/admin/translations'
     | '/counsellor/dashboard'
     | '/developer/dashboard'
     | '/gbv/dashboard'
@@ -396,6 +408,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/reports'
     | '/_authenticated/admin/retention'
+    | '/_authenticated/admin/translations'
     | '/_authenticated/counsellor/dashboard'
     | '/_authenticated/developer/dashboard'
     | '/_authenticated/gbv/dashboard'
@@ -604,6 +617,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCounsellorDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/translations': {
+      id: '/_authenticated/admin/translations'
+      path: '/admin/translations'
+      fullPath: '/admin/translations'
+      preLoaderRoute: typeof AuthenticatedAdminTranslationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/retention': {
       id: '/_authenticated/admin/retention'
       path: '/admin/retention'
@@ -670,6 +690,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
   AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRouteWithChildren
   AuthenticatedAdminRetentionRoute: typeof AuthenticatedAdminRetentionRoute
+  AuthenticatedAdminTranslationsRoute: typeof AuthenticatedAdminTranslationsRoute
   AuthenticatedCounsellorDashboardRoute: typeof AuthenticatedCounsellorDashboardRoute
   AuthenticatedDeveloperDashboardRoute: typeof AuthenticatedDeveloperDashboardRoute
   AuthenticatedGbvDashboardRoute: typeof AuthenticatedGbvDashboardRoute
@@ -683,6 +704,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
   AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRouteWithChildren,
   AuthenticatedAdminRetentionRoute: AuthenticatedAdminRetentionRoute,
+  AuthenticatedAdminTranslationsRoute: AuthenticatedAdminTranslationsRoute,
   AuthenticatedCounsellorDashboardRoute: AuthenticatedCounsellorDashboardRoute,
   AuthenticatedDeveloperDashboardRoute: AuthenticatedDeveloperDashboardRoute,
   AuthenticatedGbvDashboardRoute: AuthenticatedGbvDashboardRoute,
