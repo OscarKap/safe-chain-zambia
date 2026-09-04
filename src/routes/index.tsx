@@ -55,6 +55,10 @@ function Home() {
       {/* Mobile-first homepage */}
       <MobileHome />
 
+      {/* Language chooser — available on mobile and desktop */}
+      <LanguagePicker />
+
+
       {/* Hero (desktop / tablet) */}
       <section className="gradient-hero hidden md:block">
 
