@@ -49,6 +49,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
+          <LanguageSelector />
           <Link to="/emergency" className="inline-flex items-center gap-2 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground hover:opacity-90 transition">
             Emergency Help
           </Link>
