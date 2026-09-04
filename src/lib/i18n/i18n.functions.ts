@@ -94,13 +94,13 @@ export const reviewTranslationFn = createServerFn({ method: "POST" })
     const { admin, auditLog } = await import("@/lib/security.server");
     const db = await admin();
     const humanReviewed = data.status === "human_reviewed" || data.status === "approved";
-    const patch: Record<string, unknown> = {
+    const patch = {
       status: data.status,
       human_reviewed: humanReviewed,
       reviewer: humanReviewed ? context.userId : null,
       reviewed_at: humanReviewed ? new Date().toISOString() : null,
+      ...(data.translatedText ? { translated_text: data.translatedText } : {}),
     };
-    if (data.translatedText) patch.translated_text = data.translatedText;
     const { error } = await db.from("translations").update(patch).eq("id", data.id);
     if (error) throw new Error(error.message);
     await auditLog(context.userId, "review_translation", "translation", data.id, { status: data.status });
