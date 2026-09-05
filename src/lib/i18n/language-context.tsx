@@ -55,7 +55,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     if (items.length === 0 || lang === DEFAULT_LANGUAGE) return;
     setReady(false);
     try {
-      const res = await getTranslationsFn({ data: { language: lang, items } });
+      const res = await requestTranslationsFn({ data: { language: lang, items } });
       if (res.language === lang) setDict((d) => ({ ...d, ...res.translations }));
     } catch {
       // Never break the page: English stays on screen.
@@ -82,7 +82,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(() => ({ language, setLanguage, t, ready }), [language, setLanguage, t, ready]);
-  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+  return (
+    <Ctx.Provider value={value}>
+      {children}
+      <AutoTranslate language={language} />
+    </Ctx.Provider>
+  );
 }
 
 export function useLanguage() {
