@@ -77,7 +77,9 @@ export function AutoTranslate({ language }: { language: LanguageCode }) {
         // Preserve the surrounding whitespace of the original text node.
         const lead = original.match(/^\s*/)?.[0] ?? "";
         const tail = original.match(/\s*$/)?.[0] ?? "";
-        node.nodeValue = `${lead}${hit}${tail}`;
+        const next = `${lead}${hit}${tail}`;
+        // Writing an identical value would retrigger the observer forever.
+        if (node.nodeValue !== next) node.nodeValue = next;
       }
     };
 

@@ -6,7 +6,8 @@ import {
   DEFAULT_LANGUAGE, LANGUAGES, LANGUAGE_ORDER, LANGUAGE_STORAGE_KEY,
   isLanguageCode, type LanguageCode,
 } from "@/lib/i18n/config";
-import { getTranslationsFn } from "@/lib/i18n/i18n.functions";
+import { requestTranslationsFn } from "@/lib/i18n/i18n.functions";
+import { AutoTranslate } from "@/lib/i18n/AutoTranslate";
 
 interface LanguageState {
   language: LanguageCode;
