@@ -25,6 +25,43 @@ export const getTranslationsFn = createServerFn({ method: "POST" })
     return { language: data.language, translations: map };
   });
 
+/**
+ * Public on-demand translation. Returns cached text immediately and generates
+ * anything missing through the provider chain, rate limited per visitor so the
+ * providers can't be abused. Failures degrade to English, never to an error.
+ */
+export const requestTranslationsFn = createServerFn({ method: "POST" })
+  .inputValidator((d) => batchSchema.parse(d))
+  .handler(async ({ data }) => {
+    const { translateBatch } = await import("./translate.server");
+
+    // Serve everything already cached without spending any quota.
+    const cached = await translateBatch(data.items, data.language, { generateMissing: false });
+    const missing = data.items.filter((i) => !cached[i.text]).slice(0, 60);
+    if (missing.length === 0) return { language: data.language, translations: cached };
+
+    const { clientIp, enforceRateLimit, RateLimitError } = await import("@/lib/security.server");
+    try {
+      await enforceRateLimit(
+        {
+          bucket: "translate_public",
+          windows: [
+            { minutes: 10, max: 40, message: "Too many translation requests." },
+            { minutes: 1440, max: 400, message: "Daily translation limit reached." },
+          ],
+        },
+        clientIp(),
+      );
+    } catch (err) {
+      if (err instanceof RateLimitError) return { language: data.language, translations: cached };
+      throw err;
+    }
+
+    const fresh = await translateBatch(missing, data.language, { generateMissing: true });
+    return { language: data.language, translations: { ...cached, ...fresh } };
+  });
+
+
 async function assertAdmin(userId: string) {
   const { admin, isSuperAdmin } = await import("@/lib/security.server");
   if (await isSuperAdmin(userId)) return;
