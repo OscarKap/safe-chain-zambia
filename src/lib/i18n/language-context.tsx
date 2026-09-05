@@ -6,7 +6,8 @@ import {
   DEFAULT_LANGUAGE, LANGUAGES, LANGUAGE_ORDER, LANGUAGE_STORAGE_KEY,
   isLanguageCode, type LanguageCode,
 } from "@/lib/i18n/config";
-import { getTranslationsFn } from "@/lib/i18n/i18n.functions";
+import { requestTranslationsFn } from "@/lib/i18n/i18n.functions";
+import { AutoTranslate } from "@/lib/i18n/AutoTranslate";
 
 interface LanguageState {
   language: LanguageCode;
@@ -54,7 +55,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     if (items.length === 0 || lang === DEFAULT_LANGUAGE) return;
     setReady(false);
     try {
-      const res = await getTranslationsFn({ data: { language: lang, items } });
+      const res = await requestTranslationsFn({ data: { language: lang, items } });
       if (res.language === lang) setDict((d) => ({ ...d, ...res.translations }));
     } catch {
       // Never break the page: English stays on screen.
@@ -81,7 +82,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(() => ({ language, setLanguage, t, ready }), [language, setLanguage, t, ready]);
-  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+  return (
+    <Ctx.Provider value={value}>
+      {children}
+      <AutoTranslate language={language} />
+    </Ctx.Provider>
+  );
 }
 
 export function useLanguage() {
