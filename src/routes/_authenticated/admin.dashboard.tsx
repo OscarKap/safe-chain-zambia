@@ -112,6 +112,9 @@ function AdminDashboard() {
             Data retention
           </Link>
         )}
+        <Link to="/admin/translations" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">
+          Translations
+        </Link>
         <Link to="/account/security" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">
           Account security
         </Link>
