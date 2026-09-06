@@ -47,6 +47,11 @@ export async function readCached(
   return out;
 }
 
+/** True when the engine asked us to slow down rather than actually failing. */
+function isThrottled(message: string) {
+  return /429|too many requests|rate.?limit/i.test(message);
+}
+
 async function logFailure(key: string, text: string, target: string, provider: string | null, error: string) {
   const supabase = await db();
   await supabase.from("translation_failures").insert({
