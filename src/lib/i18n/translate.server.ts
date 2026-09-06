@@ -134,6 +134,7 @@ export async function translateBatch(
   const chain = providerChain(target);
   const batching = chain.find((p) => typeof p.translateMany === "function");
   const remaining: TranslateItem[] = [];
+  let throttled = false;
 
   if (batching?.translateMany) {
     for (let i = 0; i < missing.length; i += 20) {
@@ -162,8 +163,14 @@ export async function translateBatch(
         );
         chunk.forEach((item, idx) => { result[item.text] = out[idx]!.translatedText; });
       } catch (err) {
-        await logFailure("batch", chunk[0]?.text ?? "", target.code, batching.id,
-          err instanceof Error ? err.message : String(err));
+        const message = err instanceof Error ? err.message : String(err);
+        await logFailure("batch", chunk[0]?.text ?? "", target.code, batching.id, message);
+        if (isThrottled(message)) {
+          // The engine is busy. Stop asking; the page keeps its English text and
+          // the next visit picks the work back up.
+          throttled = true;
+          break;
+        }
         remaining.push(...chunk);
       }
     }
@@ -172,9 +179,11 @@ export async function translateBatch(
   }
 
   // Anything the batch path couldn't do goes one at a time, sequentially.
-  for (const item of remaining) {
-    const out = await translateAndCache(item, target);
-    if (!out.fallback) result[item.text] = out.text;
+  if (!throttled) {
+    for (const item of remaining) {
+      const out = await translateAndCache(item, target);
+      if (!out.fallback) result[item.text] = out.text;
+    }
   }
   return result;
 }
