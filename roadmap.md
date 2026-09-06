@@ -11,3 +11,6 @@
 - [x] Prominent language chooser on the front page (user request 4 Sep)
 - [x] Admin translation management dashboard
 - [x] Documentation: adding a language/provider
+
+## Testing
+- [ ] Submit a report in English, switch to ChiBemba, confirm the case page and action report still load

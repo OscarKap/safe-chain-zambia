@@ -114,6 +114,10 @@ export function AutoTranslate({ language }: { language: LanguageCode }) {
           for (const [source, translated] of Object.entries(res.translations)) {
             dict.current.set(source, translated);
           }
+          // Anything the service couldn't deliver yet stays eligible for a retry.
+          for (const source of slice) {
+            if (!dict.current.has(source)) asked.current.delete(source);
+          }
           apply(collect(document.body));
         }
       } catch {
