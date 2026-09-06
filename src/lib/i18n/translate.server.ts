@@ -129,16 +129,52 @@ export async function translateBatch(
 
   if (!options.generateMissing) return result;
 
-  // Bounded concurrency so a big page doesn't hammer the provider.
-  const queue = [...missing];
-  const workers = Array.from({ length: Math.min(4, queue.length) }, async () => {
-    for (;;) {
-      const next = queue.shift();
-      if (!next) return;
-      const out = await translateAndCache(next, target);
-      if (!out.fallback) result[next.text] = out.text;
+  // Prefer a provider that can translate a whole chunk in one call: far fewer
+  // requests means far fewer provider rate-limit rejections.
+  const chain = providerChain(target);
+  const batching = chain.find((p) => typeof p.translateMany === "function");
+  const remaining: TranslateItem[] = [];
+
+  if (batching?.translateMany) {
+    for (let i = 0; i < missing.length; i += 20) {
+      const chunk = missing.slice(i, i + 20);
+      try {
+        const out = await batching.translateMany({
+          items: chunk,
+          sourceLanguage: DEFAULT_LANGUAGE,
+          target,
+        });
+        const supabase = await db();
+        await supabase.from("translations").upsert(
+          chunk.map((item, idx) => ({
+            translation_key: makeTranslationKey(item.text, item.context),
+            source_text: item.text,
+            source_language: DEFAULT_LANGUAGE,
+            target_language: target.code,
+            translated_text: out[idx]!.translatedText,
+            machine_text: out[idx]!.translatedText,
+            context: item.context ?? null,
+            provider: out[idx]!.provider,
+            model: out[idx]!.model,
+            status: "machine_translated",
+          })),
+          { onConflict: "translation_key,target_language", ignoreDuplicates: false },
+        );
+        chunk.forEach((item, idx) => { result[item.text] = out[idx]!.translatedText; });
+      } catch (err) {
+        await logFailure("batch", chunk[0]?.text ?? "", target.code, batching.id,
+          err instanceof Error ? err.message : String(err));
+        remaining.push(...chunk);
+      }
     }
-  });
-  await Promise.all(workers);
+  } else {
+    remaining.push(...missing);
+  }
+
+  // Anything the batch path couldn't do goes one at a time, sequentially.
+  for (const item of remaining) {
+    const out = await translateAndCache(item, target);
+    if (!out.fallback) result[item.text] = out.text;
+  }
   return result;
 }

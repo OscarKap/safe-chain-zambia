@@ -18,6 +18,12 @@ export interface TranslateResult {
   model: string;
 }
 
+export interface TranslateManyRequest {
+  items: { text: string; context?: string }[];
+  sourceLanguage: string;
+  target: LanguageDef;
+}
+
 export interface TranslationProvider {
   id: ProviderId;
   label: string;
@@ -26,6 +32,12 @@ export interface TranslationProvider {
   /** True when this provider can handle the given language. */
   supports: (lang: LanguageDef) => boolean;
   translateText: (req: TranslateRequest) => Promise<TranslateResult>;
+  /**
+   * Optional: translate several strings in one call. Providers that support it
+   * avoid one network round trip (and one rate-limit slot) per string.
+   * Returns results aligned with the request items.
+   */
+  translateMany?: (req: TranslateManyRequest) => Promise<TranslateResult[]>;
 }
 
 export const PROVIDERS: Record<ProviderId, TranslationProvider> = {
