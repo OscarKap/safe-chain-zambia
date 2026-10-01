@@ -8,14 +8,14 @@ import relationshipsMd from "@/content/articles/relationships.md?raw";
 import rightsMd from "@/content/articles/rights.md?raw";
 import emergencyMd from "@/content/articles/emergency.md?raw";
 
-import contraceptionImg from "@/assets/topics/contraception.jpg";
-import menstrualImg from "@/assets/topics/menstrual.jpg";
-import hivImg from "@/assets/topics/hiv.jpg";
-import consentImg from "@/assets/topics/consent.jpg";
+import contraceptionImg from "@/assets/youth/contraception-youth.jpg.asset.json";
+import menstrualImg from "@/assets/youth/menstrual-youth.jpg.asset.json";
+import hivImg from "@/assets/youth/hiv-youth.webp.asset.json";
+import consentImg from "@/assets/youth/consent-youth.jpg.asset.json";
 import gbvImg from "@/assets/topics/gbv.jpg";
-import mentalImg from "@/assets/topics/mental.jpg";
-import relationshipsImg from "@/assets/topics/relationships.jpg";
-import rightsImg from "@/assets/topics/rights.jpg";
+import mentalImg from "@/assets/youth/mental-youth.jpg.asset.json";
+import relationshipsImg from "@/assets/youth/relationships-youth.jpg.asset.json";
+import rightsImg from "@/assets/youth/rights-youth.jpg.asset.json";
 import emergencyImg from "@/assets/topics/emergency.jpg";
 
 export type Category =
@@ -49,7 +49,7 @@ export const articles: Article[] = [
     category: "Health",
     summary:
       "Birth control methods, how they work, where to get them, and what to expect — explained without judgement.",
-    image: contraceptionImg,
+    image: contraceptionImg.url,
     content: contraceptionMd,
     tags: ["pregnancy", "condoms", "family planning", "pills", "implant", "IUD", "emergency contraception"],
   },
@@ -59,7 +59,7 @@ export const articles: Article[] = [
     category: "Health",
     summary:
       "Your cycle, hygiene, period pain, and managing periods with dignity — at school, at home, anywhere.",
-    image: menstrualImg,
+    image: menstrualImg.url,
     content: menstrualMd,
     tags: ["period", "period pain", "menstruation", "hygiene", "pads", "cycle"],
   },
@@ -69,7 +69,7 @@ export const articles: Article[] = [
     category: "Health",
     summary:
       "Prevention, testing, treatment, and busting common myths — knowing your status is strength, not shame.",
-    image: hivImg,
+    image: hivImg.url,
     content: hivMd,
     tags: ["HIV", "HIV testing", "STI", "condoms", "PEP", "ART", "AIDS"],
     showEmergency: true,
@@ -80,7 +80,7 @@ export const articles: Article[] = [
     category: "Relationships",
     summary:
       "What real consent looks like, your right to say no, and how to protect yourself online and offline.",
-    image: consentImg,
+    image: consentImg.url,
     content: consentMd,
     tags: ["consent", "boundaries", "no", "respect", "online safety"],
   },
@@ -101,7 +101,7 @@ export const articles: Article[] = [
     category: "Wellbeing",
     summary:
       "Coping with stress, anxiety and depression — and where to find youth counselling support.",
-    image: mentalImg,
+    image: mentalImg.url,
     content: mentalMd,
     tags: ["depression", "anxiety", "stress", "mental health", "suicide", "counselling"],
     showEmergency: true,
@@ -112,7 +112,7 @@ export const articles: Article[] = [
     category: "Relationships",
     summary:
       "What healthy love looks like, warning signs to watch for, and how to communicate with respect.",
-    image: relationshipsImg,
+    image: relationshipsImg.url,
     content: relationshipsMd,
     tags: ["relationships", "love", "trust", "communication", "boundaries"],
   },
@@ -122,7 +122,7 @@ export const articles: Article[] = [
     category: "Rights",
     summary:
       "Your rights at home, school, in healthcare, and online — and how to act when they are violated.",
-    image: rightsImg,
+    image: rightsImg.url,
     content: rightsMd,
     tags: ["rights", "law", "school", "disability", "privacy"],
   },

@@ -3,23 +3,29 @@ import {
   ShieldCheck, Phone, MapPin, BookOpen, MessageSquareWarning,
   Accessibility, Users, ArrowRight, Heart, Lock, Languages,
 } from "lucide-react";
-import heroImg from "@/assets/hero.jpg";
-import communityImg from "@/assets/community.jpg";
-import clinicImg from "@/assets/clinic.jpg";
-import learningImg from "@/assets/learning.jpg";
-import workshopImg from "@/assets/workshop.jpg";
+import heroAsset from "@/assets/youth/home-youth.jpg.asset.json";
+import communityAsset from "@/assets/youth/community-youth.webp.asset.json";
+import clinicAsset from "@/assets/youth/clinic-youth.jpg.asset.json";
+import learningAsset from "@/assets/youth/learning-youth.jpg.asset.json";
+import workshopAsset from "@/assets/youth/workshop-youth.jpg.asset.json";
 import mobileImg from "@/assets/mobile.jpg";
 import { Slideshow } from "@/components/Slideshow";
 import { MobileHome } from "@/components/MobileHome";
 import { LanguagePicker } from "@/components/LanguageSelector";
 
+const heroImg = heroAsset.url;
+const communityImg = communityAsset.url;
+const clinicImg = clinicAsset.url;
+const learningImg = learningAsset.url;
+const workshopImg = workshopAsset.url;
+
 const slides = [
-  { src: heroImg, alt: "Young Zambians smiling together", title: "Your safe link to health & rights", caption: "A youth-built platform for SRHR support, reporting, and community accountability." },
-  { src: clinicImg, alt: "Young person outside a youth-friendly clinic", title: "Youth-friendly clinics, near you", caption: "Find accessible, judgment-free health services across 10+ districts." },
-  { src: learningImg, alt: "Diverse youth learning together with tablets", title: "Learning that includes everyone", caption: "Lessons designed for girls, boys, and youth with disabilities — in 5 local languages." },
-  { src: workshopImg, alt: "Peer educators leading an SRHR workshop", title: "Peer-led, community-rooted", caption: "Real conversations, led by young Zambians who understand your world." },
+  { src: heroImg, alt: "Young people together outdoors in Zambia", title: "Your safe link to health & rights", caption: "A youth-built platform for SRHR support, reporting, and community accountability." },
+  { src: clinicImg, alt: "Young Zambian woman smiling", title: "Youth-friendly clinics, near you", caption: "Find accessible, judgment-free health services across 10+ districts." },
+  { src: learningImg, alt: "Young people sitting and talking together outdoors", title: "Learning that includes everyone", caption: "Lessons designed for girls, boys, and youth with disabilities — in 5 local languages." },
+  { src: workshopImg, alt: "Young people gathered together outdoors", title: "Peer-led, community-rooted", caption: "Real conversations, led by young Zambians who understand your world." },
   { src: mobileImg, alt: "Young woman privately using her mobile phone", title: "Private by default", caption: "Report incidents anonymously — even over SMS when you're offline." },
-  { src: communityImg, alt: "Community SRHR gathering", title: "Accountability you can see", caption: "Community scorecards turn lived experience into real change." },
+  { src: communityImg, alt: "Young people walking together in their community", title: "Accountability you can see", caption: "Community scorecards turn lived experience into real change." },
 ];
 
 export const Route = createFileRoute("/")({
@@ -27,7 +33,10 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Safe Chain — Youth SRHR, safe reporting & clinics in Zambia" },
       { name: "description", content: "Anonymous reporting, youth-friendly clinics, SRHR learning, and community accountability for young Zambians, including girls and youth with disabilities." },
-      { property: "og:image", content: heroImg },
+       { property: "og:title", content: "Safe Chain — Youth health and support in Zambia" },
+       { property: "og:description", content: "Find youth-friendly care, learn about health and rights, and seek support through Safe Chain in Zambia." },
+       { property: "og:type", content: "website" },
+       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Home,
@@ -96,7 +105,7 @@ function Home() {
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-brand/15 via-warm/10 to-secondary/30 blur-2xl" aria-hidden />
             <img
               src={heroImg}
-              alt="Young Zambians smiling together — Safe Chain is built for every body."
+               alt="Young people together outdoors in Zambia"
               width={1536}
               height={1024}
               className="relative rounded-3xl border border-border shadow-xl object-cover w-full h-[380px] md:h-[460px]"
@@ -171,7 +180,7 @@ function Home() {
         <div className="container-page py-16 md:py-20 grid lg:grid-cols-2 gap-10 items-center">
           <img
             src={communityImg}
-            alt="Community members gathering for an SRHR session"
+             alt="Young people walking together in their community"
             loading="lazy"
             className="rounded-3xl border border-border w-full h-[320px] md:h-[420px] object-cover"
           />

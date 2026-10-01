@@ -9,92 +9,46 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ServicesRouteImport } from './routes/services'
-import { Route as ReportRouteImport } from './routes/report'
-import { Route as PendingRouteImport } from './routes/pending'
-import { Route as MfaVerifyRouteImport } from './routes/mfa-verify'
-import { Route as MfaRecoveryRouteImport } from './routes/mfa-recovery'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as FeedbackRouteImport } from './routes/feedback'
-import { Route as EmergencyRouteImport } from './routes/emergency'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as BasecontrolRouteImport } from './routes/basecontrol'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as RegisterIndexRouteImport } from './routes/register.index'
-import { Route as LearnIndexRouteImport } from './routes/learn.index'
-import { Route as RegisterResponderRouteImport } from './routes/register.responder'
-import { Route as RegisterAdminRouteImport } from './routes/register.admin'
-import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as BasecontrolRouteImport } from './routes/basecontrol'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as EmergencyRouteImport } from './routes/emergency'
+import { Route as FeedbackRouteImport } from './routes/feedback'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as MfaRecoveryRouteImport } from './routes/mfa-recovery'
+import { Route as MfaVerifyRouteImport } from './routes/mfa-verify'
+import { Route as PendingRouteImport } from './routes/pending'
+import { Route as ReportRouteImport } from './routes/report'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as AuthenticatedEocRouteImport } from './routes/_authenticated/eoc'
-import { Route as ApiPublicRetentionPurgeRouteImport } from './routes/api/public/retention-purge'
-import { Route as AuthenticatedResponderDashboardRouteImport } from './routes/_authenticated/responder.dashboard'
-import { Route as AuthenticatedGbvDashboardRouteImport } from './routes/_authenticated/gbv.dashboard'
-import { Route as AuthenticatedDeveloperDashboardRouteImport } from './routes/_authenticated/developer.dashboard'
-import { Route as AuthenticatedCounsellorDashboardRouteImport } from './routes/_authenticated/counsellor.dashboard'
-import { Route as AuthenticatedAdminTranslationsRouteImport } from './routes/_authenticated/admin.translations'
-import { Route as AuthenticatedAdminRetentionRouteImport } from './routes/_authenticated/admin.retention'
-import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin.reports'
-import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
-import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
+import { Route as LearnIndexRouteImport } from './routes/learn.index'
+import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
+import { Route as RegisterIndexRouteImport } from './routes/register.index'
+import { Route as RegisterAdminRouteImport } from './routes/register.admin'
+import { Route as RegisterResponderRouteImport } from './routes/register.responder'
 import { Route as AuthenticatedAccountSecurityRouteImport } from './routes/_authenticated/account.security'
+import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
+import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
+import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin.reports'
+import { Route as AuthenticatedAdminRetentionRouteImport } from './routes/_authenticated/admin.retention'
+import { Route as AuthenticatedAdminTranslationsRouteImport } from './routes/_authenticated/admin.translations'
+import { Route as AuthenticatedCounsellorDashboardRouteImport } from './routes/_authenticated/counsellor.dashboard'
+import { Route as AuthenticatedDeveloperDashboardRouteImport } from './routes/_authenticated/developer.dashboard'
+import { Route as AuthenticatedGbvDashboardRouteImport } from './routes/_authenticated/gbv.dashboard'
+import { Route as AuthenticatedResponderDashboardRouteImport } from './routes/_authenticated/responder.dashboard'
+import { Route as ApiPublicRetentionPurgeRouteImport } from './routes/api/public/retention-purge'
 import { Route as AuthenticatedAdminReportsIdRouteImport } from './routes/_authenticated/admin.reports.$id'
 
-const ServicesRoute = ServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReportRoute = ReportRouteImport.update({
-  id: '/report',
-  path: '/report',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PendingRoute = PendingRouteImport.update({
-  id: '/pending',
-  path: '/pending',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MfaVerifyRoute = MfaVerifyRouteImport.update({
-  id: '/mfa-verify',
-  path: '/mfa-verify',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MfaRecoveryRoute = MfaRecoveryRouteImport.update({
-  id: '/mfa-recovery',
-  path: '/mfa-recovery',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FeedbackRoute = FeedbackRouteImport.update({
-  id: '/feedback',
-  path: '/feedback',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EmergencyRoute = EmergencyRouteImport.update({
-  id: '/emergency',
-  path: '/emergency',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BasecontrolRoute = BasecontrolRouteImport.update({
-  id: '/basecontrol',
-  path: '/basecontrol',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -102,38 +56,59 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const BasecontrolRoute = BasecontrolRouteImport.update({
+  id: '/basecontrol',
+  path: '/basecontrol',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RegisterIndexRoute = RegisterIndexRouteImport.update({
-  id: '/register/',
-  path: '/register/',
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LearnIndexRoute = LearnIndexRouteImport.update({
-  id: '/learn/',
-  path: '/learn/',
+const EmergencyRoute = EmergencyRouteImport.update({
+  id: '/emergency',
+  path: '/emergency',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RegisterResponderRoute = RegisterResponderRouteImport.update({
-  id: '/register/responder',
-  path: '/register/responder',
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RegisterAdminRoute = RegisterAdminRouteImport.update({
-  id: '/register/admin',
-  path: '/register/admin',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LearnSlugRoute = LearnSlugRouteImport.update({
-  id: '/learn/$slug',
-  path: '/learn/$slug',
+const MfaRecoveryRoute = MfaRecoveryRouteImport.update({
+  id: '/mfa-recovery',
+  path: '/mfa-recovery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MfaVerifyRoute = MfaVerifyRouteImport.update({
+  id: '/mfa-verify',
+  path: '/mfa-verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PendingRoute = PendingRouteImport.update({
+  id: '/pending',
+  path: '/pending',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportRoute = ReportRouteImport.update({
+  id: '/report',
+  path: '/report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedEocRoute = AuthenticatedEocRouteImport.update({
@@ -141,57 +116,35 @@ const AuthenticatedEocRoute = AuthenticatedEocRouteImport.update({
   path: '/eoc',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const ApiPublicRetentionPurgeRoute = ApiPublicRetentionPurgeRouteImport.update({
-  id: '/api/public/retention-purge',
-  path: '/api/public/retention-purge',
+const LearnIndexRoute = LearnIndexRouteImport.update({
+  id: '/learn/',
+  path: '/learn/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedResponderDashboardRoute =
-  AuthenticatedResponderDashboardRouteImport.update({
-    id: '/responder/dashboard',
-    path: '/responder/dashboard',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedGbvDashboardRoute =
-  AuthenticatedGbvDashboardRouteImport.update({
-    id: '/gbv/dashboard',
-    path: '/gbv/dashboard',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedDeveloperDashboardRoute =
-  AuthenticatedDeveloperDashboardRouteImport.update({
-    id: '/developer/dashboard',
-    path: '/developer/dashboard',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedCounsellorDashboardRoute =
-  AuthenticatedCounsellorDashboardRouteImport.update({
-    id: '/counsellor/dashboard',
-    path: '/counsellor/dashboard',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminTranslationsRoute =
-  AuthenticatedAdminTranslationsRouteImport.update({
-    id: '/admin/translations',
-    path: '/admin/translations',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminRetentionRoute =
-  AuthenticatedAdminRetentionRouteImport.update({
-    id: '/admin/retention',
-    path: '/admin/retention',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminReportsRoute =
-  AuthenticatedAdminReportsRouteImport.update({
-    id: '/admin/reports',
-    path: '/admin/reports',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminDashboardRoute =
-  AuthenticatedAdminDashboardRouteImport.update({
-    id: '/admin/dashboard',
-    path: '/admin/dashboard',
+const LearnSlugRoute = LearnSlugRouteImport.update({
+  id: '/learn/$slug',
+  path: '/learn/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterIndexRoute = RegisterIndexRouteImport.update({
+  id: '/register/',
+  path: '/register/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterAdminRoute = RegisterAdminRouteImport.update({
+  id: '/register/admin',
+  path: '/register/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterResponderRoute = RegisterResponderRouteImport.update({
+  id: '/register/responder',
+  path: '/register/responder',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAccountSecurityRoute =
+  AuthenticatedAccountSecurityRouteImport.update({
+    id: '/account/security',
+    path: '/account/security',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminAnalyticsRoute =
@@ -200,12 +153,59 @@ const AuthenticatedAdminAnalyticsRoute =
     path: '/admin/analytics',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAccountSecurityRoute =
-  AuthenticatedAccountSecurityRouteImport.update({
-    id: '/account/security',
-    path: '/account/security',
+const AuthenticatedAdminDashboardRoute =
+  AuthenticatedAdminDashboardRouteImport.update({
+    id: '/admin/dashboard',
+    path: '/admin/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminReportsRoute =
+  AuthenticatedAdminReportsRouteImport.update({
+    id: '/admin/reports',
+    path: '/admin/reports',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminRetentionRoute =
+  AuthenticatedAdminRetentionRouteImport.update({
+    id: '/admin/retention',
+    path: '/admin/retention',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminTranslationsRoute =
+  AuthenticatedAdminTranslationsRouteImport.update({
+    id: '/admin/translations',
+    path: '/admin/translations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCounsellorDashboardRoute =
+  AuthenticatedCounsellorDashboardRouteImport.update({
+    id: '/counsellor/dashboard',
+    path: '/counsellor/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDeveloperDashboardRoute =
+  AuthenticatedDeveloperDashboardRouteImport.update({
+    id: '/developer/dashboard',
+    path: '/developer/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedGbvDashboardRoute =
+  AuthenticatedGbvDashboardRouteImport.update({
+    id: '/gbv/dashboard',
+    path: '/gbv/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedResponderDashboardRoute =
+  AuthenticatedResponderDashboardRouteImport.update({
+    id: '/responder/dashboard',
+    path: '/responder/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const ApiPublicRetentionPurgeRoute = ApiPublicRetentionPurgeRouteImport.update({
+  id: '/api/public/retention-purge',
+  path: '/api/public/retention-purge',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminReportsIdRoute =
   AuthenticatedAdminReportsIdRouteImport.update({
     id: '/$id',
@@ -442,88 +442,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/services': {
-      id: '/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/report': {
-      id: '/report'
-      path: '/report'
-      fullPath: '/report'
-      preLoaderRoute: typeof ReportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pending': {
-      id: '/pending'
-      path: '/pending'
-      fullPath: '/pending'
-      preLoaderRoute: typeof PendingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mfa-verify': {
-      id: '/mfa-verify'
-      path: '/mfa-verify'
-      fullPath: '/mfa-verify'
-      preLoaderRoute: typeof MfaVerifyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mfa-recovery': {
-      id: '/mfa-recovery'
-      path: '/mfa-recovery'
-      fullPath: '/mfa-recovery'
-      preLoaderRoute: typeof MfaRecoveryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feedback': {
-      id: '/feedback'
-      path: '/feedback'
-      fullPath: '/feedback'
-      preLoaderRoute: typeof FeedbackRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/emergency': {
-      id: '/emergency'
-      path: '/emergency'
-      fullPath: '/emergency'
-      preLoaderRoute: typeof EmergencyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/basecontrol': {
-      id: '/basecontrol'
-      path: '/basecontrol'
-      fullPath: '/basecontrol'
-      preLoaderRoute: typeof BasecontrolRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -533,46 +456,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/register/': {
-      id: '/register/'
-      path: '/register'
-      fullPath: '/register/'
-      preLoaderRoute: typeof RegisterIndexRouteImport
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/learn/': {
-      id: '/learn/'
-      path: '/learn'
-      fullPath: '/learn/'
-      preLoaderRoute: typeof LearnIndexRouteImport
+    '/basecontrol': {
+      id: '/basecontrol'
+      path: '/basecontrol'
+      fullPath: '/basecontrol'
+      preLoaderRoute: typeof BasecontrolRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/register/responder': {
-      id: '/register/responder'
-      path: '/register/responder'
-      fullPath: '/register/responder'
-      preLoaderRoute: typeof RegisterResponderRouteImport
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/register/admin': {
-      id: '/register/admin'
-      path: '/register/admin'
-      fullPath: '/register/admin'
-      preLoaderRoute: typeof RegisterAdminRouteImport
+    '/emergency': {
+      id: '/emergency'
+      path: '/emergency'
+      fullPath: '/emergency'
+      preLoaderRoute: typeof EmergencyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/learn/$slug': {
-      id: '/learn/$slug'
-      path: '/learn/$slug'
-      fullPath: '/learn/$slug'
-      preLoaderRoute: typeof LearnSlugRouteImport
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mfa-recovery': {
+      id: '/mfa-recovery'
+      path: '/mfa-recovery'
+      fullPath: '/mfa-recovery'
+      preLoaderRoute: typeof MfaRecoveryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mfa-verify': {
+      id: '/mfa-verify'
+      path: '/mfa-verify'
+      fullPath: '/mfa-verify'
+      preLoaderRoute: typeof MfaVerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pending': {
+      id: '/pending'
+      path: '/pending'
+      fullPath: '/pending'
+      preLoaderRoute: typeof PendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report': {
+      id: '/report'
+      path: '/report'
+      fullPath: '/report'
+      preLoaderRoute: typeof ReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/eoc': {
@@ -582,67 +547,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEocRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/api/public/retention-purge': {
-      id: '/api/public/retention-purge'
-      path: '/api/public/retention-purge'
-      fullPath: '/api/public/retention-purge'
-      preLoaderRoute: typeof ApiPublicRetentionPurgeRouteImport
+    '/learn/': {
+      id: '/learn/'
+      path: '/learn'
+      fullPath: '/learn/'
+      preLoaderRoute: typeof LearnIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/responder/dashboard': {
-      id: '/_authenticated/responder/dashboard'
-      path: '/responder/dashboard'
-      fullPath: '/responder/dashboard'
-      preLoaderRoute: typeof AuthenticatedResponderDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/learn/$slug': {
+      id: '/learn/$slug'
+      path: '/learn/$slug'
+      fullPath: '/learn/$slug'
+      preLoaderRoute: typeof LearnSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/gbv/dashboard': {
-      id: '/_authenticated/gbv/dashboard'
-      path: '/gbv/dashboard'
-      fullPath: '/gbv/dashboard'
-      preLoaderRoute: typeof AuthenticatedGbvDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/register/': {
+      id: '/register/'
+      path: '/register'
+      fullPath: '/register/'
+      preLoaderRoute: typeof RegisterIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/developer/dashboard': {
-      id: '/_authenticated/developer/dashboard'
-      path: '/developer/dashboard'
-      fullPath: '/developer/dashboard'
-      preLoaderRoute: typeof AuthenticatedDeveloperDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/register/admin': {
+      id: '/register/admin'
+      path: '/register/admin'
+      fullPath: '/register/admin'
+      preLoaderRoute: typeof RegisterAdminRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/counsellor/dashboard': {
-      id: '/_authenticated/counsellor/dashboard'
-      path: '/counsellor/dashboard'
-      fullPath: '/counsellor/dashboard'
-      preLoaderRoute: typeof AuthenticatedCounsellorDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/register/responder': {
+      id: '/register/responder'
+      path: '/register/responder'
+      fullPath: '/register/responder'
+      preLoaderRoute: typeof RegisterResponderRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/translations': {
-      id: '/_authenticated/admin/translations'
-      path: '/admin/translations'
-      fullPath: '/admin/translations'
-      preLoaderRoute: typeof AuthenticatedAdminTranslationsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/retention': {
-      id: '/_authenticated/admin/retention'
-      path: '/admin/retention'
-      fullPath: '/admin/retention'
-      preLoaderRoute: typeof AuthenticatedAdminRetentionRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/reports': {
-      id: '/_authenticated/admin/reports'
-      path: '/admin/reports'
-      fullPath: '/admin/reports'
-      preLoaderRoute: typeof AuthenticatedAdminReportsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/dashboard': {
-      id: '/_authenticated/admin/dashboard'
-      path: '/admin/dashboard'
-      fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
+    '/_authenticated/account/security': {
+      id: '/_authenticated/account/security'
+      path: '/account/security'
+      fullPath: '/account/security'
+      preLoaderRoute: typeof AuthenticatedAccountSecurityRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/analytics': {
@@ -652,12 +596,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAnalyticsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/account/security': {
-      id: '/_authenticated/account/security'
-      path: '/account/security'
-      fullPath: '/account/security'
-      preLoaderRoute: typeof AuthenticatedAccountSecurityRouteImport
+    '/_authenticated/admin/dashboard': {
+      id: '/_authenticated/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/reports': {
+      id: '/_authenticated/admin/reports'
+      path: '/admin/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AuthenticatedAdminReportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/retention': {
+      id: '/_authenticated/admin/retention'
+      path: '/admin/retention'
+      fullPath: '/admin/retention'
+      preLoaderRoute: typeof AuthenticatedAdminRetentionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/translations': {
+      id: '/_authenticated/admin/translations'
+      path: '/admin/translations'
+      fullPath: '/admin/translations'
+      preLoaderRoute: typeof AuthenticatedAdminTranslationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/counsellor/dashboard': {
+      id: '/_authenticated/counsellor/dashboard'
+      path: '/counsellor/dashboard'
+      fullPath: '/counsellor/dashboard'
+      preLoaderRoute: typeof AuthenticatedCounsellorDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/developer/dashboard': {
+      id: '/_authenticated/developer/dashboard'
+      path: '/developer/dashboard'
+      fullPath: '/developer/dashboard'
+      preLoaderRoute: typeof AuthenticatedDeveloperDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/gbv/dashboard': {
+      id: '/_authenticated/gbv/dashboard'
+      path: '/gbv/dashboard'
+      fullPath: '/gbv/dashboard'
+      preLoaderRoute: typeof AuthenticatedGbvDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/responder/dashboard': {
+      id: '/_authenticated/responder/dashboard'
+      path: '/responder/dashboard'
+      fullPath: '/responder/dashboard'
+      preLoaderRoute: typeof AuthenticatedResponderDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/retention-purge': {
+      id: '/api/public/retention-purge'
+      path: '/api/public/retention-purge'
+      fullPath: '/api/public/retention-purge'
+      preLoaderRoute: typeof ApiPublicRetentionPurgeRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/reports/$id': {
       id: '/_authenticated/admin/reports/$id'
