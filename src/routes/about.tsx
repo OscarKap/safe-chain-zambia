@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Accessibility, Heart, Languages, Lock, ShieldCheck, Users } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
-import campaign from "@/assets/community.jpg";
+import campaignAsset from "@/assets/youth/community-youth.webp.asset.json";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({ meta: [{ title: "About Safe Chain" }, { name: "description", content: "Safe Chain is a youth-led civic-tech platform for SRHR, safe reporting and community accountability in Zambia." }] }),
+  head: () => ({ meta: [{ title: "About Safe Chain" }, { name: "description", content: "Safe Chain is a youth-led civic-tech platform for SRHR, safe reporting and community accountability in Zambia." }, { property: "og:title", content: "About Safe Chain" }, { property: "og:description", content: "Meet Safe Chain, connecting young Zambians with trusted health information and support." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: About,
 });
 
@@ -27,7 +27,7 @@ function About() {
       />
 
       <section className="container-page py-12 grid lg:grid-cols-2 gap-10 items-center">
-        <img src={campaign} alt="Community gathering" loading="lazy" className="rounded-3xl border border-border w-full h-80 object-cover" />
+         <img src={campaignAsset.url} alt="Young people walking together in their community" loading="lazy" className="rounded-3xl border border-border w-full h-80 object-cover" />
         <div>
           <h2 className="text-3xl font-bold">Why we built this</h2>
           <p className="mt-3 text-muted-foreground">

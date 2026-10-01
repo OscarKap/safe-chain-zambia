@@ -5,6 +5,7 @@ import {
   Users, ChevronRight, Lock, BookOpen,
 } from "lucide-react";
 import { PartnerLogos } from "@/components/PartnerLogos";
+import homeYouth from "@/assets/youth/home-youth.jpg.asset.json";
 
 type Action = {
   to: string;
@@ -60,11 +61,12 @@ export function MobileHome() {
 
       {/* Greeting card */}
       <div className="container-page mt-4">
-        <div className="rounded-3xl bg-gradient-to-br from-brand-soft via-secondary to-brand-soft p-5 relative overflow-hidden">
-          <div className="absolute -right-8 -bottom-8 h-40 w-40 rounded-full bg-warm/20 blur-2xl" aria-hidden />
-          <h1 className="text-2xl font-bold text-foreground">{greet}! 👋</h1>
-          <p className="mt-1 text-sm text-foreground/80">Your health matters.</p>
-          <p className="text-sm text-foreground/80">Support is always within reach. 💚</p>
+         <div className="rounded-2xl relative overflow-hidden min-h-44 flex flex-col justify-end p-5">
+           <img src={homeYouth.url} alt="Young people together outdoors in Zambia" className="absolute inset-0 h-full w-full object-cover" />
+           <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/45 to-transparent" aria-hidden />
+           <h1 className="relative text-2xl font-bold text-background">{greet}! 👋</h1>
+           <p className="relative mt-1 text-sm text-background">Your health matters.</p>
+           <p className="relative text-sm text-background">Support is always within reach. 💚</p>
         </div>
       </div>
 
