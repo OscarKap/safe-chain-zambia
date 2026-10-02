@@ -12,11 +12,11 @@ import contraceptionImg from "@/assets/youth/contraception-youth.jpg.asset.json"
 import menstrualImg from "@/assets/youth/menstrual-youth.jpg.asset.json";
 import hivImg from "@/assets/youth/hiv-youth.webp.asset.json";
 import consentImg from "@/assets/youth/consent-youth.jpg.asset.json";
-import gbvImg from "@/assets/topics/gbv.jpg";
+import gbvImg from "@/assets/youth/gbv-support.jpg.asset.json";
 import mentalImg from "@/assets/youth/mental-youth.jpg.asset.json";
 import relationshipsImg from "@/assets/youth/relationships-youth.jpg.asset.json";
 import rightsImg from "@/assets/youth/rights-youth.jpg.asset.json";
-import emergencyImg from "@/assets/topics/emergency.jpg";
+import emergencyImg from "@/assets/youth/emergency-support.jpg.asset.json";
 
 export type Category =
   | "Health"
@@ -90,7 +90,7 @@ export const articles: Article[] = [
     category: "Safety",
     summary:
       "How to recognise GBV, support a friend, find confidential help, and protect yourself.",
-    image: gbvImg,
+    image: gbvImg.url,
     content: gbvMd,
     tags: ["GBV", "abuse", "violence", "report", "survivor", "safety"],
     showEmergency: true,
@@ -132,7 +132,7 @@ export const articles: Article[] = [
     category: "Safety",
     summary:
       "What to do right now if you or someone you know is in danger, and time-sensitive care that can save a life.",
-    image: emergencyImg,
+    image: emergencyImg.url,
     content: emergencyMd,
     tags: ["emergency", "help", "suicide", "PEP", "crisis"],
     showEmergency: true,
