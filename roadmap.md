@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Uploaded youth photography
-- [x] Replace home, About, and most Learning Hub images with the supplied African youth photos on desktop and mobile; retain safety-specific illustrations and partner marks.
+- [x] Replace home, About, and Learning Hub images with the supplied African youth photos on desktop and mobile; retain partner marks.
 
 ## Zambian local-language translation system
 - [x] Language config (en, bem, nya, toi, loz) + provider chains
