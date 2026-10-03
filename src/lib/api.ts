@@ -75,7 +75,7 @@ export interface ResponderWorkload {
 }
 
 export interface ReportListItem {
-  id: string; category: string; status: ReportStatus; created_at: string;
+  id: string; category: string; subcategory?: string | null; status: ReportStatus; created_at: string;
   province?: string; district?: string; assigned_to?: string | null;
   priority?: ReportPriority;
 }
@@ -378,7 +378,7 @@ export const reports = {
   },
 
   async list(params?: { status?: ReportStatus; priority?: ReportPriority; province?: string; district?: string; category?: string; q?: string; assignedTo?: string }): Promise<ReportListItem[]> {
-    let q = supabase.from("reports").select("id,category,status,priority,created_at,province,district,assigned_to");
+    let q = supabase.from("reports").select("id,category,subcategory,status,priority,created_at,province,district,assigned_to");
     if (params?.status) q = q.eq("status", params.status);
     if (params?.priority) q = q.eq("priority", params.priority);
     if (params?.province) q = q.eq("province", params.province);
@@ -402,6 +402,7 @@ export const reports = {
     return {
       id: r.id,
       category: r.category,
+      subcategory: r.subcategory ?? null,
       status: r.status as ReportStatus,
       priority: (r.priority as ReportPriority | undefined) ?? "normal",
       created_at: r.created_at,
@@ -741,3 +742,8 @@ export const analytics = {
   },
 };
 
+
+/** Display label for a case: category plus TFGBV/other subcategory when present. */
+export function caseLabel(r: { category: string; subcategory?: string | null }): string {
+  return r.subcategory ? `${r.category} · ${r.subcategory}` : r.category;
+}

@@ -1,3 +1,4 @@
+import { caseLabel } from "@/lib/api";
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -68,7 +69,7 @@ function ReportsList() {
                     <td className="px-2 py-3 font-mono text-xs">
                       <Link to="/admin/reports/$id" params={{ id: r.id }} className="text-brand hover:underline">{r.id.slice(0, 8)}…</Link>
                     </td>
-                    <td className="px-2 py-3 font-medium">{r.category}</td>
+                    <td className="px-2 py-3 font-medium">{caseLabel(r)}</td>
                     <td className="px-2 py-3 text-muted-foreground">{[r.district, r.province].filter(Boolean).join(", ") || "—"}</td>
                     <td className="px-2 py-3"><span className="rounded-full bg-muted px-2 py-0.5 text-xs">{r.status}</span></td>
                     <td className="px-2 py-3 text-muted-foreground">{new Date(r.created_at).toLocaleString()}</td>
