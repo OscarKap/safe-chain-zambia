@@ -12,6 +12,7 @@ export type Department = {
 export const CASE_TYPES: { id: string; label: string }[] = [
   { id: "GBV", label: "Gender-based violence" },
   { id: "Assault", label: "Sexual assault" },
+  { id: "TFGBV", label: "Technology-facilitated GBV (TFGBV)" },
   { id: "Child", label: "Child protection" },
   { id: "Counselling", label: "Counselling & psychosocial support" },
   { id: "Mental", label: "Mental health crisis" },
@@ -34,13 +35,13 @@ export const DEPARTMENTS: Department[] = [
     id: "police_vsu",
     label: "Police — Victim Support Unit (VSU)",
     description: "Criminal response, protection orders, arrests and case referral.",
-    caseTypes: ["GBV", "Assault", "Child", "Police", "Legal", "Shelter"],
+    caseTypes: ["GBV", "TFGBV", "Assault", "Child", "Police", "Legal", "Shelter"],
   },
   {
     id: "police",
     label: "Police — General duty",
     description: "Emergency response, safety escort and incident recording.",
-    caseTypes: ["Police", "GBV", "Assault", "Other"],
+    caseTypes: ["Police", "GBV", "TFGBV", "Assault", "Other"],
   },
   {
     id: "health_facility",

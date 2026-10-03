@@ -11,6 +11,7 @@ import {
 
 const reportSchema = z.object({
   category: z.string().min(1).max(60),
+  subcategory: z.string().max(80).optional(),
   description: z.string().trim().min(20).max(4000),
   province: z.string().min(1).max(80),
   district: z.string().min(1).max(80),
@@ -57,6 +58,7 @@ export const submitPublicReportFn = createServerFn({ method: "POST" })
       .from("reports")
       .insert({
         category: data.category,
+        subcategory: data.subcategory || null,
         description: data.description,
         province: data.province,
         district: data.district,
