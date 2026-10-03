@@ -1,3 +1,4 @@
+import { caseLabel } from "@/lib/api";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -179,7 +180,7 @@ function AdminDashboard() {
             {reportsQ.data?.slice(0, 8).map((r) => (
               <li key={r.id} className="py-2 flex items-center justify-between gap-3 text-sm">
                 <Link to="/admin/reports/$id" params={{ id: r.id }} className="flex-1 hover:underline">
-                  <p className="font-medium">{r.category}</p>
+                  <p className="font-medium">{caseLabel(r)}</p>
                   <p className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}</p>
                 </Link>
                 <span className="rounded-full bg-muted px-2 py-1 text-xs">{r.status}</span>

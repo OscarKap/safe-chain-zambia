@@ -1,14 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Search, Clock, BookOpen, Bookmark as BookmarkIcon } from "lucide-react";
+import { Search, Clock, BookOpen, Bookmark as BookmarkIcon, Smartphone } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { articles, categories, articleReadingTime, type Category } from "@/data/articles";
 import { BookmarkButton, useBookmarks } from "@/components/Bookmark";
 
 export const Route = createFileRoute("/learn/")({
+  validateSearch: (s: Record<string, unknown>) => ({ topic: typeof s.topic === "string" ? s.topic : undefined }),
   head: () => ({ meta: [
     { title: "Learning Hub — Safe Chain" },
-    { name: "description", content: "In-app SRHR, mental health, GBV, HIV, consent and youth rights lessons for young people in Zambia. Read offline-friendly, in your own time." },
+    { name: "description", content: "In-app SRHR, mental health, GBV, technology-facilitated GBV (TFGBV), HIV, consent and youth rights lessons for young people in Zambia. Read offline-friendly, in your own time." },
   ]}),
   component: Learn,
 });
@@ -17,7 +18,8 @@ type Filter = "All" | "Saved" | Category;
 
 function Learn() {
   const [q, setQ] = useState("");
-  const [filter, setFilter] = useState<Filter>("All");
+  const { topic } = Route.useSearch();
+  const [filter, setFilter] = useState<Filter>(topic === "tfgbv" ? "TFGBV & Online Safety" : "All");
   const { bookmarks } = useBookmarks();
 
   const filtered = useMemo(() => {
@@ -55,6 +57,24 @@ function Learn() {
           />
         </div>
       </PageHeader>
+
+      <section className="container-page pt-6">
+        <div className="rounded-2xl border border-brand/30 bg-brand-soft/50 p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand text-brand-foreground">
+            <Smartphone className="h-5 w-5" aria-hidden />
+          </span>
+          <div className="flex-1">
+            <p className="font-semibold">GBV & TFGBV: safety online and offline</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              TFGBV can affect people of different ages and backgrounds. If technology is being used to threaten, control, exploit, harass or harm you, you can seek support.
+            </p>
+          </div>
+          <button
+            onClick={() => setFilter("TFGBV & Online Safety")}
+            className="self-start sm:self-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 whitespace-nowrap"
+          >Explore TFGBV topics</button>
+        </div>
+      </section>
 
       <section className="container-page py-6">
         <div className="-mx-1 overflow-x-auto pb-1">

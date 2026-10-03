@@ -1,3 +1,4 @@
+import { caseLabel } from "@/lib/api";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { reports, notifications, apiErrorMessage } from "@/lib/api";
@@ -33,7 +34,7 @@ function CounsellorDashboard() {
           <ul className="divide-y divide-border">
             {list.slice(0, 10).map((r) => (
               <li key={r.id} className="py-2 flex items-center justify-between gap-3 text-sm">
-                <div><p className="font-medium">{r.category}</p><p className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}</p></div>
+                <div><p className="font-medium">{caseLabel(r)}</p><p className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}</p></div>
                 <span className="rounded-full bg-muted px-2 py-1 text-xs">{r.status}</span>
               </li>
             ))}

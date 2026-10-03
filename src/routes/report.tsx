@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { PROVINCES, ZAMBIA } from "@/data/facilities";
 import { apiErrorMessage } from "@/lib/api";
 import { submitPublicReportFn } from "@/lib/security.functions";
+import { TFGBV_CATEGORY_ID, TFGBV_CATEGORY_LABEL, TFGBV_INCIDENT_TYPES, EVIDENCE_SAFETY_WARNING } from "@/data/tfgbv";
 
 export const Route = createFileRoute("/report")({
   head: () => ({ meta: [{ title: "Safe Reporting — Safe Chain" }, { name: "description", content: "Anonymously report SRHR concerns, GBV incidents and service complaints. Track your case privately." }] }),
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/report")({
 
 const categories = [
   { id: "GBV", label: "Gender-based violence" },
+  { id: TFGBV_CATEGORY_ID, label: TFGBV_CATEGORY_LABEL },
   { id: "Assault", label: "Sexual assault" },
   { id: "Service", label: "Service complaint" },
   { id: "STI", label: "STI / health concern" },
@@ -33,6 +35,8 @@ function Report() {
   const [anonymous, setAnonymous] = useState(true);
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
+  const [category, setCategory] = useState("");
+  const [subcategory, setSubcategory] = useState("");
   const openedAt = useRef(Date.now());
   const districts = useMemo(() => (province ? ZAMBIA[province] ?? [] : []), [province]);
 
@@ -53,6 +57,7 @@ function Report() {
       const res = await submitPublicReportFn({
         data: {
           category: parsed.data.category,
+          subcategory: parsed.data.category === TFGBV_CATEGORY_ID && subcategory ? subcategory : undefined,
           description: parsed.data.description,
           province,
           district,
@@ -111,11 +116,33 @@ function Report() {
             <div className="mt-3 grid sm:grid-cols-2 gap-2">
               {categories.map((c) => (
                 <label key={c.id} className="flex items-center gap-3 rounded-xl border border-border p-3 text-sm has-[:checked]:bg-brand-soft has-[:checked]:border-brand cursor-pointer">
-                  <input type="radio" name="category" value={c.id} className="accent-[color:var(--brand)]" required />
+                  <input type="radio" name="category" value={c.id} checked={category === c.id} onChange={() => { setCategory(c.id); setSubcategory(""); }} className="accent-[color:var(--brand)]" required />
                   {c.label}
                 </label>
               ))}
             </div>
+            {category === TFGBV_CATEGORY_ID && (
+              <div className="mt-4 rounded-xl border border-brand/30 bg-brand-soft/40 p-4 space-y-3">
+                <label className="grid gap-1.5 text-sm">
+                  <span className="font-medium">What best describes it? <span className="text-muted-foreground font-normal">(optional)</span></span>
+                  <div className="relative">
+                    <select
+                      value={subcategory}
+                      onChange={(e) => setSubcategory(e.target.value)}
+                      className="w-full appearance-none rounded-lg border border-input bg-background pl-3 pr-9 py-2.5 outline-none focus:ring-2 focus:ring-ring"
+                    >
+                      <option value="">Prefer not to say</option>
+                      {TFGBV_INCIDENT_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                  </div>
+                </label>
+                <p className="text-xs text-muted-foreground">
+                  You do not need to share images, passwords or account details here. Describe what happened in your own words — a responder can guide you on evidence later.
+                </p>
+                <p className="text-xs text-muted-foreground"><strong className="text-foreground">Device safety:</strong> {EVIDENCE_SAFETY_WARNING}</p>
+              </div>
+            )}
           </fieldset>
 
           <div className="grid sm:grid-cols-3 gap-4">
@@ -180,7 +207,7 @@ function Report() {
           <div className="flex flex-wrap items-center gap-3">
             <button type="submit" disabled={submitting} className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-60">{submitting ? "Submitting…" : "Submit report"}</button>
             <p className="text-xs text-muted-foreground inline-flex items-center gap-1.5">
-              <Lock className="h-3.5 w-3.5" /> Encrypted locally before sending.
+              <Lock className="h-3.5 w-3.5" /> Sent over a secure connection and seen only by authorised responders.
             </p>
           </div>
         </form>

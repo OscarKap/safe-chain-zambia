@@ -1,3 +1,4 @@
+import { caseLabel } from "@/lib/api";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle, Activity, Users, Clock, MapPin } from "lucide-react";
@@ -69,7 +70,7 @@ function EOC() {
                         <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${PRIORITY_COLOR[r.priority ?? "normal"]}`}>
                           {(r.priority ?? "normal").toUpperCase()}
                         </span>
-                        <span className="text-sm font-medium truncate">{r.category}</span>
+                        <span className="text-sm font-medium truncate">{caseLabel(r)}</span>
                         <span className="text-xs text-muted-foreground">· {r.status}</span>
                       </div>
                       <p className="text-xs text-muted-foreground mt-0.5">
@@ -92,7 +93,7 @@ function EOC() {
               {all.slice(0, 8).map((r) => (
                 <li key={r.id} className="py-2.5 flex items-center gap-3 text-sm">
                   <Activity className="h-4 w-4 text-muted-foreground shrink-0" />
-                  <span className="font-medium truncate">{r.category}</span>
+                  <span className="font-medium truncate">{caseLabel(r)}</span>
                   <span className="text-xs text-muted-foreground truncate">
                     {r.district ?? "—"} · {r.status}
                   </span>

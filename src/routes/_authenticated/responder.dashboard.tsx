@@ -1,3 +1,4 @@
+import { caseLabel } from "@/lib/api";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -107,7 +108,7 @@ function ResponderDashboard() {
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
                         <Link to="/admin/reports/$id" params={{ id: r.id }} className="font-medium hover:underline">
-                          {r.category}
+                          {caseLabel(r)}
                         </Link>
                         <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${r.priority === "critical" ? "bg-red-500 text-white" : r.priority === "high" ? "bg-orange-500 text-white" : "bg-slate-200 text-slate-700"}`}>
                           {r.priority ?? "normal"}
@@ -244,7 +245,7 @@ function ActionReportDialog({ caseItem, onClose, onDone }: { caseItem: ReportLis
   });
 
   return (
-    <Modal title={`Action report — ${caseItem.category}`} onClose={onClose}>
+    <Modal title={`Action report — ${caseLabel(caseItem)}`} onClose={onClose}>
       <p className="text-sm text-muted-foreground mb-4">
         Ref <span className="font-mono">{caseItem.id.slice(0, 8).toUpperCase()}</span> · document what you intend to do,
         what was actually done, and the help the survivor received.

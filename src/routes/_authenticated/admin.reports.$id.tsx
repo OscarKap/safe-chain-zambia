@@ -1,3 +1,4 @@
+import { caseLabel } from "@/lib/api";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -105,7 +106,7 @@ function ReportDetail() {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="text-xl font-semibold">{r.category}</h2>
+              <h2 className="text-xl font-semibold">{caseLabel(r)}</h2>
               <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${PRIORITY_STYLES[priority]}`}>
                 {priority === "critical" && <AlertTriangle className="mr-1 h-3 w-3" />}
                 {priority.toUpperCase()} priority

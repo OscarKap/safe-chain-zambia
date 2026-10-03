@@ -7,6 +7,9 @@ import mentalMd from "@/content/articles/mental.md?raw";
 import relationshipsMd from "@/content/articles/relationships.md?raw";
 import rightsMd from "@/content/articles/rights.md?raw";
 import emergencyMd from "@/content/articles/emergency.md?raw";
+import tfgbvMd from "@/content/articles/tfgbv.md?raw";
+import digitalSafetyMd from "@/content/articles/digital-safety.md?raw";
+import tfgbvHelpMd from "@/content/articles/tfgbv-help.md?raw";
 
 import contraceptionImg from "@/assets/youth/contraception-youth.jpg.asset.json";
 import menstrualImg from "@/assets/youth/menstrual-youth.jpg.asset.json";
@@ -23,7 +26,8 @@ export type Category =
   | "Relationships"
   | "Wellbeing"
   | "Rights"
-  | "Safety";
+  | "Safety"
+  | "TFGBV & Online Safety";
 
 export type Article = {
   slug: string;
@@ -43,6 +47,38 @@ function readingTime(text: string): string {
 }
 
 export const articles: Article[] = [
+  {
+    slug: "tfgbv",
+    title: "What is Technology-Facilitated GBV?",
+    category: "TFGBV & Online Safety",
+    summary:
+      "Online harassment, cyberstalking, image sharing, sextortion, impersonation, doxxing and digital control — how to recognise TFGBV.",
+    image: consentImg.url,
+    content: tfgbvMd,
+    tags: ["TFGBV", "online abuse", "cyberstalking", "sextortion", "intimate images", "doxxing", "impersonation", "coercive control", "GBV"],
+    showEmergency: true,
+  },
+  {
+    slug: "tfgbv-help",
+    title: "If You Experience TFGBV: Evidence & Help",
+    category: "TFGBV & Online Safety",
+    summary:
+      "What to do first, how to preserve evidence safely, and where to seek help and report technology-facilitated abuse.",
+    image: emergencyImg.url,
+    content: tfgbvHelpMd,
+    tags: ["TFGBV", "evidence", "report", "help", "online abuse", "GBV"],
+    showEmergency: true,
+  },
+  {
+    slug: "digital-safety",
+    title: "Digital Safety & Privacy",
+    category: "TFGBV & Online Safety",
+    summary:
+      "Protect your accounts, check your phone for monitoring, and keep children and young people safer online.",
+    image: rightsImg.url,
+    content: digitalSafetyMd,
+    tags: ["TFGBV", "privacy", "passwords", "online safety", "children online"],
+  },
   {
     slug: "contraception",
     title: "Contraception",
@@ -150,6 +186,7 @@ export const articleWordCount = (a: Article): number =>
   a.content.trim().split(/\s+/).length;
 
 export const categories: Category[] = [
+  "TFGBV & Online Safety",
   "Health",
   "Safety",
   "Wellbeing",
