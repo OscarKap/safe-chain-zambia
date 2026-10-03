@@ -518,6 +518,7 @@ export type Database = {
           reporter_name: string | null
           reporter_phone: string | null
           status: string
+          subcategory: string | null
           submitted_by: string | null
           updated_at: string
         }
@@ -535,6 +536,7 @@ export type Database = {
           reporter_name?: string | null
           reporter_phone?: string | null
           status?: string
+          subcategory?: string | null
           submitted_by?: string | null
           updated_at?: string
         }
@@ -552,6 +554,7 @@ export type Database = {
           reporter_name?: string | null
           reporter_phone?: string | null
           status?: string
+          subcategory?: string | null
           submitted_by?: string | null
           updated_at?: string
         }
