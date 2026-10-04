@@ -31,6 +31,15 @@ function Emergency() {
           </p>
         </div>
 
+        <div className="mt-4 rounded-2xl border border-brand/30 bg-brand-soft/50 p-5 text-sm">
+          <p className="font-semibold">Threatened online or through your phone?</p>
+          <p className="mt-1 text-muted-foreground">
+            If someone is using technology to threaten, stalk, blackmail or expose you and you feel in danger, these lines can help too.
+            Safe Chain connects you to these services and verified providers — it does not dispatch police or ambulances itself.
+          </p>
+          <a href="/support" className="mt-3 inline-flex font-semibold text-brand underline">GBV & TFGBV support options</a>
+        </div>
+
         <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {hotlines.map((h) => (
             <a
@@ -53,7 +62,7 @@ function Emergency() {
             <h2 className="text-xl font-bold flex items-center gap-2"><Phone className="h-5 w-5 text-brand" /> What to expect when you call</h2>
             <ol className="mt-4 space-y-3 text-sm text-muted-foreground list-decimal pl-5">
               <li>A trained responder will answer — you don't need to share your name.</li>
-              <li>Tell them where you are if it's safe to. They can dispatch help.</li>
+              <li>Tell them where you are if it's safe to. They can arrange help from the right service.</li>
               <li>You can ask for a female responder, sign-language support, or a translator.</li>
               <li>Every call is confidential and free.</li>
             </ol>
