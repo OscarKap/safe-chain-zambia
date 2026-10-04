@@ -17,3 +17,9 @@
 
 ## Testing
 - [ ] Submit a report in English, switch to ChiBemba, confirm the case page and action report still load
+
+## TFGBV integration
+- [x] "GBV & TFGBV Support" page + menu item, homepage awareness (desktop + mobile)
+- [x] Learning Hub TFGBV category (3 articles) with evidence-safety warning
+- [x] Report: TFGBV category + optional incident type; flows through existing assignment
+- [x] Emergency page TFGBV note; dashboards show incident type
