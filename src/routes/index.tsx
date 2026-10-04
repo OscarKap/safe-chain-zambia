@@ -11,6 +11,7 @@ import workshopAsset from "@/assets/youth/workshop-youth.jpg.asset.json";
 import mobileImg from "@/assets/mobile.jpg";
 import { Slideshow } from "@/components/Slideshow";
 import { MobileHome } from "@/components/MobileHome";
+import { TfgbvAwareness } from "@/components/TfgbvAwareness";
 import { LanguagePicker } from "@/components/LanguageSelector";
 
 const heroImg = heroAsset.url;
@@ -133,6 +134,11 @@ function Home() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* GBV & TFGBV awareness */}
+      <section className="container-page pt-16 md:pt-20 hidden md:block">
+        <TfgbvAwareness />
       </section>
 
       {/* Slideshow */}

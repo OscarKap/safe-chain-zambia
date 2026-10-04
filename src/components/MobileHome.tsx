@@ -5,6 +5,7 @@ import {
   Users, ChevronRight, Lock, BookOpen,
 } from "lucide-react";
 import { PartnerLogos } from "@/components/PartnerLogos";
+import { TfgbvAwareness } from "@/components/TfgbvAwareness";
 import homeYouth from "@/assets/youth/home-youth.jpg.asset.json";
 
 type Action = {
@@ -102,6 +103,11 @@ export function MobileHome() {
             </Link>
           );
         })}
+      </div>
+
+      {/* GBV & TFGBV awareness */}
+      <div className="container-page mt-7">
+        <TfgbvAwareness compact />
       </div>
 
       {/* Helpful info */}

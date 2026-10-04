@@ -10,6 +10,7 @@ import { LanguageSelector } from "@/components/LanguageSelector";
 const nav = [
   { to: "/", label: "Home" },
   { to: "/services", label: "Find a Clinic" },
+  { to: "/support", label: "GBV & TFGBV Support" },
   { to: "/learn", label: "Learn" },
   { to: "/report", label: "Report" },
   { to: "/feedback", label: "Feedback" },

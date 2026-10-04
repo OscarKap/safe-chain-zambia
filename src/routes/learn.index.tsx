@@ -6,7 +6,7 @@ import { articles, categories, articleReadingTime, type Category } from "@/data/
 import { BookmarkButton, useBookmarks } from "@/components/Bookmark";
 
 export const Route = createFileRoute("/learn/")({
-  validateSearch: (s: Record<string, unknown>) => ({ topic: typeof s.topic === "string" ? s.topic : undefined }),
+  validateSearch: (s: Record<string, unknown>): { topic?: string } => (typeof s.topic === "string" ? { topic: s.topic } : {}),
   head: () => ({ meta: [
     { title: "Learning Hub — Safe Chain" },
     { name: "description", content: "In-app SRHR, mental health, GBV, technology-facilitated GBV (TFGBV), HIV, consent and youth rights lessons for young people in Zambia. Read offline-friendly, in your own time." },

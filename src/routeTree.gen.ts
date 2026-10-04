@@ -23,6 +23,7 @@ import { Route as MfaVerifyRouteImport } from './routes/mfa-verify'
 import { Route as PendingRouteImport } from './routes/pending'
 import { Route as ReportRouteImport } from './routes/report'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SupportRouteImport } from './routes/support'
 import { Route as AuthenticatedEocRouteImport } from './routes/_authenticated/eoc'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
@@ -109,6 +110,11 @@ const ReportRoute = ReportRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedEocRoute = AuthenticatedEocRouteImport.update({
@@ -227,6 +233,7 @@ export interface FileRoutesByFullPath {
   '/pending': typeof PendingRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/support': typeof SupportRoute
   '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/register/admin': typeof RegisterAdminRoute
@@ -260,6 +267,7 @@ export interface FileRoutesByTo {
   '/pending': typeof PendingRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/support': typeof SupportRoute
   '/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/register/admin': typeof RegisterAdminRoute
@@ -295,6 +303,7 @@ export interface FileRoutesById {
   '/pending': typeof PendingRoute
   '/report': typeof ReportRoute
   '/services': typeof ServicesRoute
+  '/support': typeof SupportRoute
   '/_authenticated/eoc': typeof AuthenticatedEocRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/register/admin': typeof RegisterAdminRoute
@@ -330,6 +339,7 @@ export interface FileRouteTypes {
     | '/pending'
     | '/report'
     | '/services'
+    | '/support'
     | '/eoc'
     | '/learn/$slug'
     | '/register/admin'
@@ -363,6 +373,7 @@ export interface FileRouteTypes {
     | '/pending'
     | '/report'
     | '/services'
+    | '/support'
     | '/eoc'
     | '/learn/$slug'
     | '/register/admin'
@@ -397,6 +408,7 @@ export interface FileRouteTypes {
     | '/pending'
     | '/report'
     | '/services'
+    | '/support'
     | '/_authenticated/eoc'
     | '/learn/$slug'
     | '/register/admin'
@@ -432,6 +444,7 @@ export interface RootRouteChildren {
   PendingRoute: typeof PendingRoute
   ReportRoute: typeof ReportRoute
   ServicesRoute: typeof ServicesRoute
+  SupportRoute: typeof SupportRoute
   LearnSlugRoute: typeof LearnSlugRoute
   RegisterAdminRoute: typeof RegisterAdminRoute
   RegisterResponderRoute: typeof RegisterResponderRoute
@@ -538,6 +551,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/eoc': {
@@ -729,6 +749,7 @@ const rootRouteChildren: RootRouteChildren = {
   PendingRoute: PendingRoute,
   ReportRoute: ReportRoute,
   ServicesRoute: ServicesRoute,
+  SupportRoute: SupportRoute,
   LearnSlugRoute: LearnSlugRoute,
   RegisterAdminRoute: RegisterAdminRoute,
   RegisterResponderRoute: RegisterResponderRoute,
