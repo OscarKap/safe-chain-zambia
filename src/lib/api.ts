@@ -123,6 +123,8 @@ export const VICTIM_CONDITIONS = [
 ] as const;
 export interface ReportDetail extends ReportListItem {
   description?: string; reporter_name?: string; reporter_phone?: string;
+  contact_method?: string | null; contact_safe?: boolean | null;
+  last_contact_at?: string | null; last_contact_outcome?: string | null; next_follow_up?: string | null;
   gps_lat?: number | null; gps_lng?: number | null;
   notes?: ReportNote[]; history?: ReportHistoryEntry[]; attachments?: ReportAttachment[];
 }
@@ -412,6 +414,11 @@ export const reports = {
       description: r.description ?? undefined,
       reporter_name: r.reporter_name ?? undefined,
       reporter_phone: r.reporter_phone ?? undefined,
+      contact_method: r.contact_method ?? null,
+      contact_safe: r.contact_safe ?? null,
+      last_contact_at: r.last_contact_at ?? null,
+      last_contact_outcome: r.last_contact_outcome ?? null,
+      next_follow_up: r.next_follow_up ?? null,
       gps_lat: (r as { gps_lat?: number | null }).gps_lat ?? null,
       gps_lng: (r as { gps_lng?: number | null }).gps_lng ?? null,
       notes: (notes ?? []).map((n) => ({ id: n.id, body: n.body, author: n.author_id ?? undefined, created_at: n.created_at })),
@@ -436,6 +443,36 @@ export const reports = {
     }).select("id,status").single();
     if (error) throw new Error(error.message);
     return { id: data.id, status: data.status };
+  },
+
+  /** Logs a contact attempt (not the conversation) and updates the case's contact summary. */
+  async recordContact(id: string, c: { outcome: string; actions: string[]; note?: string; followUp: string | null }): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser();
+    const now = new Date().toISOString();
+    const { error } = await supabase.from("reports")
+      .update({ last_contact_at: now, last_contact_outcome: c.outcome.slice(0, 120), next_follow_up: c.followUp })
+      .eq("id", id);
+    if (error) throw new Error(error.message);
+    const details = [c.outcome, c.actions.length ? `Actions: ${c.actions.join(", ")}` : "", c.note?.trim() ?? ""].filter(Boolean).join(" · ").slice(0, 2000);
+    const rows: { report_id: string; action: string; details: string | null; actor_id: string | null }[] = [
+      { report_id: id, action: "contact:recorded", details, actor_id: user?.id ?? null },
+    ];
+    if (c.followUp) rows.push({ report_id: id, action: "followup:scheduled", details: `Follow up on ${c.followUp}`, actor_id: user?.id ?? null });
+    const { error: hErr } = await supabase.from("report_history").insert(rows);
+    if (hErr) throw new Error(hErr.message);
+  },
+
+  async recordReferral(id: string, summary: string): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { error } = await supabase.from("report_history").insert({ report_id: id, action: "referral:created", details: summary.slice(0, 2000), actor_id: user?.id ?? null });
+    if (error) throw new Error(error.message);
+  },
+
+  async scheduleFollowUp(id: string, date: string | null): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { error } = await supabase.from("reports").update({ next_follow_up: date }).eq("id", id);
+    if (error) throw new Error(error.message);
+    await supabase.from("report_history").insert({ report_id: id, action: date ? "followup:scheduled" : "followup:completed", details: date ? `Follow up on ${date}` : null, actor_id: user?.id ?? null });
   },
 
   async setStatus(id: string, status: ReportStatus): Promise<{ success: boolean }> {
