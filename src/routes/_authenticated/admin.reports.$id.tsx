@@ -12,6 +12,7 @@ import {
 import { DashboardShell, SectionCard } from "@/components/DashboardShell";
 import { useAuth } from "@/lib/auth-context";
 import { DEPARTMENT_LABEL } from "@/data/departments";
+import { ContactReferralPanel } from "@/components/ContactReferralPanel";
 
 export const Route = createFileRoute("/_authenticated/admin/reports/$id")({
   head: () => ({ meta: [{ title: "Case — Safe Chain" }, { name: "robots", content: "noindex, nofollow" }] }),
@@ -125,6 +126,7 @@ function ReportDetail() {
 
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
+          <ContactReferralPanel r={r} />
           <SectionCard title="Incident details">
             <dl className="grid sm:grid-cols-2 gap-3 text-sm">
               <Info label="Reference" value={r.id} mono />
