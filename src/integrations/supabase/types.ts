@@ -507,12 +507,17 @@ export type Database = {
         Row: {
           assigned_to: string | null
           category: string
+          contact_method: string | null
+          contact_safe: boolean | null
           created_at: string
           description: string
           district: string | null
           gps_lat: number | null
           gps_lng: number | null
           id: string
+          last_contact_at: string | null
+          last_contact_outcome: string | null
+          next_follow_up: string | null
           priority: string
           province: string | null
           reporter_name: string | null
@@ -525,12 +530,17 @@ export type Database = {
         Insert: {
           assigned_to?: string | null
           category: string
+          contact_method?: string | null
+          contact_safe?: boolean | null
           created_at?: string
           description: string
           district?: string | null
           gps_lat?: number | null
           gps_lng?: number | null
           id?: string
+          last_contact_at?: string | null
+          last_contact_outcome?: string | null
+          next_follow_up?: string | null
           priority?: string
           province?: string | null
           reporter_name?: string | null
@@ -543,12 +553,17 @@ export type Database = {
         Update: {
           assigned_to?: string | null
           category?: string
+          contact_method?: string | null
+          contact_safe?: boolean | null
           created_at?: string
           description?: string
           district?: string | null
           gps_lat?: number | null
           gps_lng?: number | null
           id?: string
+          last_contact_at?: string | null
+          last_contact_outcome?: string | null
+          next_follow_up?: string | null
           priority?: string
           province?: string | null
           reporter_name?: string | null
