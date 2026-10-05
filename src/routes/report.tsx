@@ -8,6 +8,7 @@ import { PROVINCES, ZAMBIA } from "@/data/facilities";
 import { apiErrorMessage } from "@/lib/api";
 import { submitPublicReportFn } from "@/lib/security.functions";
 import { TFGBV_CATEGORY_ID, TFGBV_CATEGORY_LABEL, TFGBV_INCIDENT_TYPES, EVIDENCE_SAFETY_WARNING } from "@/data/tfgbv";
+import { CONTACT_METHODS, isValidPhone, type ContactMethod } from "@/lib/contact";
 
 export const Route = createFileRoute("/report")({
   head: () => ({ meta: [{ title: "Safe Reporting — Safe Chain" }, { name: "description", content: "Anonymously report SRHR concerns, GBV incidents and service complaints. Track your case privately." }] }),
@@ -32,23 +33,29 @@ const schema = z.object({
 function Report() {
   const [submittedId, setSubmittedId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [anonymous, setAnonymous] = useState(true);
+  const [contactMethod, setContactMethod] = useState<ContactMethod | "">("");
+  const [phone, setPhone] = useState("");
+  const [contactSafe, setContactSafe] = useState<boolean | null>(null);
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
   const openedAt = useRef(Date.now());
   const districts = useMemo(() => (province ? ZAMBIA[province] ?? [] : []), [province]);
+  const needsPhone = CONTACT_METHODS.find((m) => m.id === contactMethod)?.needsPhone ?? false;
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     if (!province) { toast.error("Choose a province"); return; }
     if (!district) { toast.error("Choose a district"); return; }
+    if (!contactMethod) { toast.error("Choose how we can contact you (or that you don't want contact)"); return; }
+    if (needsPhone && !isValidPhone(phone)) { toast.error("Enter a valid phone number"); return; }
+    if (contactMethod !== "none" && contactSafe === null) { toast.error("Tell us if it is safe to contact you this way"); return; }
     const parsed = schema.safeParse({
       category: fd.get("category"),
       description: fd.get("description"),
-      contact: anonymous ? "" : (fd.get("contact") as string),
+      contact: needsPhone ? phone : "",
     });
     if (!parsed.success) { toast.error(parsed.error.issues[0].message); return; }
 
@@ -61,8 +68,10 @@ function Report() {
           description: parsed.data.description,
           province,
           district,
-          reporter_name: anonymous ? "Anonymous" : undefined,
-          reporter_phone: anonymous ? undefined : parsed.data.contact || undefined,
+          reporter_name: "Anonymous",
+          reporter_phone: needsPhone ? phone.trim() : undefined,
+          contact_method: contactMethod,
+          contact_safe: contactMethod === "none" ? null : contactSafe,
           website: String(fd.get("website") ?? ""),
           elapsedMs: Date.now() - openedAt.current,
         },
@@ -188,21 +197,40 @@ function Report() {
             <textarea name="description" required rows={6} placeholder="Share as much or as little as you feel comfortable with." className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring resize-y" />
           </label>
 
-          <div className="rounded-xl border border-border bg-surface p-4">
-            <label className="flex items-start gap-3 text-sm">
-              <input type="checkbox" checked={anonymous} onChange={(e) => setAnonymous(e.target.checked)} className="mt-1 accent-[color:var(--brand)]" />
-              <span>
-                <span className="font-medium">Keep my report fully anonymous</span>
-                <span className="block text-muted-foreground">No name, phone, or device info will be stored.</span>
-              </span>
-            </label>
-            {!anonymous && (
-              <label className="mt-3 grid gap-1.5 text-sm">
-                <span className="font-medium">How can we reach you? <span className="text-muted-foreground font-normal">(phone or email)</span></span>
-                <input name="contact" placeholder="e.g., 0977 123 456" className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring" />
+          <fieldset className="rounded-xl border border-border bg-surface p-4 space-y-4">
+            <legend className="px-1 text-sm font-semibold">How would you like SafeChain to contact you?</legend>
+            <div className="grid sm:grid-cols-2 gap-2">
+              {CONTACT_METHODS.map((m) => (
+                <label key={m.id} className="flex items-center gap-3 rounded-xl border border-border bg-background p-3 text-sm has-[:checked]:bg-brand-soft has-[:checked]:border-brand cursor-pointer">
+                  <input type="radio" name="contact_method" value={m.id} checked={contactMethod === m.id} onChange={() => setContactMethod(m.id)} className="accent-[color:var(--brand)]" />
+                  {m.label}
+                </label>
+              ))}
+            </div>
+            {needsPhone && (
+              <label className="grid gap-1.5 text-sm">
+                <span className="font-medium">Phone number</span>
+                <input value={phone} onChange={(e) => setPhone(e.target.value)} inputMode="tel" placeholder="e.g. 0977 123 456" className="rounded-lg border border-input bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring" />
               </label>
             )}
-          </div>
+            {contactMethod && contactMethod !== "none" && (
+              <div className="text-sm">
+                <p className="font-medium">Is it safe for us to contact you using this method?</p>
+                <div className="mt-2 flex gap-2">
+                  {[{ v: true, l: "Yes" }, { v: false, l: "No" }].map((o) => (
+                    <label key={o.l} className="flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 has-[:checked]:bg-brand-soft has-[:checked]:border-brand cursor-pointer">
+                      <input type="radio" name="contact_safe" checked={contactSafe === o.v} onChange={() => setContactSafe(o.v)} className="accent-[color:var(--brand)]" />
+                      {o.l}
+                    </label>
+                  ))}
+                </div>
+                {contactSafe === false && (
+                  <p className="mt-2 text-xs text-muted-foreground">Thank you for telling us. A responder will not contact you this way unless it becomes safe.</p>
+                )}
+              </div>
+            )}
+            <p className="text-xs text-muted-foreground">Your name is never required. Your number is only seen by the responder handling your case.</p>
+          </fieldset>
 
           <div className="flex flex-wrap items-center gap-3">
             <button type="submit" disabled={submitting} className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-60">{submitting ? "Submitting…" : "Submit report"}</button>
