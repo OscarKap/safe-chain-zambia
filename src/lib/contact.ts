@@ -102,7 +102,7 @@ export function referralMessage(ref: string, r: ReferralInput): string {
     r.instructions && `Note: ${r.instructions}`,
     "",
     "Please contact the facility for assistance. If you need further support, you may contact SafeChain again using your case reference.",
-  ].filter((l) => l !== false && l !== undefined && l !== null) as string[];
+  ].filter((l): l is string => typeof l === "string");
   return lines.join("\n");
 }
 
