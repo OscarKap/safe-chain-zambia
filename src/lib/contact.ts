@@ -97,12 +97,12 @@ export function referralMessage(ref: string, r: ReferralInput): string {
     `Case: ${ref}`,
     `Service: ${r.service || r.type}`,
     `Facility: ${r.facility}`,
-    r.location && `Location: ${r.location}`,
-    r.contact && `Contact: ${r.contact}`,
-    r.instructions && `Note: ${r.instructions}`,
+    r.location ? `Location: ${r.location}` : null,
+    r.contact ? `Contact: ${r.contact}` : null,
+    r.instructions ? `Note: ${r.instructions}` : null,
     "",
     "Please contact the facility for assistance. If you need further support, you may contact SafeChain again using your case reference.",
-  ].filter((l) => l !== false && l !== undefined && l !== null) as string[];
+  ].filter((l): l is string => l !== null);
   return lines.join("\n");
 }
 
