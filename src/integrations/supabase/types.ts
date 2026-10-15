@@ -331,24 +331,33 @@ export type Database = {
           id: string
           message: string
           read: boolean
+          report_id: string | null
           type: string | null
           user_id: string
+          whatsapp_text: string | null
+          whatsapp_to: string | null
         }
         Insert: {
           created_at?: string
           id?: string
           message: string
           read?: boolean
+          report_id?: string | null
           type?: string | null
           user_id: string
+          whatsapp_text?: string | null
+          whatsapp_to?: string | null
         }
         Update: {
           created_at?: string
           id?: string
           message?: string
           read?: boolean
+          report_id?: string | null
           type?: string | null
           user_id?: string
+          whatsapp_text?: string | null
+          whatsapp_to?: string | null
         }
         Relationships: []
       }

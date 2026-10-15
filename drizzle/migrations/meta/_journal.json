@@ -22,6 +22,13 @@
       "when": 1791194495773,
       "tag": "0002_report_contact_referral",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792050924647,
+      "tag": "0003_case_notifications",
+      "breakpoints": true
     }
   ]
 }
