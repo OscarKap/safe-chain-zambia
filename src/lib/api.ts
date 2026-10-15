@@ -136,6 +136,7 @@ export interface ReportInput {
 
 export interface NotificationItem {
   id: string; message: string; read: boolean; created_at?: string; type?: string;
+  report_id?: string | null; whatsapp_to?: string | null; whatsapp_text?: string | null;
 }
 
 export interface SuperAdminStats {
@@ -627,7 +628,7 @@ export const reports = {
 export const notifications = {
   async list(): Promise<NotificationItem[]> {
     const { data, error } = await supabase.from("notifications")
-      .select("id,message,read,created_at,type").order("created_at", { ascending: false }).limit(50);
+      .select("id,message,read,created_at,type,report_id,whatsapp_to,whatsapp_text").order("created_at", { ascending: false }).limit(50);
     if (error) throw new Error(error.message);
     return (data ?? []) as NotificationItem[];
   },
